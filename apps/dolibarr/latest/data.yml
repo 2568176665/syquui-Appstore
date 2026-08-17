@@ -27,6 +27,7 @@ additionalProperties:
         - default: dolidb
           edit: true
           envKey: PANEL_DB_NAME
+          random: true
           labelEn: Database Name
           labelZh: 数据库名称
           required: true
@@ -35,14 +36,16 @@ additionalProperties:
         - default: dolidbuser
           edit: true
           envKey: PANEL_DB_USER
+          random: true
           labelEn: Database User
           labelZh: 数据库用户
           required: true
           rule: paramCommon
           type: text
-        - default: ""
+        - default: dolibarr
           edit: true
           envKey: PANEL_DB_USER_PASSWORD
+          random: true
           labelEn: Database Password
           labelZh: 数据库密码
           required: true

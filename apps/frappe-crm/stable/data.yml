@@ -32,7 +32,7 @@ additionalProperties:
           type: text
           labelEn: Database User
           labelZh: 数据库用户
-        - default: ""
+        - default: frappecrm
           envKey: PANEL_DB_USER_PASSWORD
           random: true
           required: true

@@ -79,6 +79,41 @@ PANEL_APP_PORT_S3
 PANEL_APP_PORT_SYNC
 ```
 
+## Known failure modes and fixes
+
+Use this checklist when an app depends on a 1Panel-managed database or one-shot initialization service.
+
+### Passwords
+
+- Declare `PANEL_DB_USER_PASSWORD` as a `password` form field with a non-empty alphanumeric `default` when `random: true` is used. 1Panel generates `default + "_" + six-character-random-string`; an empty default produces `_xxxxxx`, which fails because a special character cannot be first.
+- For the current 1Panel `paramComplexity` rule, allow English letters, digits, `.%@!~_-`, length 6–128, and require an English letter or digit at both ends. Do not copy older documentation that says 6–30 or includes `$`/`&` without checking the target 1Panel version.
+- Apply the same valid-password check to database, administrator, and other generated secrets. Test a generated example, not only the literal `default` value.
+
+### Named databases and users
+
+- Declare `PANEL_DB_NAME`, `PANEL_DB_USER`, and `PANEL_DB_USER_PASSWORD` in every version-level `data.yml`; a Compose variable alone does not make the database visible in 1Panel.
+- Give all three fields non-empty defaults. Use `random: true` for the database name and user when multiple installations may share the host, and keep their generated values within `paramCommon`.
+- Bind the exact same variables in Compose and pass them to the application. When 1Panel pre-creates the database and user, do not let the application create, drop, or silently rename the database.
+
+### Permissions and initialization
+
+- For bind-mounted directories owned by the application user, add a root one-shot permission service that creates required files/directories and runs `chown` before configurator, migration, or site-creation services. Gate dependents with `condition: service_completed_successfully`.
+- For Frappe site creation, pass the named database/user/password explicitly and use `--no-setup-db` when 1Panel has already created the database; retain the application's schema/bootstrap step.
+- Verify the actual command supported by the image with its `--help`. Do not use unsupported options such as `bench new-site --no-enqueue`, and do not add runtime `bench new-site --force` to work around an existing database or site.
+- Distinguish the generator's `generate-app.sh --force` (overwriting a generated output directory) from an application's runtime `--force`; use either only with explicit scope and a verified target.
+
+### Redis and site names
+
+- When Redis authentication is enabled, use a complete URI such as `redis://:<password>@<host>:6379` consistently for cache, queue, and websocket configuration; a missing `:` or password creates misleading startup failures.
+- Do not treat a VPS IP used as a Frappe site name as the first explanation for database-creation failures. Inspect the `CreateSite` logs, database credentials, service dependencies, and permissions first; keep the site name and reverse-proxy host consistent.
+
+### Validation
+
+- Resolve script paths from the actual skill root. In this repository the tools live under `.agents/skills/1panel-app-builder/scripts`; do not assume the upstream `/root/github/1Panel-Appstore/skills` path or a top-level `skills/` directory exists.
+- Validate every `latest/` and concrete version directory after changing shared form fields. Check the generated database name, user, and password against their rules and confirm every Compose reference has a matching form field.
+- Treat a validator warning about a path such as `/home/frappe/...` as a container-target-path warning; only change it when the host-side volume source is actually absolute and should be converted to `./data/...`.
+- Inspect `git status --short` before and after edits and preserve unrelated user changes, including untracked files.
+
 ## Scripts
 
 Run from `/root/github/1Panel-Appstore/skills` unless noted.
