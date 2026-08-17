@@ -1,21 +1,23 @@
-# Repository Guidelines
+# 仓库指南
 
-## Project Shape
+参考项目：
+https://github.com/1Panel-dev/appstore
+https://github.com/okxlin/appstore
 
-This repository is a third-party 1Panel local app store. It is mostly YAML,
-Docker Compose files, READMEs, icons, and helper shell scripts. There is no
-central application build step.
+## 项目形态
 
-Top-level files:
+本仓库是第三方 1Panel 本地应用商店，主要由 YAML、Docker Compose 文件、README、图标和辅助 shell 脚本组成，没有集中的应用构建步骤。
 
-- `data.yaml`: app store metadata and category/tag definitions.
-- `apps/<app-key>/`: one app package per directory.
-- `skills/`: app-generation guidance, templates, and helper scripts.
-- `update/`: update-detection and README-version sync scripts.
+顶层文件：
 
-## App Package Layout
+- `data.yaml`：应用商店元数据以及分类/标签定义。
+- `apps/<app-key>/`：每个应用一个目录。
+- `skills/`：应用生成指南、模板和辅助脚本。
+- `update/`：更新检测与 README 版本同步脚本。
 
-Use this structure for each app:
+## 应用包目录结构
+
+每个应用采用如下结构：
 
 ```text
 apps/<app-key>/
@@ -29,35 +31,24 @@ apps/<app-key>/
     └── data/
 ```
 
-Some apps also include `latest/`. When both `latest/` and a concrete version
-exist, `latest/` should use an image tagged `latest`, and the concrete version
-directory should use the pinned image tag.
+部分应用还包含 `latest/`。当 `latest/` 与具体版本目录同时存在时，`latest/` 应使用 `latest` 镜像标签，具体版本目录应使用固定的镜像标签。
 
-## 1Panel Conventions
+## 1Panel 约定
 
-- App keys are lowercase and hyphenated, and must match the app directory name.
-- Top-level `apps/<app-key>/data.yml` contains display metadata.
-- Version-level `data.yml` contains `additionalProperties.formFields`.
-- Prefer standard port variables such as `PANEL_APP_PORT_HTTP`,
-  `PANEL_APP_PORT_HTTPS`, `PANEL_APP_PORT_API`, `PANEL_APP_PORT_ADMIN`,
-  `PANEL_APP_PORT_PROXY`, `PANEL_APP_PORT_DB`, `PANEL_APP_PORT_SSH`,
-  `PANEL_APP_PORT_S3`, and `PANEL_APP_PORT_SYNC`.
-- Each `PANEL_APP_PORT_*` used in `docker-compose.yml` should have a matching
-  form field in the version `data.yml`.
-- Compose services should use `container_name: ${CONTAINER_NAME}`,
-  `restart: always`, the external `1panel-network`, relative `./data/` volume
-  paths for persistence, and `labels: createdBy: "Apps"`.
-- Use `./data/...` mounts instead of host absolute paths unless the app
-  genuinely requires host integration.
-- Keep app metadata tags aligned with `data.yaml`.
+- 应用 key 使用小写字母和连字符，且必须与应用目录名一致。
+- 顶层 `apps/<app-key>/data.yml` 存放展示元数据。
+- 版本级 `data.yml` 存放 `additionalProperties.formFields`。
+- 优先使用标准端口变量，例如 `PANEL_APP_PORT_HTTP`、`PANEL_APP_PORT_HTTPS`、`PANEL_APP_PORT_API`、`PANEL_APP_PORT_ADMIN`、`PANEL_APP_PORT_PROXY`、`PANEL_APP_PORT_DB`、`PANEL_APP_PORT_SSH`、`PANEL_APP_PORT_S3`、`PANEL_APP_PORT_SYNC`。
+- `docker-compose.yml` 中用到的每个 `PANEL_APP_PORT_*` 都应在版本 `data.yml` 中有对应的表单字段。
+- Compose 服务应使用 `container_name: ${CONTAINER_NAME}`、`restart: always`、外部 `1panel-network`、相对 `./data/` 卷路径做持久化，并添加 `labels: createdBy: "Apps"`。
+- 使用 `./data/...` 挂载，而不是宿主机绝对路径，除非应用确实需要宿主机集成。
+- 保持应用元数据标签与 `data.yaml` 一致。
 
-## App Creation Workflow
+## 应用创建流程
 
-Before adding or changing app packages, read `skills/SKILL.md`. It documents
-the expected 1Panel packaging workflow, metadata fields, compose conversion
-rules, README shape, and icon lookup order.
+添加或修改应用包之前，先阅读 `skills/SKILL.md`。它记录了预期的 1Panel 打包流程、元数据字段、compose 转换规则、README 形态以及图标查找顺序。
 
-Useful helper scripts:
+常用辅助脚本：
 
 ```bash
 cd /root/github/1Panel-Appstore/skills
@@ -66,34 +57,26 @@ cd /root/github/1Panel-Appstore/skills
 ./scripts/validate-app.sh ../apps/<app-key>
 ```
 
-The generator is a starting point. Review and adjust generated metadata,
-ports, volumes, environment variables, README content, and icons before
-considering the app complete.
+生成器只是起点。在认为应用完成之前，请检查并调整生成的元数据、端口、卷、环境变量、README 内容和图标。
 
-## Validation
+## 验证
 
-For a changed app, run:
+对改动的应用运行：
 
 ```bash
 cd /root/github/1Panel-Appstore
 ./skills/scripts/validate-app.sh ./apps/<app-key>
 ```
 
-For YAML or Compose edits, also inspect the affected files directly. The
-validator is shell/grep based and catches common structural problems, not every
-semantic issue.
+对 YAML 或 Compose 的修改，还应直接检查受影响的文件。验证器基于 shell/grep，能发现常见的结构性问题，但不能发现所有语义问题。
 
-## Update Scripts
+## 更新脚本
 
-The scripts in `update/` may perform network requests and `git pull`. Do not run
-them casually while making focused app edits. If using them, inspect the script
-and current worktree first.
+`update/` 中的脚本可能执行网络请求和 `git pull`。在做局部应用修改时不要随意运行它们。如需使用，请先检查脚本和当前工作区状态。
 
-## Editing Notes
+## 编辑说明
 
-- Preserve existing YAML indentation style within the file being edited.
-- Keep READMEs concise and app-focused; many apps include both Chinese and
-  English README files.
-- Do not replace real logos with placeholders. If an icon cannot be found, call
-  that out instead of inventing an inaccurate asset.
-- Treat unrelated changes in the worktree as user-owned and leave them alone.
+- 保持正在编辑文件内的 YAML 缩进风格。
+- 保持 README 简洁、聚焦应用；许多应用同时包含中文和英文 README。
+- 不要用占位图替换真实 logo。如果找不到图标，请明确指出，而不是伪造一个不准确的资源。
+- 将工作区中无关的改动视为用户所有，保持不动。
