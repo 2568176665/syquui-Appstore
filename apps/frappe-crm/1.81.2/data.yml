@@ -65,6 +65,48 @@ additionalProperties:
     required: true
     type: password
     edit: true
+  - default: frappecrm
+    envKey: FRAPPE_DB_NAME
+    labelEn: Database Name
+    labelZh: 数据库名称
+    label:
+      en: Database Name
+      es-es: Database Name
+      fa: Database Name
+      ja: Database Name
+      ms: Database Name
+      pt-br: Database Name
+      ru: Database Name
+      ko: Database Name
+      zh-hant: 数据库名称
+      zh: 数据库名称
+      tr: Database Name
+    required: true
+    type: text
+    edit: true
+    random: true
+    rule: paramCommon
+  - default: ''
+    envKey: FRAPPE_DB_PASSWORD
+    labelEn: Database Password
+    labelZh: 数据库密码
+    label:
+      en: Database Password
+      es-es: Database Password
+      fa: Database Password
+      ja: Database Password
+      ms: Database Password
+      pt-br: Database Password
+      ru: Database Password
+      ko: Database Password
+      zh-hant: 数据库密码
+      zh: 数据库密码
+      tr: Database Password
+    required: true
+    type: password
+    edit: true
+    random: true
+    rule: paramComplexity
   - child:
       default: ''
       envKey: PANEL_REDIS_HOST
