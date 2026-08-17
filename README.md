@@ -134,14 +134,14 @@
 在 1Panel 所在服务器执行以下命令，将本仓库的 `apps/` 目录复制到 1Panel 的本地应用目录：
 
 ```bash
-git clone -b localApps https://github.com/okxlin/appstore /opt/1panel/resource/apps/local/appstore-localApps
+git clone https://github.com/2568176665/syquui-Appstore /opt/1panel/resource/apps/local/appstore-localApps
 
 cp -rf /opt/1panel/resource/apps/local/appstore-localApps/apps/* /opt/1panel/resource/apps/local/
 
 rm -rf /opt/1panel/resource/apps/local/appstore-localApps
 ```
 
-> 说明：如果上述命令中的 GitHub 地址与本仓库不一致，请将命令中的仓库地址替换为本仓库的实际地址；`/opt` 为 1Panel 默认安装目录，请根据实际情况修改。
+> 说明：如果上述命令中的 GitHub 地址与本仓库不一致，请将命令中的仓库地址替换为本仓库的实际地址（https://github.com/2568176665/syquui-Appstore）；`/opt` 为 1Panel 默认安装目录，请根据实际情况修改。
 
 3. 复制完成后，在 1Panel「应用商店」页面点击「更新应用列表」按钮同步本地应用。
 4. 回到「应用商店 → 本地应用」，选择所需应用安装即可。
