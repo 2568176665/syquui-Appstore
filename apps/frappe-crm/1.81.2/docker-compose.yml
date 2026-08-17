@@ -23,6 +23,10 @@ services:
     command:
       - >
         set -e;
+        mkdir -p sites;
+        if [ ! -s sites/common_site_config.json ]; then
+          printf '%s\n' '{}' > sites/common_site_config.json;
+        fi;
         ls -1 apps > sites/apps.txt;
         REDIS_PASSWORD_ENCODED=$$(python -c 'import os,urllib.parse; print(urllib.parse.quote(os.getenv("REDIS_PASSWORD", ""), safe=""))');
         REDIS_AUTH="";
