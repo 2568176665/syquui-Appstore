@@ -11,31 +11,15 @@ services:
     networks:
       - 1panel-network
     environment:
-      - DOLI_DB_HOST=${CONTAINER_NAME}-Db
-      - DOLI_DB_NAME=${DOLI_DB_NAME}
-      - DOLI_DB_USER=${DOLI_DB_USER}
-      - DOLI_DB_PASSWORD=${DOLI_DB_PASSWORD}
+      - DOLI_DB_HOST=${PANEL_DB_HOST}
+      - DOLI_DB_HOST_PORT=${PANEL_DB_PORT}
+      - DOLI_DB_NAME=${PANEL_DB_NAME}
+      - DOLI_DB_USER=${PANEL_DB_USER}
+      - DOLI_DB_PASSWORD=${PANEL_DB_USER_PASSWORD}
       - DOLI_URL_ROOT=${DOLI_URL_ROOT}
       - DOLI_ADMIN_LOGIN=${DOLI_ADMIN_LOGIN}
       - DOLI_ADMIN_PASSWORD=${DOLI_ADMIN_PASSWORD}
       - DOLI_CRON=${DOLI_CRON}
-    depends_on:
-      - mariadb
-    labels:
-      createdBy: Apps
-  mariadb:
-    image: mariadb:11.4
-    container_name: ${CONTAINER_NAME}-Db
-    restart: always
-    volumes:
-      - ./db-data:/var/lib/mysql
-    networks:
-      - 1panel-network
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DOLI_DB_PASSWORD}
-      - MYSQL_DATABASE=${DOLI_DB_NAME}
-      - MYSQL_USER=${DOLI_DB_USER}
-      - MYSQL_PASSWORD=${DOLI_DB_PASSWORD}
     labels:
       createdBy: Apps
 networks:

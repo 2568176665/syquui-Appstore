@@ -22,6 +22,8 @@ Dolibarr is a self-hosted, open-source ERP & CRM suite covering customer relatio
 ## 1Panel Deployment
 
 1. Search for Dolibarr in the 1Panel app store and install.
-2. Fill in the database name, database user/password, admin account/password, and site URL.
+2. Select an installed MySQL or MariaDB database service, then fill in the database name, database user/password, admin account/password, and site URL.
 3. After installation, visit `http://SERVER_IP:PORT` to complete initial setup.
-4. Data is persisted in the `data` and `db-data` directories.
+4. Data is persisted in the `data` directory.
+
+> Tip: First install a MySQL or MariaDB service in 1Panel's "Databases" section, then select it from the dropdown when installing Dolibarr. 1Panel auto-creates the database and user.

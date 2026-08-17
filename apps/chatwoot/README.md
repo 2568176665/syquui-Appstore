@@ -22,8 +22,8 @@ Chatwoot 是一个自托管、开源的全渠道客户支持平台，提供实�
 ## 1Panel 部署说明
 
 1. 在 1Panel 应用商店搜索 Chatwoot 并安装。
-2. 填写密钥、数据库密码、Redis 密码、数据库名称以及前台访问地址。
+2. 选择已安装的 PostgreSQL 数据库服务和 Redis 服务，填写数据库名称、数据库用户/密码、Redis 密码、密钥以及前台访问地址。
 3. 安装完成后，访问 `http://服务器IP:端口` 进行初始化设置。
 4. 数据默认持久化在 `data` 目录下。
 
-> 提示：请通过 `FRONTEND_URL` 填写的地址访问（首次启动需注册企业账号）。建议在反向代理中开启 HTTPS 并设置 `FORCE_SSL`。
+> 提示：需要先在 1Panel「数据库」中安装 PostgreSQL 与 Redis 服务，安装 Chatwoot 时下拉选择。请通过 `FRONTEND_URL` 填写的地址访问（首次启动需注册企业账号）。建议在反向代理中开启 HTTPS 并设置 `FORCE_SSL`。

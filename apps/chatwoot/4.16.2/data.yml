@@ -10,15 +10,31 @@ additionalProperties:
           type: number
         - default: ""
           edit: true
-          envKey: SECRET_KEY_BASE
-          labelEn: Secret Key Base
-          labelZh: 密钥 Key Base
+          envKey: PANEL_DB_HOST
+          key: postgresql
+          labelEn: Database Service
+          labelZh: 数据库服务
           required: true
-          rule: paramComplexity
-          type: password
+          type: service
+        - default: chatwoot_production
+          edit: true
+          envKey: PANEL_DB_NAME
+          labelEn: Database Name
+          labelZh: 数据库名称
+          required: true
+          rule: paramCommon
+          type: text
+        - default: chatwoot
+          edit: true
+          envKey: PANEL_DB_USER
+          labelEn: Database User
+          labelZh: 数据库用户
+          required: true
+          rule: paramCommon
+          type: text
         - default: ""
           edit: true
-          envKey: POSTGRES_PASSWORD
+          envKey: PANEL_DB_USER_PASSWORD
           labelEn: Database Password
           labelZh: 数据库密码
           required: true
@@ -26,20 +42,28 @@ additionalProperties:
           type: password
         - default: ""
           edit: true
-          envKey: REDIS_PASSWORD
+          envKey: PANEL_REDIS_HOST
+          key: redis
+          labelEn: Redis Service
+          labelZh: Redis 服务
+          required: true
+          type: service
+        - default: ""
+          edit: true
+          envKey: PANEL_REDIS_ROOT_PASSWORD
           labelEn: Redis Password
           labelZh: Redis 密码
           required: true
           rule: paramComplexity
           type: password
-        - default: chatwoot_production
+        - default: ""
           edit: true
-          envKey: POSTGRES_DATABASE
-          labelEn: Database Name
-          labelZh: 数据库名称
+          envKey: SECRET_KEY_BASE
+          labelEn: Secret Key Base
+          labelZh: 密钥 Key Base
           required: true
-          rule: paramCommon
-          type: text
+          rule: paramComplexity
+          type: password
         - default: ""
           edit: true
           envKey: FRONTEND_URL

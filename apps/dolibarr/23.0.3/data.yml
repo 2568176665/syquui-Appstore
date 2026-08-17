@@ -8,9 +8,25 @@ additionalProperties:
           required: true
           rule: paramPort
           type: number
+        - child:
+            default: ""
+            envKey: PANEL_DB_HOST
+            required: true
+            type: service
+          default: mariadb
+          envKey: PANEL_DB_TYPE
+          labelEn: Database Type
+          labelZh: 数据库类型
+          required: true
+          type: apps
+          values:
+            - label: MySQL
+              value: mysql
+            - label: MariaDB
+              value: mariadb
         - default: dolidb
           edit: true
-          envKey: DOLI_DB_NAME
+          envKey: PANEL_DB_NAME
           labelEn: Database Name
           labelZh: 数据库名称
           required: true
@@ -18,7 +34,7 @@ additionalProperties:
           type: text
         - default: dolidbuser
           edit: true
-          envKey: DOLI_DB_USER
+          envKey: PANEL_DB_USER
           labelEn: Database User
           labelZh: 数据库用户
           required: true
@@ -26,7 +42,7 @@ additionalProperties:
           type: text
         - default: ""
           edit: true
-          envKey: DOLI_DB_PASSWORD
+          envKey: PANEL_DB_USER_PASSWORD
           labelEn: Database Password
           labelZh: 数据库密码
           required: true

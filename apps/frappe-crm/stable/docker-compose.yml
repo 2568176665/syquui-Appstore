@@ -1,36 +1,4 @@
 services:
-  mariadb:
-    image: mariadb:10.8
-    container_name: ${CONTAINER_NAME}-Db
-    restart: always
-    volumes:
-      - ./db-data:/var/lib/mysql
-    networks:
-      - 1panel-network
-    command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-      - --skip-character-set-client-handshake
-      - --skip-innodb-read-only-compressed
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-    healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
-    labels:
-      createdBy: Apps
-  redis:
-    image: redis:alpine
-    container_name: ${CONTAINER_NAME}-Redis
-    restart: always
-    volumes:
-      - ./redis-data:/data
-    networks:
-      - 1panel-network
-    labels:
-      createdBy: Apps
   configurator:
     image: ghcr.io/frappe/crm:stable
     container_name: ${CONTAINER_NAME}-Configurator
@@ -53,10 +21,10 @@ services:
     networks:
       - 1panel-network
     environment:
-      - DB_HOST=${CONTAINER_NAME}-Db
-      - DB_PORT=3306
-      - REDIS_CACHE=${CONTAINER_NAME}-Redis:6379
-      - REDIS_QUEUE=${CONTAINER_NAME}-Redis:6379
+      - DB_HOST=${PANEL_DB_HOST}
+      - DB_PORT=${PANEL_DB_PORT}
+      - REDIS_CACHE=${PANEL_REDIS_HOST}:6379
+      - REDIS_QUEUE=${PANEL_REDIS_HOST}:6379
       - SOCKETIO_PORT=9000
     labels:
       createdBy: Apps
@@ -71,7 +39,7 @@ services:
       - >
         test -d sites/$$FRAPPE_SITE_NAME ||
         bench new-site $$FRAPPE_SITE_NAME
-        --mariadb-root-password $$DB_PASSWORD
+        --mariadb-root-password $$PANEL_DB_ROOT_PASSWORD
         --admin-password $$FRAPPE_ADMIN_PASSWORD
         --install-app crm
         --no-enqueue
@@ -81,13 +49,11 @@ services:
       - 1panel-network
     environment:
       - FRAPPE_SITE_NAME=${FRAPPE_SITE_NAME}
-      - DB_PASSWORD=${DB_PASSWORD}
+      - PANEL_DB_ROOT_PASSWORD=${PANEL_DB_ROOT_PASSWORD}
       - FRAPPE_ADMIN_PASSWORD=${FRAPPE_ADMIN_PASSWORD}
     depends_on:
       configurator:
         condition: service_completed_successfully
-      mariadb:
-        condition: service_healthy
     labels:
       createdBy: Apps
   backend:

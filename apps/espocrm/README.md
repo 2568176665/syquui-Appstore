@@ -21,8 +21,10 @@ EspoCRM 是一个自托管、开源的企业级 CRM 系统，支持联系人管�
 ## 1Panel 部署说明
 
 1. 在 1Panel 应用商店搜索 EspoCRM 并安装。
-2. 填写数据库名称、数据库用户/密码、管理员账号/密码以及站点访问地址。
+2. 选择已安装的 MySQL 或 MariaDB 数据库服务，填写数据库名称、数据库用户/密码，以及管理员账号/密码和站点访问地址。
 3. 安装完成后，访问 `http://服务器IP:端口` 进行登录使用。
-4. 数据默认持久化在 `data`、`custom`、`client-custom`、`db-data` 目录下。
+4. 数据默认持久化在 `data`、`custom`、`client-custom` 目录下。
+
+> 提示：需要先在 1Panel「数据库」中创建并安装 MySQL 或 MariaDB 服务，安装 EspoCRM 时下拉选择该数据库服务。1Panel 会自动创建数据库和用户。
 
 > 注：实时 WebSocket 推送默认通过容器内部网络工作；如需通过反向代理对外提供 WebSocket，请额外配置代理转发。

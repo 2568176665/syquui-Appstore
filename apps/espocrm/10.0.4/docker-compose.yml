@@ -12,10 +12,11 @@ services:
     networks:
       - 1panel-network
     environment:
-      - ESPOCRM_DATABASE_HOST=${CONTAINER_NAME}-Db
-      - ESPOCRM_DATABASE_NAME=${ESPOCRM_DATABASE_NAME}
-      - ESPOCRM_DATABASE_USER=${ESPOCRM_DATABASE_USER}
-      - ESPOCRM_DATABASE_PASSWORD=${ESPOCRM_DATABASE_PASSWORD}
+      - ESPOCRM_DATABASE_HOST=${PANEL_DB_HOST}
+      - ESPOCRM_DATABASE_PORT=${PANEL_DB_PORT}
+      - ESPOCRM_DATABASE_NAME=${PANEL_DB_NAME}
+      - ESPOCRM_DATABASE_USER=${PANEL_DB_USER}
+      - ESPOCRM_DATABASE_PASSWORD=${PANEL_DB_USER_PASSWORD}
       - ESPOCRM_ADMIN_USERNAME=${ESPOCRM_ADMIN_USERNAME}
       - ESPOCRM_ADMIN_PASSWORD=${ESPOCRM_ADMIN_PASSWORD}
       - ESPOCRM_SITE_URL=${ESPOCRM_SITE_URL}
@@ -23,8 +24,6 @@ services:
       - ESPOCRM_CONFIG_WEB_SOCKET_URL=ws://${CONTAINER_NAME}-Websocket:8080
       - ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBSCRIBER_DSN=tcp://*:7777
       - ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBMISSION_DSN=tcp://${CONTAINER_NAME}-Websocket:7777
-    depends_on:
-      - espocrm-db
     labels:
       createdBy: Apps
   espocrm-daemon:
@@ -39,10 +38,11 @@ services:
     networks:
       - 1panel-network
     environment:
-      - ESPOCRM_DATABASE_HOST=${CONTAINER_NAME}-Db
-      - ESPOCRM_DATABASE_NAME=${ESPOCRM_DATABASE_NAME}
-      - ESPOCRM_DATABASE_USER=${ESPOCRM_DATABASE_USER}
-      - ESPOCRM_DATABASE_PASSWORD=${ESPOCRM_DATABASE_PASSWORD}
+      - ESPOCRM_DATABASE_HOST=${PANEL_DB_HOST}
+      - ESPOCRM_DATABASE_PORT=${PANEL_DB_PORT}
+      - ESPOCRM_DATABASE_NAME=${PANEL_DB_NAME}
+      - ESPOCRM_DATABASE_USER=${PANEL_DB_USER}
+      - ESPOCRM_DATABASE_PASSWORD=${PANEL_DB_USER_PASSWORD}
     depends_on:
       - espocrm
     labels:
@@ -65,21 +65,6 @@ services:
       - ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBMISSION_DSN=tcp://${CONTAINER_NAME}-Websocket:7777
     depends_on:
       - espocrm
-    labels:
-      createdBy: Apps
-  espocrm-db:
-    image: mariadb:11.4
-    container_name: ${CONTAINER_NAME}-Db
-    restart: always
-    volumes:
-      - ./db-data:/var/lib/mysql
-    networks:
-      - 1panel-network
-    environment:
-      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-      - MARIADB_DATABASE=${ESPOCRM_DATABASE_NAME}
-      - MARIADB_USER=${ESPOCRM_DATABASE_USER}
-      - MARIADB_PASSWORD=${ESPOCRM_DATABASE_PASSWORD}
     labels:
       createdBy: Apps
 networks:

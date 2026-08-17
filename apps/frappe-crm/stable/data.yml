@@ -10,20 +10,36 @@ additionalProperties:
           type: number
         - default: ""
           edit: true
+          envKey: PANEL_DB_HOST
+          key: mariadb
+          labelEn: Database Service
+          labelZh: 数据库服务
+          required: true
+          type: service
+        - default: ""
+          edit: true
+          envKey: PANEL_DB_ROOT_PASSWORD
+          labelEn: Database Root Password
+          labelZh: 数据库 Root 密码
+          required: true
+          rule: paramComplexity
+          type: password
+        - default: ""
+          edit: true
+          envKey: PANEL_REDIS_HOST
+          key: redis
+          labelEn: Redis Service
+          labelZh: Redis 服务
+          required: true
+          type: service
+        - default: ""
+          edit: true
           envKey: FRAPPE_SITE_NAME
           labelEn: Site Name
           labelZh: 站点域名
           required: true
           rule: paramCommon
           type: text
-        - default: ""
-          edit: true
-          envKey: DB_PASSWORD
-          labelEn: Database Root Password
-          labelZh: 数据库 Root 密码
-          required: true
-          rule: paramComplexity
-          type: password
         - default: ""
           edit: true
           envKey: FRAPPE_ADMIN_PASSWORD
