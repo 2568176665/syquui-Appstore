@@ -1,0 +1,23 @@
+services:
+  s-ui:
+    image: alireza7/s-ui:v1.5.5
+    container_name: ${CONTAINER_NAME}
+    hostname: s-ui
+    volumes:
+      - ./data/db:/app/db
+      - ./data/cert:/app/cert
+    tty: true
+    restart: always
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:2095"
+      - "${PANEL_APP_PORT_SUB}:2096"
+      - "${PANEL_APP_PORT_PROXY_HTTP}:${PANEL_APP_PORT_PROXY_HTTP}"
+      - "${PANEL_APP_PORT_PROXY_HTTPS}:${PANEL_APP_PORT_PROXY_HTTPS}"
+    networks:
+      - 1panel-network
+    entrypoint: "./entrypoint.sh"
+    labels:
+      createdBy: "Apps"
+networks:
+  1panel-network:
+    external: true

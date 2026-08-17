@@ -1,0 +1,36 @@
+additionalProperties:
+  formFields:
+    - default: 6333
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: HTTP API / Web UI Port
+      labelZh: HTTP API / Web UI 端口
+      required: true
+      rule: paramPort
+      type: number
+      label:
+        en: HTTP API / Web UI Port
+        zh: HTTP API / Web UI 端口
+    - default: 6334
+      edit: true
+      envKey: PANEL_APP_PORT_GRPC
+      labelEn: gRPC API Port
+      labelZh: gRPC API 端口
+      required: true
+      rule: paramPort
+      type: number
+      label:
+        en: gRPC API Port
+        zh: gRPC API 端口
+    - default: Qdrant123456
+      edit: true
+      envKey: QDRANT_API_KEY
+      labelEn: API Key
+      labelZh: API 密钥
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+      label:
+        en: API Key
+        zh: API 密钥
