@@ -40,6 +40,7 @@
 | firecrawl | 将任意网站转换为适合大语言模型的结构化数据 |
 | flowise | 可视化构建 AI/LLM 流程 |
 | frappe-crm | 开源 CRM 客户关系管理系统 |
+| frappe-insights | 开源商业智能与数据分析平台 |
 | git-sync | Git 仓库自动同步与备份工具 |
 | glance-agent | 远程服务器监控数据采集 agent |
 | glm-free-api | 智谱清言 ChatGLM-4-Plus 大模型逆向 API |

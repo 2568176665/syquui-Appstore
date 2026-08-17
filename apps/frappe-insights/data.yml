@@ -1,0 +1,25 @@
+name: frappe-insights
+tags:
+  - 工具
+  - BI
+  - 开源
+title: Frappe Insights
+description: Frappe Insights 是一个开源的商业智能与数据分析平台，支持 SQL 查询、数据可视化、仪表盘和 Frappe 生态集成。
+additionalProperties:
+  key: frappe-insights
+  name: Frappe Insights
+  tags:
+    - 工具
+    - BI
+    - 开源
+  shortDescZh: 开源商业智能与数据分析平台
+  shortDescEn: Frappe Insights - Open Source Business Intelligence
+  type: website
+  crossVersionUpdate: true
+  website: https://frappe.io/insights
+  github: https://github.com/frappe/insights
+  document: https://docs.frappe.io/insights
+
+  architectures:
+    - amd64
+    - arm64
