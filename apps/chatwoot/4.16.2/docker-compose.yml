@@ -1,0 +1,104 @@
+services:
+  rails:
+    image: chatwoot/chatwoot:v4.16.2
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    ports:
+      - ${PANEL_APP_PORT_HTTP}:3000
+    volumes:
+      - ./data/storage:/app/storage
+    networks:
+      - 1panel-network
+    environment:
+      - NODE_ENV=production
+      - RAILS_ENV=production
+      - INSTALLATION_ENV=docker
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - POSTGRES_HOST=${CONTAINER_NAME}-Db
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@${CONTAINER_NAME}-Redis:6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - FRONTEND_URL=${FRONTEND_URL}
+      - FORCE_SSL=false
+    entrypoint: docker/entrypoints/rails.sh
+    command:
+      - bundle
+      - exec
+      - rails
+      - s
+      - -p
+      - "3000"
+      - -b
+      - 0.0.0.0
+    depends_on:
+      - postgres
+      - redis
+    labels:
+      createdBy: Apps
+  sidekiq:
+    image: chatwoot/chatwoot:v4.16.2
+    container_name: ${CONTAINER_NAME}-Sidekiq
+    restart: always
+    volumes:
+      - ./data/storage:/app/storage
+    networks:
+      - 1panel-network
+    environment:
+      - NODE_ENV=production
+      - RAILS_ENV=production
+      - INSTALLATION_ENV=docker
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - POSTGRES_HOST=${CONTAINER_NAME}-Db
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@${CONTAINER_NAME}-Redis:6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - FRONTEND_URL=${FRONTEND_URL}
+      - FORCE_SSL=false
+    command:
+      - bundle
+      - exec
+      - sidekiq
+      - -C
+      - config/sidekiq.yml
+    depends_on:
+      - postgres
+      - redis
+    labels:
+      createdBy: Apps
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ${CONTAINER_NAME}-Db
+    restart: always
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    networks:
+      - 1panel-network
+    environment:
+      - POSTGRES_DB=${POSTGRES_DATABASE}
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    labels:
+      createdBy: Apps
+  redis:
+    image: redis:alpine
+    container_name: ${CONTAINER_NAME}-Redis
+    restart: always
+    command:
+      - sh
+      - -c
+      - redis-server --requirepass "$$REDIS_PASSWORD"
+    volumes:
+      - ./data/redis:/data
+    networks:
+      - 1panel-network
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    labels:
+      createdBy: Apps
+networks:
+  1panel-network:
+    external: true

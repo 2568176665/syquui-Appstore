@@ -1,0 +1,25 @@
+name: chatwoot
+tags:
+  - 工具
+  - 客服
+  - 开源
+title: Chatwoot
+description: Chatwoot 是一个自托管、开源的全渠道客户支持平台，提供实时聊天、多平台收件箱、工单管理、自动化流程等功能。
+additionalProperties:
+  key: chatwoot
+  name: Chatwoot
+  tags:
+    - 工具
+    - 客服
+    - 开源
+  shortDescZh: 开源全渠道客户支持平台
+  shortDescEn: Chatwoot - Open Source Customer Engagement Platform
+  type: website
+  crossVersionUpdate: true
+  website: https://www.chatwoot.com
+  github: https://github.com/chatwoot/chatwoot
+  document: https://www.chatwoot.com/docs
+
+  architectures:
+    - amd64
+    - arm64
