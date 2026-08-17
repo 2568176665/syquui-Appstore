@@ -1,0 +1,226 @@
+services:
+  frappe-insights-permissions:
+    image: ghcr.io/frappe/insights:v3.12.5
+    container_name: ${CONTAINER_NAME}-permissions
+    user: root
+    entrypoint: ["bash", "-c"]
+    command:
+      - >
+        mkdir -p /mnt/sites /mnt/logs;
+        chown -R "$$(id -u frappe):$$(id -g frappe)" /mnt/sites /mnt/logs;
+    restart: "no"
+    volumes:
+      - ./data/sites:/mnt/sites
+      - ./data/logs:/mnt/logs
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  frappe-insights-configurator:
+    image: ghcr.io/frappe/insights:v3.12.5
+    container_name: ${CONTAINER_NAME}-configurator
+    entrypoint: ["bash", "-c"]
+    command:
+      - >
+        set -e;
+        ls -1 apps > sites/apps.txt;
+        REDIS_PASSWORD_ENCODED=$$(python -c 'import os,urllib.parse; print(urllib.parse.quote(os.getenv("REDIS_PASSWORD", ""), safe=""))');
+        REDIS_AUTH="";
+        if [ -n "$$REDIS_PASSWORD_ENCODED" ]; then REDIS_AUTH=":$$REDIS_PASSWORD_ENCODED@"; fi;
+        bench set-config -g db_host "$$DB_HOST";
+        bench set-config -gp db_port 3306;
+        bench set-config -g redis_cache "redis://$${REDIS_AUTH}$${REDIS_HOST}:6379/$${REDIS_CACHE_DB}";
+        bench set-config -g redis_queue "redis://$${REDIS_AUTH}$${REDIS_HOST}:6379/$${REDIS_QUEUE_DB}";
+        bench set-config -g redis_socketio "redis://$${REDIS_AUTH}$${REDIS_HOST}:6379/$${REDIS_QUEUE_DB}";
+        bench set-config -gp socketio_port 9000;
+        bench set-config -g chromium_path /usr/bin/chromium-headless-shell;
+        bench set-config -g server_script_enabled 1;
+    environment:
+      DB_HOST: ${PANEL_DB_HOST}
+      REDIS_HOST: ${PANEL_REDIS_HOST}
+      REDIS_PASSWORD: ${PANEL_REDIS_ROOT_PASSWORD}
+      REDIS_CACHE_DB: ${REDIS_CACHE_DB}
+      REDIS_QUEUE_DB: ${REDIS_QUEUE_DB}
+    restart: "no"
+    depends_on:
+      frappe-insights-permissions:
+        condition: service_completed_successfully
+    volumes:
+      - ./data/sites:/home/frappe/frappe-bench/sites
+      - ./data/logs:/home/frappe/frappe-bench/logs
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  frappe-insights-create-site:
+    image: ghcr.io/frappe/insights:v3.12.5
+    container_name: ${CONTAINER_NAME}-create-site
+    entrypoint: ["bash", "-c"]
+    command:
+      - >
+        set -e;
+        wait-for-it -t 180 "$$DB_HOST:3306";
+        wait-for-it -t 180 "$$REDIS_HOST:6379";
+        if [ -f "sites/$$FRAPPE_SITE_NAME/site_config.json" ]; then
+          echo "Site $$FRAPPE_SITE_NAME already exists; skipping site creation.";
+          if ! bench --site "$$FRAPPE_SITE_NAME" list-apps | grep -qx insights; then
+            bench --site "$$FRAPPE_SITE_NAME" install-app insights;
+          fi;
+        else
+          bench new-site "$$FRAPPE_SITE_NAME" \
+            --mariadb-user-host-login-scope='%' \
+            --admin-password="$$ADMIN_PASSWORD" \
+            --db-root-username=root \
+            --db-root-password="$$DB_ROOT_PASSWORD" \
+            --install-app insights \
+            --set-default "$$FRAPPE_SITE_NAME";
+        fi;
+        bench use "$$FRAPPE_SITE_NAME";
+    environment:
+      FRAPPE_SITE_NAME: ${FRAPPE_SITE_NAME}
+      ADMIN_PASSWORD: ${FRAPPE_ADMIN_PASSWORD}
+      DB_ROOT_PASSWORD: ${PANEL_DB_ROOT_PASSWORD}
+      DB_HOST: ${PANEL_DB_HOST}
+      REDIS_HOST: ${PANEL_REDIS_HOST}
+    restart: "no"
+    depends_on:
+      frappe-insights-configurator:
+        condition: service_completed_successfully
+    volumes:
+      - ./data/sites:/home/frappe/frappe-bench/sites
+      - ./data/logs:/home/frappe/frappe-bench/logs
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  frappe-insights-migrate:
+    image: ghcr.io/frappe/insights:v3.12.5
+    container_name: ${CONTAINER_NAME}-migrate
+    entrypoint: ["bash", "-c"]
+    command:
+      - >
+        set -e;
+        bench --site "$$FRAPPE_SITE_NAME" migrate;
+        bench --site "$$FRAPPE_SITE_NAME" clear-cache;
+    environment:
+      FRAPPE_SITE_NAME: ${FRAPPE_SITE_NAME}
+    restart: "no"
+    depends_on:
+      frappe-insights-create-site:
+        condition: service_completed_successfully
+    volumes:
+      - ./data/sites:/home/frappe/frappe-bench/sites
+      - ./data/logs:/home/frappe/frappe-bench/logs
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  frappe-insights-backend:
+    image: ghcr.io/frappe/insights:v3.12.5
+    container_name: ${CONTAINER_NAME}-backend
+    environment:
+      GUNICORN_THREADS: "4"
+      GUNICORN_WORKERS: "2"
+      GUNICORN_TIMEOUT: "120"
+    restart: unless-stopped
+    depends_on:
+      frappe-insights-migrate:
+        condition: service_completed_successfully
+    volumes:
+      - ./data/sites:/home/frappe/frappe-bench/sites
+      - ./data/logs:/home/frappe/frappe-bench/logs
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  frappe-insights-websocket:
+    image: ghcr.io/frappe/insights:v3.12.5
+    container_name: ${CONTAINER_NAME}-websocket
+    command: ["node", "/home/frappe/frappe-bench/apps/frappe/socketio.js"]
+    restart: unless-stopped
+    depends_on:
+      frappe-insights-migrate:
+        condition: service_completed_successfully
+    volumes:
+      - ./data/sites:/home/frappe/frappe-bench/sites
+      - ./data/logs:/home/frappe/frappe-bench/logs
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  frappe-insights-queue-short:
+    image: ghcr.io/frappe/insights:v3.12.5
+    container_name: ${CONTAINER_NAME}-queue-short
+    command: ["bench", "worker", "--queue", "short,default"]
+    restart: unless-stopped
+    depends_on:
+      frappe-insights-migrate:
+        condition: service_completed_successfully
+    volumes:
+      - ./data/sites:/home/frappe/frappe-bench/sites
+      - ./data/logs:/home/frappe/frappe-bench/logs
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  frappe-insights-queue-long:
+    image: ghcr.io/frappe/insights:v3.12.5
+    container_name: ${CONTAINER_NAME}-queue-long
+    command: ["bench", "worker", "--queue", "long,default,short"]
+    restart: unless-stopped
+    depends_on:
+      frappe-insights-migrate:
+        condition: service_completed_successfully
+    volumes:
+      - ./data/sites:/home/frappe/frappe-bench/sites
+      - ./data/logs:/home/frappe/frappe-bench/logs
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  frappe-insights-scheduler:
+    image: ghcr.io/frappe/insights:v3.12.5
+    container_name: ${CONTAINER_NAME}-scheduler
+    command: ["bench", "schedule"]
+    restart: unless-stopped
+    depends_on:
+      frappe-insights-migrate:
+        condition: service_completed_successfully
+    volumes:
+      - ./data/sites:/home/frappe/frappe-bench/sites
+      - ./data/logs:/home/frappe/frappe-bench/logs
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  frappe-insights:
+    image: ghcr.io/frappe/insights:v3.12.5
+    container_name: ${CONTAINER_NAME}
+    command: ["nginx-entrypoint.sh"]
+    environment:
+      BACKEND: ${CONTAINER_NAME}-backend:8000
+      SOCKETIO: ${CONTAINER_NAME}-websocket:9000
+      FRAPPE_SITE_NAME_HEADER: ${FRAPPE_SITE_NAME}
+      UPSTREAM_REAL_IP_ADDRESS: 127.0.0.1
+      UPSTREAM_REAL_IP_HEADER: X-Forwarded-For
+      UPSTREAM_REAL_IP_RECURSIVE: "off"
+      PROXY_READ_TIMEOUT: "120"
+      CLIENT_MAX_BODY_SIZE: 50m
+    ports:
+      - ${PANEL_APP_PORT_HTTP}:8080
+    restart: unless-stopped
+    depends_on:
+      frappe-insights-backend:
+        condition: service_started
+      frappe-insights-websocket:
+        condition: service_started
+    volumes:
+      - ./data/sites:/home/frappe/frappe-bench/sites
+      - ./data/logs:/home/frappe/frappe-bench/logs
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+networks:
+  1panel-network:
+    external: true

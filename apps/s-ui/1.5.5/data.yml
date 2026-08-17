@@ -22,7 +22,7 @@ additionalProperties:
       label:
         en: Subscription Port
         zh: 订阅端口
-    - default: 80
+    - default: 2080
       edit: true
       envKey: PANEL_APP_PORT_PROXY_HTTP
       labelEn: Proxy HTTP Inbound Port
@@ -33,7 +33,7 @@ additionalProperties:
       label:
         en: Proxy HTTP Inbound Port
         zh: 代理 HTTP 入站端口
-    - default: 443
+    - default: 2443
       edit: true
       envKey: PANEL_APP_PORT_PROXY_HTTPS
       labelEn: Proxy HTTPS Inbound Port

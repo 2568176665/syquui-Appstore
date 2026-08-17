@@ -9,64 +9,66 @@ services:
       - ./data:/var/www/html/data
       - ./custom:/var/www/html/custom
       - ./client-custom:/var/www/html/client/custom
-    networks:
-      - 1panel-network
+    networks: [1panel-network]
     environment:
-      - ESPOCRM_DATABASE_HOST=${PANEL_DB_HOST}
-      - ESPOCRM_DATABASE_PORT=${PANEL_DB_PORT}
-      - ESPOCRM_DATABASE_NAME=${PANEL_DB_NAME}
-      - ESPOCRM_DATABASE_USER=${PANEL_DB_USER}
-      - ESPOCRM_DATABASE_PASSWORD=${PANEL_DB_USER_PASSWORD}
-      - ESPOCRM_ADMIN_USERNAME=${ESPOCRM_ADMIN_USERNAME}
-      - ESPOCRM_ADMIN_PASSWORD=${ESPOCRM_ADMIN_PASSWORD}
-      - ESPOCRM_SITE_URL=${ESPOCRM_SITE_URL}
-      - ESPOCRM_CONFIG_USE_WEB_SOCKET=true
-      - ESPOCRM_CONFIG_WEB_SOCKET_URL=ws://${CONTAINER_NAME}-Websocket:8080
-      - ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBSCRIBER_DSN=tcp://*:7777
-      - ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBMISSION_DSN=tcp://${CONTAINER_NAME}-Websocket:7777
+      ESPOCRM_DATABASE_PLATFORM: Mysql
+      ESPOCRM_DATABASE_HOST: ${PANEL_DB_HOST}
+      ESPOCRM_DATABASE_PORT: ${PANEL_DB_PORT}
+      ESPOCRM_DATABASE_NAME: ${PANEL_DB_NAME}
+      ESPOCRM_DATABASE_USER: ${PANEL_DB_USER}
+      ESPOCRM_DATABASE_PASSWORD: ${PANEL_DB_USER_PASSWORD}
+      ESPOCRM_ADMIN_USERNAME: ${ESPOCRM_ADMIN_USERNAME}
+      ESPOCRM_ADMIN_PASSWORD: ${ESPOCRM_ADMIN_PASSWORD}
+      ESPOCRM_SITE_URL: ${ESPOCRM_SITE_URL}
+      ESPOCRM_CONFIG_USE_WEB_SOCKET: ${ESPOCRM_USE_WEBSOCKET}
+      ESPOCRM_CONFIG_WEB_SOCKET_URL: ${ESPOCRM_WEB_SOCKET_URL}
+      ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBSCRIBER_DSN: tcp://*:7777
+      ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBMISSION_DSN: tcp://${CONTAINER_NAME}-websocket:7777
     labels:
-      createdBy: Apps
+      createdBy: "Apps"
+
   espocrm-daemon:
     image: espocrm/espocrm:10.0.4
-    container_name: ${CONTAINER_NAME}-Daemon
+    container_name: ${CONTAINER_NAME}-daemon
     restart: always
     entrypoint: docker-daemon.sh
     volumes:
       - ./data:/var/www/html/data
       - ./custom:/var/www/html/custom
       - ./client-custom:/var/www/html/client/custom
-    networks:
-      - 1panel-network
+    networks: [1panel-network]
     environment:
-      - ESPOCRM_DATABASE_HOST=${PANEL_DB_HOST}
-      - ESPOCRM_DATABASE_PORT=${PANEL_DB_PORT}
-      - ESPOCRM_DATABASE_NAME=${PANEL_DB_NAME}
-      - ESPOCRM_DATABASE_USER=${PANEL_DB_USER}
-      - ESPOCRM_DATABASE_PASSWORD=${PANEL_DB_USER_PASSWORD}
-    depends_on:
-      - espocrm
+      ESPOCRM_DATABASE_PLATFORM: Mysql
+      ESPOCRM_DATABASE_HOST: ${PANEL_DB_HOST}
+      ESPOCRM_DATABASE_PORT: ${PANEL_DB_PORT}
+      ESPOCRM_DATABASE_NAME: ${PANEL_DB_NAME}
+      ESPOCRM_DATABASE_USER: ${PANEL_DB_USER}
+      ESPOCRM_DATABASE_PASSWORD: ${PANEL_DB_USER_PASSWORD}
+    depends_on: [espocrm]
     labels:
-      createdBy: Apps
+      createdBy: "Apps"
+
   espocrm-websocket:
     image: espocrm/espocrm:10.0.4
-    container_name: ${CONTAINER_NAME}-Websocket
+    container_name: ${CONTAINER_NAME}-websocket
     restart: always
     entrypoint: docker-websocket.sh
+    ports:
+      - ${PANEL_APP_PORT_WS}:8080
     volumes:
       - ./data:/var/www/html/data
       - ./custom:/var/www/html/custom
       - ./client-custom:/var/www/html/client/custom
-    networks:
-      - 1panel-network
+    networks: [1panel-network]
     environment:
-      - ESPOCRM_CONFIG_USE_WEB_SOCKET=true
-      - ESPOCRM_CONFIG_WEB_SOCKET_URL=ws://${CONTAINER_NAME}-Websocket:8080
-      - ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBSCRIBER_DSN=tcp://*:7777
-      - ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBMISSION_DSN=tcp://${CONTAINER_NAME}-Websocket:7777
-    depends_on:
-      - espocrm
+      ESPOCRM_CONFIG_USE_WEB_SOCKET: ${ESPOCRM_USE_WEBSOCKET}
+      ESPOCRM_CONFIG_WEB_SOCKET_URL: ${ESPOCRM_WEB_SOCKET_URL}
+      ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBSCRIBER_DSN: tcp://*:7777
+      ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBMISSION_DSN: tcp://${CONTAINER_NAME}-websocket:7777
+    depends_on: [espocrm]
     labels:
-      createdBy: Apps
+      createdBy: "Apps"
+
 networks:
   1panel-network:
     external: true

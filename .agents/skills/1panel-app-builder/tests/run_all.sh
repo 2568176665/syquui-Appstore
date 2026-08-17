@@ -2,15 +2,15 @@
 
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-cd "$ROOT_DIR"
+cd "$SKILL_DIR"
 
-bash -n skills/scripts/download-icon.sh
-bash -n skills/scripts/generate-app.sh
-bash -n skills/scripts/validate-app.sh
-bash -n skills/tests/test_skills_scripts.sh
+bash -n scripts/download-icon.sh
+bash -n scripts/generate-app.sh
+bash -n scripts/validate-app.sh
+bash -n tests/test_skills_scripts.sh
 
-bash skills/tests/test_skills_scripts.sh
+bash tests/test_skills_scripts.sh
 
 echo "All skills checks passed."

@@ -1,7 +1,7 @@
 additionalProperties:
   formFields:additionalProperties:
   formFields:
-    - default: 8080
+    - default: 18080
       envKey: PANEL_APP_PORT_HTTP
       labelZh: HTTP 端口
       labelEn: HTTP Port

@@ -1,77 +1,237 @@
 additionalProperties:
-    formFields:
-        - default: "8080"
-          edit: true
-          envKey: PANEL_APP_PORT_HTTP
-          labelEn: Service Port 8080
-          labelZh: 服务端口 8080
-          required: true
-          rule: paramPort
-          type: number
-        - child:
-            default: ""
-            envKey: PANEL_DB_HOST
-            required: true
-            type: service
-          default: mariadb
-          envKey: PANEL_DB_TYPE
-          labelEn: Database Type
-          labelZh: 数据库类型
-          required: true
-          type: apps
-          values:
-            - label: MySQL
-              value: mysql
-            - label: MariaDB
-              value: mariadb
-        - default: espocrm
-          edit: true
-          envKey: PANEL_DB_NAME
-          random: true
-          labelEn: Database Name
-          labelZh: 数据库名称
-          required: true
-          rule: paramCommon
-          type: text
-        - default: espocrm
-          edit: true
-          envKey: PANEL_DB_USER
-          random: true
-          labelEn: Database User
-          labelZh: 数据库用户
-          required: true
-          rule: paramCommon
-          type: text
-        - default: espocrm
-          edit: true
-          envKey: PANEL_DB_USER_PASSWORD
-          random: true
-          labelEn: Database Password
-          labelZh: 数据库密码
-          required: true
-          rule: paramComplexity
-          type: password
-        - default: admin
-          edit: true
-          envKey: ESPOCRM_ADMIN_USERNAME
-          labelEn: Admin Username
-          labelZh: 管理员用户名
-          required: true
-          rule: paramCommon
-          type: text
-        - default: ""
-          edit: true
-          envKey: ESPOCRM_ADMIN_PASSWORD
-          labelEn: Admin Password
-          labelZh: 管理员密码
-          required: true
-          rule: paramComplexity
-          type: password
-        - default: ""
-          edit: true
-          envKey: ESPOCRM_SITE_URL
-          labelEn: Site URL
-          labelZh: 站点访问地址
-          required: true
-          rule: paramExtUrl
-          type: text
+  formFields:
+  - default: 8001
+    envKey: PANEL_APP_PORT_HTTP
+    labelEn: HTTP Port
+    labelZh: HTTP 端口
+    label:
+      en: HTTP Port
+      es-es: HTTP Port
+      fa: HTTP Port
+      ja: HTTP Port
+      ms: HTTP Port
+      pt-br: HTTP Port
+      ru: HTTP Port
+      ko: HTTP Port
+      zh-hant: HTTP 端口
+      zh: HTTP 端口
+      tr: HTTP Port
+    required: true
+    type: number
+    edit: true
+    rule: paramPort
+  - child:
+      default: ''
+      envKey: PANEL_DB_HOST
+      required: true
+      type: service
+    default: mariadb
+    envKey: PANEL_DB_TYPE
+    labelEn: Database Service
+    labelZh: 数据库服务
+    label:
+      en: Database Service
+      es-es: Database Service
+      fa: Database Service
+      ja: Database Service
+      ms: Database Service
+      pt-br: Database Service
+      ru: Database Service
+      ko: Database Service
+      zh-hant: 数据库服务
+      zh: 数据库服务
+      tr: Database Service
+    required: true
+    type: apps
+    values:
+    - label: MySQL
+      value: mysql
+    - label: MariaDB
+      value: mariadb
+  - default: espocrm
+    envKey: PANEL_DB_NAME
+    labelEn: Database Name
+    labelZh: 数据库名称
+    label:
+      en: Database Name
+      es-es: Database Name
+      fa: Database Name
+      ja: Database Name
+      ms: Database Name
+      pt-br: Database Name
+      ru: Database Name
+      ko: Database Name
+      zh-hant: 数据库名称
+      zh: 数据库名称
+      tr: Database Name
+    required: true
+    type: text
+    edit: true
+    rule: paramCommon
+    random: true
+  - default: espocrm
+    envKey: PANEL_DB_USER
+    labelEn: Database User
+    labelZh: 数据库用户
+    label:
+      en: Database User
+      es-es: Database User
+      fa: Database User
+      ja: Database User
+      ms: Database User
+      pt-br: Database User
+      ru: Database User
+      ko: Database User
+      zh-hant: 数据库用户
+      zh: 数据库用户
+      tr: Database User
+    required: true
+    type: text
+    edit: true
+    rule: paramCommon
+    random: true
+  - default: ''
+    envKey: PANEL_DB_USER_PASSWORD
+    labelEn: Database Password
+    labelZh: 数据库密码
+    label:
+      en: Database Password
+      es-es: Database Password
+      fa: Database Password
+      ja: Database Password
+      ms: Database Password
+      pt-br: Database Password
+      ru: Database Password
+      ko: Database Password
+      zh-hant: 数据库密码
+      zh: 数据库密码
+      tr: Database Password
+    required: true
+    type: password
+    edit: true
+    rule: paramComplexity
+    random: true
+  - default: admin
+    envKey: ESPOCRM_ADMIN_USERNAME
+    labelEn: Admin Username
+    labelZh: 管理员用户名
+    label:
+      en: Admin Username
+      es-es: Admin Username
+      fa: Admin Username
+      ja: Admin Username
+      ms: Admin Username
+      pt-br: Admin Username
+      ru: Admin Username
+      ko: Admin Username
+      zh-hant: 管理员用户名
+      zh: 管理员用户名
+      tr: Admin Username
+    required: true
+    type: text
+    edit: true
+    rule: paramCommon
+  - default: ''
+    envKey: ESPOCRM_ADMIN_PASSWORD
+    labelEn: Admin Password
+    labelZh: 管理员密码
+    label:
+      en: Admin Password
+      es-es: Admin Password
+      fa: Admin Password
+      ja: Admin Password
+      ms: Admin Password
+      pt-br: Admin Password
+      ru: Admin Password
+      ko: Admin Password
+      zh-hant: 管理员密码
+      zh: 管理员密码
+      tr: Admin Password
+    required: true
+    type: password
+    edit: true
+    rule: paramComplexity
+    random: true
+  - default: http://localhost:8001
+    envKey: ESPOCRM_SITE_URL
+    labelEn: Site URL
+    labelZh: 站点访问地址
+    label:
+      en: Site URL
+      es-es: Site URL
+      fa: Site URL
+      ja: Site URL
+      ms: Site URL
+      pt-br: Site URL
+      ru: Site URL
+      ko: Site URL
+      zh-hant: 站点访问地址
+      zh: 站点访问地址
+      tr: Site URL
+    required: true
+    type: text
+    edit: true
+    rule: paramExtUrl
+  - default: 'false'
+    envKey: ESPOCRM_USE_WEBSOCKET
+    labelEn: Enable WebSocket
+    labelZh: 启用 WebSocket
+    label:
+      en: Enable WebSocket
+      es-es: Enable WebSocket
+      fa: Enable WebSocket
+      ja: Enable WebSocket
+      ms: Enable WebSocket
+      pt-br: Enable WebSocket
+      ru: Enable WebSocket
+      ko: Enable WebSocket
+      zh-hant: 启用 WebSocket
+      zh: 启用 WebSocket
+      tr: Enable WebSocket
+    required: true
+    type: select
+    edit: true
+    values:
+    - label: Disable
+      value: 'false'
+    - label: Enable
+      value: 'true'
+  - default: 8005
+    envKey: PANEL_APP_PORT_WS
+    labelEn: WebSocket Port
+    labelZh: WebSocket 端口
+    label:
+      en: WebSocket Port
+      es-es: WebSocket Port
+      fa: WebSocket Port
+      ja: WebSocket Port
+      ms: WebSocket Port
+      pt-br: WebSocket Port
+      ru: WebSocket Port
+      ko: WebSocket Port
+      zh-hant: WebSocket 端口
+      zh: WebSocket 端口
+      tr: WebSocket Port
+    required: true
+    type: number
+    edit: true
+    rule: paramPort
+  - default: ''
+    envKey: ESPOCRM_WEB_SOCKET_URL
+    labelEn: Public WebSocket URL
+    labelZh: 公网 WebSocket 地址
+    label:
+      en: Public WebSocket URL
+      es-es: Public WebSocket URL
+      fa: Public WebSocket URL
+      ja: Public WebSocket URL
+      ms: Public WebSocket URL
+      pt-br: Public WebSocket URL
+      ru: Public WebSocket URL
+      ko: Public WebSocket URL
+      zh-hant: 公网 WebSocket 地址
+      zh: 公网 WebSocket 地址
+      tr: Public WebSocket URL
+    required: false
+    type: text
+    edit: true

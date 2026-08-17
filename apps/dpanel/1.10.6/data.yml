@@ -11,7 +11,7 @@ additionalProperties:
       required: true
       rule: paramPort
       type: number
-    - default: 80
+    - default: 18080
       edit: true
       envKey: PANEL_APP_PORT_HTTP
       labelZh: HTTP 服务端口
@@ -22,7 +22,7 @@ additionalProperties:
       required: true
       rule: paramPort
       type: number
-    - default: 443
+    - default: 18443
       edit: true
       envKey: PANEL_APP_PORT_HTTPS
       labelZh: HTTPS 服务端口

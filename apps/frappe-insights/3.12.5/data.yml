@@ -1,0 +1,190 @@
+additionalProperties:
+  formFields:
+  - default: 18080
+    envKey: PANEL_APP_PORT_HTTP
+    labelEn: Port
+    labelZh: 访问端口
+    label:
+      en: Port
+      es-es: Port
+      fa: Port
+      ja: Port
+      ms: Port
+      pt-br: Port
+      ru: Port
+      ko: Port
+      zh-hant: 访问端口
+      zh: 访问端口
+      tr: Port
+    required: true
+    type: number
+    edit: true
+    rule: paramPort
+  - child:
+      default: ''
+      envKey: PANEL_DB_HOST
+      required: true
+      type: service
+    default: mariadb
+    envKey: PANEL_DB_TYPE
+    labelEn: Database Service
+    labelZh: 数据库服务
+    label:
+      en: Database Service
+      es-es: Database Service
+      fa: Database Service
+      ja: Database Service
+      ms: Database Service
+      pt-br: Database Service
+      ru: Database Service
+      ko: Database Service
+      zh-hant: 数据库服务
+      zh: 数据库服务
+      tr: Database Service
+    required: true
+    type: apps
+    values:
+    - label: MariaDB
+      value: mariadb
+  - default: ''
+    envKey: PANEL_DB_ROOT_PASSWORD
+    labelEn: MariaDB Root Password
+    labelZh: MariaDB Root 密码
+    label:
+      en: MariaDB Root Password
+      es-es: MariaDB Root Password
+      fa: MariaDB Root Password
+      ja: MariaDB Root Password
+      ms: MariaDB Root Password
+      pt-br: MariaDB Root Password
+      ru: MariaDB Root Password
+      ko: MariaDB Root Password
+      zh-hant: MariaDB Root 密码
+      zh: MariaDB Root 密码
+      tr: MariaDB Root Password
+    required: true
+    type: password
+    edit: true
+  - child:
+      default: ''
+      envKey: PANEL_REDIS_HOST
+      required: true
+      type: service
+    default: redis
+    envKey: PANEL_REDIS_TYPE
+    labelEn: Redis Service
+    labelZh: Redis 服务
+    label:
+      en: Redis Service
+      es-es: Redis Service
+      fa: Redis Service
+      ja: Redis Service
+      ms: Redis Service
+      pt-br: Redis Service
+      ru: Redis Service
+      ko: Redis Service
+      zh-hant: Redis 服务
+      zh: Redis 服务
+      tr: Redis Service
+    required: true
+    type: apps
+    values:
+    - label: Redis
+      value: redis
+  - default: ''
+    envKey: PANEL_REDIS_ROOT_PASSWORD
+    labelEn: Redis Password
+    labelZh: Redis 密码
+    label:
+      en: Redis Password
+      es-es: Redis Password
+      fa: Redis Password
+      ja: Redis Password
+      ms: Redis Password
+      pt-br: Redis Password
+      ru: Redis Password
+      ko: Redis Password
+      zh-hant: Redis 密码
+      zh: Redis 密码
+      tr: Redis Password
+    required: false
+    type: password
+    edit: true
+  - default: 10
+    envKey: REDIS_CACHE_DB
+    labelEn: Redis Cache DB
+    labelZh: Redis 缓存 DB
+    label:
+      en: Redis Cache DB
+      es-es: Redis Cache DB
+      fa: Redis Cache DB
+      ja: Redis Cache DB
+      ms: Redis Cache DB
+      pt-br: Redis Cache DB
+      ru: Redis Cache DB
+      ko: Redis Cache DB
+      zh-hant: Redis 缓存 DB
+      zh: Redis 缓存 DB
+      tr: Redis Cache DB
+    required: true
+    type: number
+    edit: true
+  - default: 11
+    envKey: REDIS_QUEUE_DB
+    labelEn: Redis Queue DB
+    labelZh: Redis 队列 DB
+    label:
+      en: Redis Queue DB
+      es-es: Redis Queue DB
+      fa: Redis Queue DB
+      ja: Redis Queue DB
+      ms: Redis Queue DB
+      pt-br: Redis Queue DB
+      ru: Redis Queue DB
+      ko: Redis Queue DB
+      zh-hant: Redis 队列 DB
+      zh: Redis 队列 DB
+      tr: Redis Queue DB
+    required: true
+    type: number
+    edit: true
+  - default: insights.localhost
+    envKey: FRAPPE_SITE_NAME
+    labelEn: Site Name
+    labelZh: 站点域名
+    label:
+      en: Site Name
+      es-es: Site Name
+      fa: Site Name
+      ja: Site Name
+      ms: Site Name
+      pt-br: Site Name
+      ru: Site Name
+      ko: Site Name
+      zh-hant: 站点域名
+      zh: 站点域名
+      tr: Site Name
+    required: true
+    type: text
+    edit: true
+  - default: ''
+    envKey: FRAPPE_ADMIN_PASSWORD
+    labelEn: Administrator Password
+    labelZh: 管理员密码
+    label:
+      en: Administrator Password
+      es-es: Administrator Password
+      fa: Administrator Password
+      ja: Administrator Password
+      ms: Administrator Password
+      pt-br: Administrator Password
+      ru: Administrator Password
+      ko: Administrator Password
+      zh-hant: 管理员密码
+      zh: 管理员密码
+      tr: Administrator Password
+    required: true
+    type: password
+    edit: true
+    rule: paramComplexity
+    random: true

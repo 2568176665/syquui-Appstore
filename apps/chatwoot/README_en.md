@@ -1,29 +1,18 @@
 # Chatwoot
 
-Chatwoot is a self-hosted, open-source customer engagement platform offering live chat, a unified multi-channel inbox, ticket management, automation, and team collaboration.
+Chatwoot is a self-hosted open-source omnichannel customer support platform.
 
-## Key Features
+## 1Panel Deployment
 
-- 💬 Real-time live chat and website widget.
-- 📥 Unified cross-channel inbox (email, WeChat, WhatsApp, Facebook, Telegram, etc.).
-- 🎫 Ticket management and multi-level assignment.
-- 🤖 Automation, bot conversations, and intelligent routing.
-- 🏷️ Conversation labels, private notes, and team collaboration.
-- 📊 Agent performance and conversation analytics.
-- 🔐 Granular role and permission control.
-- 🌐 Multi-language support.
+1. Install Redis in 1Panel first.
+2. Select that Redis service during Chatwoot installation and enter its password (leave blank if Redis has no password).
+3. This package runs its own `pgvector/pgvector:pg16` PostgreSQL because Chatwoot requires pgvector; a separate 1Panel PostgreSQL service is not required.
+4. First boot automatically runs `db:chatwoot_prepare` for database initialization and migrations.
+5. Set `FRONTEND_URL` to the final public URL and use a 1Panel reverse proxy with HTTPS.
+6. Persistent data is stored under `data/postgres` and `data/storage`.
 
 ## Links
 
 - Website: https://www.chatwoot.com
 - Docs: https://www.chatwoot.com/docs
 - Source: https://github.com/chatwoot/chatwoot
-
-## 1Panel Deployment
-
-1. Search for Chatwoot in the 1Panel app store and install.
-2. Select an installed PostgreSQL database service and a Redis service, then fill in the database name, database user/password, Redis password, secret key, and frontend URL.
-3. After installation, visit `http://SERVER_IP:PORT` to complete initial setup.
-4. Data is persisted in the `data` directory.
-
-> Tip: First install PostgreSQL and Redis services in 1Panel's "Databases" section, then select them from the dropdown when installing Chatwoot. Access Chatwoot via the address you set in `FRONTEND_URL` (a workspace account must be registered on first boot). We recommend enabling HTTPS in your reverse proxy and setting `FORCE_SSL`.

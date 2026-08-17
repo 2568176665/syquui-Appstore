@@ -1,25 +1,34 @@
-name: frappe-crm
+name: Frappe CRM
 tags:
-  - 工具
-  - CRM
-  - 开源
+- CRM
+- Business
 title: Frappe CRM
-description: Frappe CRM 是一个开源的 CRM 系统，基于 Frappe 框架构建，专注于简洁的客户关系管理与销售流程，可扩展为完整的 ERP 生态。
+description: 现代化、开源、自托管的销售 CRM
 additionalProperties:
   key: frappe-crm
   name: Frappe CRM
   tags:
-    - 工具
-    - CRM
-    - 开源
-  shortDescZh: 开源 CRM 客户关系管理系统
-  shortDescEn: Frappe CRM - Open Source CRM
+  - CRM
+  - Business
+  shortDescZh: 现代化、开源、自托管的销售 CRM
+  shortDescEn: Modern open-source self-hosted sales CRM
+  description:
+    en: Modern open-source self-hosted sales CRM.
+    es-es: Modern open-source self-hosted sales CRM.
+    fa: Modern open-source self-hosted sales CRM.
+    ja: Modern open-source self-hosted sales CRM.
+    ms: Modern open-source self-hosted sales CRM.
+    pt-br: Modern open-source self-hosted sales CRM.
+    ru: Modern open-source self-hosted sales CRM.
+    ko: Modern open-source self-hosted sales CRM.
+    zh-hant: 现代化、开源、自托管的销售 CRM。
+    zh: 现代化、开源、自托管的销售 CRM。
+    tr: Modern open-source self-hosted sales CRM.
   type: website
-  crossVersionUpdate: true
+  crossVersionUpdate: false
+  limit: 0
   website: https://frappe.io/crm
   github: https://github.com/frappe/crm
   document: https://docs.frappe.io/crm
-
   architectures:
-    - amd64
-    - arm64
+  - amd64

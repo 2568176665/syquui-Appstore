@@ -24,6 +24,8 @@ Frappe CRM is an open-source CRM built on the Frappe framework, focused on simpl
 3. On first start the site is initialized and the CRM app is installed automatically; please wait patiently.
 4. After installation, point your access domain to the server and visit `http://SITE_DOMAIN:PORT`.
 5. The default administrator account is `Administrator`; the password is the one you set during installation.
-6. Data is persisted in the `sites` directory.
+6. Data is persisted under `data/sites` and `data/logs` in the version directory.
 
 > Tip: First install MariaDB and Redis services in 1Panel's "Databases" section, then select them from the dropdown when installing Frappe CRM, and provide that MariaDB's root password (used to create the site database). Frappe routes traffic by site domain, so access it using the site domain you entered (not the server IP). For reverse proxy, forward the `FRAPPE_SITE_NAME` domain to this service port.
+
+> Redis logical databases default to 8/9. Change them during installation if those DB numbers are already used by another application.

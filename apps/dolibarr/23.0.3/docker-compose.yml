@@ -11,6 +11,8 @@ services:
     networks:
       - 1panel-network
     environment:
+      - DOLI_INSTALL_AUTO=1
+      - DOLI_DB_TYPE=mysqli
       - DOLI_DB_HOST=${PANEL_DB_HOST}
       - DOLI_DB_HOST_PORT=${PANEL_DB_PORT}
       - DOLI_DB_NAME=${PANEL_DB_NAME}
@@ -20,6 +22,7 @@ services:
       - DOLI_ADMIN_LOGIN=${DOLI_ADMIN_LOGIN}
       - DOLI_ADMIN_PASSWORD=${DOLI_ADMIN_PASSWORD}
       - DOLI_CRON=${DOLI_CRON}
+      - DOLI_CRON_KEY=${DOLI_CRON_KEY}
     labels:
       createdBy: Apps
 networks:

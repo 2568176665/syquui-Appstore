@@ -14,7 +14,7 @@ services:
   drawio:
     image: jgraph/drawio:latest
     ports:
-      - 8080:8080
+      - ${PANEL_APP_PORT_API}:8080
     container_name: ${CONTAINER_NAME}-drawio
     networks:
       - 1panel-network

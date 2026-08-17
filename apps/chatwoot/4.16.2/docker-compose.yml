@@ -1,70 +1,87 @@
+x-chatwoot-env: &chatwoot-env
+  NODE_ENV: production
+  RAILS_ENV: production
+  INSTALLATION_ENV: docker
+  SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+  POSTGRES_HOST: ${CONTAINER_NAME}-postgres
+  POSTGRES_PORT: "5432"
+  POSTGRES_USERNAME: ${CHATWOOT_POSTGRES_USER}
+  POSTGRES_PASSWORD: ${CHATWOOT_POSTGRES_PASSWORD}
+  POSTGRES_DATABASE: ${CHATWOOT_POSTGRES_DB}
+  REDIS_URL: redis://${PANEL_REDIS_HOST}:6379/${CHATWOOT_REDIS_DB}
+  REDIS_PASSWORD: ${PANEL_REDIS_ROOT_PASSWORD}
+  FRONTEND_URL: ${FRONTEND_URL}
+  FORCE_SSL: "false"
+
 services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ${CONTAINER_NAME}-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${CHATWOOT_POSTGRES_DB}
+      POSTGRES_USER: ${CHATWOOT_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${CHATWOOT_POSTGRES_PASSWORD}
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${CHATWOOT_POSTGRES_USER} -d ${CHATWOOT_POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  prepare:
+    image: chatwoot/chatwoot:v4.16.2
+    container_name: ${CONTAINER_NAME}-prepare
+    restart: "no"
+    environment: *chatwoot-env
+    entrypoint: docker/entrypoints/rails.sh
+    command: ["bundle", "exec", "rails", "db:chatwoot_prepare"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./data/storage:/app/storage
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
   rails:
     image: chatwoot/chatwoot:v4.16.2
     container_name: ${CONTAINER_NAME}
     restart: always
     ports:
       - ${PANEL_APP_PORT_HTTP}:3000
+    environment: *chatwoot-env
+    entrypoint: docker/entrypoints/rails.sh
+    command: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
+    depends_on:
+      prepare:
+        condition: service_completed_successfully
     volumes:
       - ./data/storage:/app/storage
-    networks:
-      - 1panel-network
-    environment:
-      - NODE_ENV=production
-      - RAILS_ENV=production
-      - INSTALLATION_ENV=docker
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - POSTGRES_HOST=${PANEL_DB_HOST}
-      - POSTGRES_PORT=${PANEL_DB_PORT}
-      - POSTGRES_USERNAME=${PANEL_DB_USER}
-      - POSTGRES_PASSWORD=${PANEL_DB_USER_PASSWORD}
-      - POSTGRES_DATABASE=${PANEL_DB_NAME}
-      - REDIS_URL=redis://default:${PANEL_REDIS_ROOT_PASSWORD}@${PANEL_REDIS_HOST}:6379
-      - REDIS_PASSWORD=${PANEL_REDIS_ROOT_PASSWORD}
-      - FRONTEND_URL=${FRONTEND_URL}
-      - FORCE_SSL=false
-    entrypoint: docker/entrypoints/rails.sh
-    command:
-      - bundle
-      - exec
-      - rails
-      - s
-      - -p
-      - "3000"
-      - -b
-      - 0.0.0.0
+    networks: [1panel-network]
     labels:
-      createdBy: Apps
+      createdBy: "Apps"
+
   sidekiq:
     image: chatwoot/chatwoot:v4.16.2
-    container_name: ${CONTAINER_NAME}-Sidekiq
+    container_name: ${CONTAINER_NAME}-sidekiq
     restart: always
+    environment: *chatwoot-env
+    command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
+    depends_on:
+      prepare:
+        condition: service_completed_successfully
     volumes:
       - ./data/storage:/app/storage
-    networks:
-      - 1panel-network
-    environment:
-      - NODE_ENV=production
-      - RAILS_ENV=production
-      - INSTALLATION_ENV=docker
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - POSTGRES_HOST=${PANEL_DB_HOST}
-      - POSTGRES_PORT=${PANEL_DB_PORT}
-      - POSTGRES_USERNAME=${PANEL_DB_USER}
-      - POSTGRES_PASSWORD=${PANEL_DB_USER_PASSWORD}
-      - POSTGRES_DATABASE=${PANEL_DB_NAME}
-      - REDIS_URL=redis://default:${PANEL_REDIS_ROOT_PASSWORD}@${PANEL_REDIS_HOST}:6379
-      - REDIS_PASSWORD=${PANEL_REDIS_ROOT_PASSWORD}
-      - FRONTEND_URL=${FRONTEND_URL}
-      - FORCE_SSL=false
-    command:
-      - bundle
-      - exec
-      - sidekiq
-      - -C
-      - config/sidekiq.yml
+    networks: [1panel-network]
     labels:
-      createdBy: Apps
+      createdBy: "Apps"
+
 networks:
   1panel-network:
     external: true

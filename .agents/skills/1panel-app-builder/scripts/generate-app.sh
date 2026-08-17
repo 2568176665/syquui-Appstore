@@ -70,7 +70,7 @@ ${YELLOW}输出:${NC}
 ${YELLOW}示例:${NC}
   $0 https://github.com/alist-org/alist
   $0 ./my-docker-compose.yml ./my-apps
-  $0 "docker run -d --name nginx -p 80:80 nginx:latest"
+  $0 "docker run -d --name nginx -p 18080:80 nginx:latest"
   $0 --app-key demo-app --name DemoApp --version 1.2.3 --icon-mode skip ./docker-compose.yml
 
 ${YELLOW}选项:${NC}
@@ -309,6 +309,35 @@ parse_port_entry() {
   echo "${host_port}:${container_port}"
 }
 
+# 避免生成的宿主机默认端口占用 1Panel Nginx 或常见代理端口。
+safe_default_host_port() {
+  local port="$1"
+  local index="$2"
+  local candidate
+  case "$port" in
+    80) candidate=$((10080 + index)) ;;
+    443) candidate=$((10443 + index)) ;;
+    8080) candidate=$((18080 + index)) ;;
+    *) echo "$port"; return 0 ;;
+  esac
+
+  while :; do
+    local occupied=false
+    local used_port
+    for used_port in "${USED_HOST_PORTS[@]}"; do
+      if [[ "$used_port" == "$candidate" ]]; then
+        occupied=true
+        break
+      fi
+    done
+    if [[ "$occupied" != true ]]; then
+      echo "$candidate"
+      return 0
+    fi
+    candidate=$((candidate + 1))
+  done
+}
+
 # 根据端口号选择 1Panel 常用 envKey
 map_port_envkey() {
   local port="$1"
@@ -538,7 +567,7 @@ extract_from_compose() {
   done < <(echo "$compose_content" | yq -r ".services[\"${SERVICE_NAME}\"].ports[]" 2>/dev/null || true)
 
   if [[ ${#PORT_ENTRIES[@]} -eq 0 ]]; then
-    PORT_ENTRIES=("8080")
+    PORT_ENTRIES=("10080")
   fi
 
   SERVICE_VOLUMES=()
@@ -665,7 +694,7 @@ PY
   parse_image_ref "$image_ref"
 
   if [[ ${#PORT_ENTRIES[@]} -eq 0 ]]; then
-    PORT_ENTRIES=("8080")
+    PORT_ENTRIES=("10080")
   fi
 
   APP_NAME="$SERVICE_NAME"
@@ -977,13 +1006,25 @@ main() {
   CONTAINER_PORTS=()
   PORT_ENV_KEYS=()
   PORT_ENV_KEYS_USED=()
+  USED_HOST_PORTS=()
   local i
+  for ((i=0; i<${#PORT_ENTRIES[@]}; i++)); do
+    local source_mapping
+    source_mapping=$(parse_port_entry "${PORT_ENTRIES[$i]}")
+    USED_HOST_PORTS+=("${source_mapping%%:*}")
+  done
   for ((i=0; i<${#PORT_ENTRIES[@]}; i++)); do
     local mapping
     mapping=$(parse_port_entry "${PORT_ENTRIES[$i]}")
     local host_port="${mapping%%:*}"
     local container_port="${mapping##*:}"
-    HOST_PORTS+=("$host_port")
+    local safe_host_port
+    safe_host_port=$(safe_default_host_port "$host_port" "$i")
+    if [[ "$safe_host_port" != "$host_port" ]]; then
+      log_warn "宿主机端口 $host_port 与 1Panel Nginx/代理端口冲突，默认改为 $safe_host_port"
+    fi
+    HOST_PORTS+=("$safe_host_port")
+    USED_HOST_PORTS+=("$safe_host_port")
     CONTAINER_PORTS+=("$container_port")
     local envkey
     envkey=$(map_port_envkey "$container_port" "$i")

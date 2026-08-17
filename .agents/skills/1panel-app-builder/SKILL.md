@@ -50,8 +50,8 @@ Some apps also include `latest/`. When both `latest/` and a concrete version exi
    - Do not create placeholders.
    - Use `--icon-mode skip` for drafts, `cache-only` for offline work, and `required` when an icon is mandatory.
 5. Validate before delivery.
-   - Run `skills/scripts/validate-app.sh ./apps/<app-key>`.
-   - For Skill script changes, run `skills/tests/run_all.sh`.
+   - From the skill directory, run `./scripts/validate-app.sh ../../../apps/<app-key>`.
+   - For Skill script changes, run `./tests/run_all.sh`.
 
 ## 1Panel Rules
 
@@ -100,12 +100,21 @@ Use this checklist when an app depends on a 1Panel-managed database or one-shot 
 - For bind-mounted directories owned by the application user, add a root one-shot permission service that creates required files/directories and runs `chown` before configurator, migration, or site-creation services. Gate dependents with `condition: service_completed_successfully`.
 - For Frappe site creation, pass the named database/user/password explicitly and use `--no-setup-db` when 1Panel has already created the database; retain the application's schema/bootstrap step.
 - Verify the actual command supported by the image with its `--help`. Do not use unsupported options such as `bench new-site --no-enqueue`, and do not add runtime `bench new-site --force` to work around an existing database or site.
+- Frappe stable images may be based on v15, where `bench new-site --db-user` is unsupported; set `db_user` in `common_site_config.json` before site creation and verify the image's actual `--help` output instead of copying v16 options.
+- Frappe's Docker frontend includes its own nginx-like service. Keep its internal target port separate from the 1Panel host port, and choose an external default that does not collide with 1Panel's proxy ports.
+- Frappe creates `site_config.json` before database bootstrap. Do not treat an existing site directory as a successful installation; verify the installed app with `bench --site <site> list-apps` and fail clearly on incomplete leftovers instead of deleting them or retrying with `--force`.
 - Distinguish the generator's `generate-app.sh --force` (overwriting a generated output directory) from an application's runtime `--force`; use either only with explicit scope and a verified target.
 
 ### Redis and site names
 
 - When Redis authentication is enabled, use a complete URI such as `redis://:<password>@<host>:6379` consistently for cache, queue, and websocket configuration; a missing `:` or password creates misleading startup failures.
 - Do not treat a VPS IP used as a Frappe site name as the first explanation for database-creation failures. Inspect the `CreateSite` logs, database credentials, service dependencies, and permissions first; keep the site name and reverse-proxy host consistent.
+
+### Host port safety
+
+- Never use `80`, `443`, or `8080` as an application's default host port; these commonly belong to 1Panel's Nginx or proxy services. This restriction applies to the host side of `HOST:CONTAINER` mappings, not to an application's required internal target port.
+- When a source Compose file uses a reserved host port, remap the generated 1Panel default to a safe high port and keep the container target unchanged. Document any proxy-specific mapping explicitly.
+- When remapping reserved ports, compare each candidate with all original and already-assigned host ports so the generated defaults cannot collide with another mapping.
 
 ### Validation
 
@@ -116,7 +125,7 @@ Use this checklist when an app depends on a 1Panel-managed database or one-shot 
 
 ## Scripts
 
-Run from `/root/github/1Panel-Appstore/skills` unless noted.
+Run from the skill directory unless noted. In this repository, that is `.agents/skills/1panel-app-builder`.
 
 Generate a draft:
 
@@ -149,7 +158,7 @@ Download an icon:
 Validate an app:
 
 ```bash
-./scripts/validate-app.sh ../apps/<app-key>
+./scripts/validate-app.sh ../../../apps/<app-key>
 ```
 
 Validate Skill tooling:
@@ -163,7 +172,7 @@ Validate Skill tooling:
 Icon lookup order:
 
 1. Known explicit URL (`--icon-url`).
-2. Local cache under `skills/.cache/icons`.
+2. Local cache under `.cache/icons` in the skill directory.
 3. Dashboard Icons.
 4. Simple Icons.
 5. selfh.st Icons.
@@ -174,7 +183,7 @@ Missing icons are acceptable for drafts only. For final app delivery, leave `log
 
 Before considering an app ready:
 
-- Run `./scripts/validate-app.sh ../apps/<app-key>`.
+- Run `./scripts/validate-app.sh ../../../apps/<app-key>` from the skill directory.
 - Confirm `latest/` uses `:latest`.
 - Confirm concrete version directories use matching image tags or document the exception.
 - Confirm every compose `PANEL_APP_PORT_*` variable exists in the version `data.yml`.

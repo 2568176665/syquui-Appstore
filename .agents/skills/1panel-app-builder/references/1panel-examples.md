@@ -183,9 +183,9 @@ networks:
     external: true
 ```
 
-**参数定义：**
+**参数定义（宿主机端口避开 8080）：**
 ```yaml
-- default: 8080
+- default: 18081
   edit: true
   envKey: PANEL_APP_PORT_HTTP
   labelEn: Web Port
@@ -236,7 +236,7 @@ formFields:
     required: true
     rule: paramPort
     type: number
-  - default: 80
+  - default: 18080
     edit: true
     envKey: PANEL_APP_PORT_NGINX_HTTP
     labelEn: HTTP Port
@@ -244,7 +244,7 @@ formFields:
     required: true
     rule: paramPort
     type: number
-  - default: 443
+  - default: 18443
     edit: true
     envKey: PANEL_APP_PORT_NGINX_HTTPS
     labelEn: HTTPS Port

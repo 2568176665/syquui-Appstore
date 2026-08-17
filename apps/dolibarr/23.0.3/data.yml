@@ -1,89 +1,218 @@
 additionalProperties:
-    formFields:
-        - default: "8080"
-          edit: true
-          envKey: PANEL_APP_PORT_HTTP
-          labelEn: Service Port 8080
-          labelZh: 服务端口 8080
-          required: true
-          rule: paramPort
-          type: number
-        - child:
-            default: ""
-            envKey: PANEL_DB_HOST
-            required: true
-            type: service
-          default: mariadb
-          envKey: PANEL_DB_TYPE
-          labelEn: Database Type
-          labelZh: 数据库类型
-          required: true
-          type: apps
-          values:
-            - label: MySQL
-              value: mysql
-            - label: MariaDB
-              value: mariadb
-        - default: dolidb
-          edit: true
-          envKey: PANEL_DB_NAME
-          random: true
-          labelEn: Database Name
-          labelZh: 数据库名称
-          required: true
-          rule: paramCommon
-          type: text
-        - default: dolidbuser
-          edit: true
-          envKey: PANEL_DB_USER
-          random: true
-          labelEn: Database User
-          labelZh: 数据库用户
-          required: true
-          rule: paramCommon
-          type: text
-        - default: dolibarr
-          edit: true
-          envKey: PANEL_DB_USER_PASSWORD
-          random: true
-          labelEn: Database Password
-          labelZh: 数据库密码
-          required: true
-          rule: paramComplexity
-          type: password
-        - default: admin
-          edit: true
-          envKey: DOLI_ADMIN_LOGIN
-          labelEn: Admin Login
-          labelZh: 管理员账号
-          required: true
-          rule: paramCommon
-          type: text
-        - default: ""
-          edit: true
-          envKey: DOLI_ADMIN_PASSWORD
-          labelEn: Admin Password
-          labelZh: 管理员密码
-          required: true
-          rule: paramComplexity
-          type: password
-        - default: ""
-          edit: true
-          envKey: DOLI_URL_ROOT
-          labelEn: Site URL
-          labelZh: 站点访问地址
-          required: true
-          rule: paramExtUrl
-          type: text
-        - default: "0"
-          edit: true
-          envKey: DOLI_CRON
-          labelEn: Enable Cron
-          labelZh: 启用定时任务
-          required: true
-          type: select
-          values:
-            - label: 启用
-              value: "1"
-            - label: 禁用
-              value: "0"
+  formFields:
+  - default: '8002'
+    edit: true
+    envKey: PANEL_APP_PORT_HTTP
+    labelEn: Service Port 8002
+    labelZh: 服务端口 8002
+    required: true
+    rule: paramPort
+    type: number
+    label:
+      en: Service Port 8002
+      es-es: Service Port 8002
+      fa: Service Port 8002
+      ja: Service Port 8002
+      ms: Service Port 8002
+      pt-br: Service Port 8002
+      ru: Service Port 8002
+      ko: Service Port 8002
+      zh-hant: 服务端口 8002
+      zh: 服务端口 8002
+      tr: Service Port 8002
+  - child:
+      default: ''
+      envKey: PANEL_DB_HOST
+      required: true
+      type: service
+    default: mariadb
+    envKey: PANEL_DB_TYPE
+    labelEn: Database Type
+    labelZh: 数据库类型
+    required: true
+    type: apps
+    values:
+    - label: MySQL
+      value: mysql
+    - label: MariaDB
+      value: mariadb
+    label:
+      en: Database Type
+      es-es: Database Type
+      fa: Database Type
+      ja: Database Type
+      ms: Database Type
+      pt-br: Database Type
+      ru: Database Type
+      ko: Database Type
+      zh-hant: 数据库类型
+      zh: 数据库类型
+      tr: Database Type
+  - default: dolidb
+    edit: true
+    envKey: PANEL_DB_NAME
+    random: true
+    labelEn: Database Name
+    labelZh: 数据库名称
+    required: true
+    rule: paramCommon
+    type: text
+    label:
+      en: Database Name
+      es-es: Database Name
+      fa: Database Name
+      ja: Database Name
+      ms: Database Name
+      pt-br: Database Name
+      ru: Database Name
+      ko: Database Name
+      zh-hant: 数据库名称
+      zh: 数据库名称
+      tr: Database Name
+  - default: dolidbuser
+    edit: true
+    envKey: PANEL_DB_USER
+    random: true
+    labelEn: Database User
+    labelZh: 数据库用户
+    required: true
+    rule: paramCommon
+    type: text
+    label:
+      en: Database User
+      es-es: Database User
+      fa: Database User
+      ja: Database User
+      ms: Database User
+      pt-br: Database User
+      ru: Database User
+      ko: Database User
+      zh-hant: 数据库用户
+      zh: 数据库用户
+      tr: Database User
+  - default: dolibarr
+    edit: true
+    envKey: PANEL_DB_USER_PASSWORD
+    random: true
+    labelEn: Database Password
+    labelZh: 数据库密码
+    required: true
+    rule: paramComplexity
+    type: password
+    label:
+      en: Database Password
+      es-es: Database Password
+      fa: Database Password
+      ja: Database Password
+      ms: Database Password
+      pt-br: Database Password
+      ru: Database Password
+      ko: Database Password
+      zh-hant: 数据库密码
+      zh: 数据库密码
+      tr: Database Password
+  - default: admin
+    edit: true
+    envKey: DOLI_ADMIN_LOGIN
+    labelEn: Admin Login
+    labelZh: 管理员账号
+    required: true
+    rule: paramCommon
+    type: text
+    label:
+      en: Admin Login
+      es-es: Admin Login
+      fa: Admin Login
+      ja: Admin Login
+      ms: Admin Login
+      pt-br: Admin Login
+      ru: Admin Login
+      ko: Admin Login
+      zh-hant: 管理员账号
+      zh: 管理员账号
+      tr: Admin Login
+  - default: ''
+    edit: true
+    envKey: DOLI_ADMIN_PASSWORD
+    labelEn: Admin Password
+    labelZh: 管理员密码
+    required: true
+    rule: paramComplexity
+    type: password
+    label:
+      en: Admin Password
+      es-es: Admin Password
+      fa: Admin Password
+      ja: Admin Password
+      ms: Admin Password
+      pt-br: Admin Password
+      ru: Admin Password
+      ko: Admin Password
+      zh-hant: 管理员密码
+      zh: 管理员密码
+      tr: Admin Password
+  - default: ''
+    edit: true
+    envKey: DOLI_URL_ROOT
+    labelEn: Site URL
+    labelZh: 站点访问地址
+    required: true
+    rule: paramExtUrl
+    type: text
+    label:
+      en: Site URL
+      es-es: Site URL
+      fa: Site URL
+      ja: Site URL
+      ms: Site URL
+      pt-br: Site URL
+      ru: Site URL
+      ko: Site URL
+      zh-hant: 站点访问地址
+      zh: 站点访问地址
+      tr: Site URL
+  - default: '0'
+    edit: true
+    envKey: DOLI_CRON
+    labelEn: Enable Cron
+    labelZh: 启用定时任务
+    required: true
+    type: select
+    values:
+    - label: 启用
+      value: '1'
+    - label: 禁用
+      value: '0'
+    label:
+      en: Enable Cron
+      es-es: Enable Cron
+      fa: Enable Cron
+      ja: Enable Cron
+      ms: Enable Cron
+      pt-br: Enable Cron
+      ru: Enable Cron
+      ko: Enable Cron
+      zh-hant: 启用定时任务
+      zh: 启用定时任务
+      tr: Enable Cron
+  - default: ''
+    envKey: DOLI_CRON_KEY
+    labelEn: Cron Security Key
+    labelZh: Cron 安全密钥
+    label:
+      en: Cron Security Key
+      es-es: Cron Security Key
+      fa: Cron Security Key
+      ja: Cron Security Key
+      ms: Cron Security Key
+      pt-br: Cron Security Key
+      ru: Cron Security Key
+      ko: Cron Security Key
+      zh-hant: Cron 安全密钥
+      zh: Cron 安全密钥
+      tr: Cron Security Key
+    required: false
+    type: password
+    edit: true
+    rule: paramComplexity
+    random: true

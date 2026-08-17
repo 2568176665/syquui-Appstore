@@ -191,6 +191,35 @@ validate_version_data_yml() {
   else
     log_info "找到 $param_count 个可配置参数"
   fi
+
+  if awk '
+    function clean(value) {
+      gsub(/[[:space:]]+$/, "", value)
+      gsub(/^[[:space:]]+/, "", value)
+      gsub(/["\047]/, "", value)
+      return value
+    }
+    /^[[:space:]]*-[[:space:]]+default:/ {
+      default_value=$0
+      sub(/^[^:]*:[[:space:]]*/, "", default_value)
+      default_value=clean(default_value)
+      is_port_field=0
+      next
+    }
+    /^[[:space:]]*-[[:space:]]+/ {
+      default_value=""
+      is_port_field=0
+    }
+    /envKey:[[:space:]]*PANEL_APP_PORT_[A-Z0-9_]+[[:space:]]*$/ {
+      is_port_field=1
+      if (default_value == "80" || default_value == "443" || default_value == "8080") {
+        found=1
+      }
+    }
+    END { exit found ? 0 : 1 }
+  ' "$data_file"; then
+    log_error "版本 data.yml 不得将 80、443 或 8080 作为默认宿主机端口"
+  fi
 }
 
 extract_form_env_keys() {
@@ -377,11 +406,47 @@ validate_docker_compose() {
     if ! grep -q 'PANEL_APP_PORT_' "$compose_file"; then
       log_warn "端口映射建议使用 PANEL_APP_PORT_* 变量"
     fi
+    if awk '
+      {
+        mapping=$0
+        sub(/^[[:space:]]*-[[:space:]]+/, "", mapping)
+        gsub(/^["\047]|["\047]$/, "", mapping)
+        part_count=split(mapping, parts, ":")
+        host_port=parts[part_count - 1]
+        if (part_count >= 2 && (host_port == "80" || host_port == "443" || host_port == "8080")) {
+          found=1
+        }
+      }
+      /^[[:space:]]*published:[[:space:]]*/ {
+        published=$0
+        sub(/^[^:]*:[[:space:]]*/, "", published)
+        sub(/[[:space:]]+#.*$/, "", published)
+        gsub(/^["\047]|["\047]$/, "", published)
+        if (published == "80" || published == "443" || published == "8080") {
+          found=1
+        }
+      }
+      END { exit found ? 0 : 1 }
+    ' "$compose_file"; then
+      log_error "docker-compose.yml 不得直接绑定宿主机保留端口 80、443 或 8080"
+    fi
   fi
 
   # 检查数据卷路径
   if grep -q "volumes:" "$compose_file"; then
-    if grep -E '^\s+- /[a-zA-Z]' "$compose_file" | grep -qvE '^\s+- /(var/run/docker\.sock|var/run|run|tmp|tmp/\.X11-unix|tmp/\.cache|etc/(localtime|timezone|hostname|passwd|group|os-release|resolv\.conf)|proc|sys|dev/net/tun|storage|var/log)(:|$)'; then
+    local absolute_volume_source
+    local has_unsafe_absolute_volume=false
+    while IFS= read -r absolute_volume_source; do
+      case "$absolute_volume_source" in
+        /var/run/docker.sock|/var/run/*|/run|/run/*|/tmp|/tmp/*|/etc/localtime|/etc/timezone|/etc/hostname|/etc/passwd|/etc/group|/etc/os-release|/etc/resolv.conf|/proc|/proc/*|/sys|/sys/*|/dev/net/tun|/storage|/storage/*|/var/log|/var/log/*)
+          ;;
+        /*)
+          has_unsafe_absolute_volume=true
+          break
+          ;;
+      esac
+    done < <(sed -nE 's/^[[:space:]]*-[[:space:]]+([^:]+):.*$/\1/p' "$compose_file" | awk '{ gsub(/^["\047]|["\047]$/, ""); print }')
+    if [[ "$has_unsafe_absolute_volume" == true ]]; then
       log_warn "检测到绝对路径的数据卷，建议使用 ./data/ 相对路径"
     fi
   fi

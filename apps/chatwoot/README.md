@@ -1,29 +1,18 @@
 # Chatwoot
 
-Chatwoot 是一个自托管、开源的全渠道客户支持平台，提供实时聊天、多平台收件箱、工单管理、自动化流程与团队协作等功能。
+Chatwoot 是一个自托管、开源的全渠道客户支持平台。
 
-## 主要特性
+## 1Panel 部署说明
 
-- 💬 实时在线聊天与网站挂件。
-- 📥 统一的跨渠道收件箱（邮件、微信、WhatsApp、Facebook、Telegram 等）。
-- 🎫 工单管理与多级指派。
-- 🤖 自动化流程、机器人对话与智能分配。
-- 🏷️ 对话标签、私密备注与团队协作。
-- 📊 客服绩效与对话分析。
-- 🔐 精细的角色与权限控制。
-- 🌐 多语言支持。
+1. 先在 1Panel 安装 Redis。
+2. 安装 Chatwoot 时选择该 Redis，并填写 Redis 密码（如果 Redis 未设置密码可留空）。
+3. Chatwoot 使用包内独立的 `pgvector/pgvector:pg16` PostgreSQL，以满足 Chatwoot 的 pgvector 依赖；无需另外选择 1Panel PostgreSQL。
+4. 首次启动会自动执行 `db:chatwoot_prepare` 完成数据库初始化/迁移。
+5. `FRONTEND_URL` 请填写最终访问地址，建议通过 1Panel 网站反向代理配置 HTTPS。
+6. 持久化数据位于 `data/postgres` 与 `data/storage`。
 
-## 官网与文档
+## 链接
 
 - 官网：https://www.chatwoot.com
 - 文档：https://www.chatwoot.com/docs
 - 源码：https://github.com/chatwoot/chatwoot
-
-## 1Panel 部署说明
-
-1. 在 1Panel 应用商店搜索 Chatwoot 并安装。
-2. 选择已安装的 PostgreSQL 数据库服务和 Redis 服务，填写数据库名称、数据库用户/密码、Redis 密码、密钥以及前台访问地址。
-3. 安装完成后，访问 `http://服务器IP:端口` 进行初始化设置。
-4. 数据默认持久化在 `data` 目录下。
-
-> 提示：需要先在 1Panel「数据库」中安装 PostgreSQL 与 Redis 服务，安装 Chatwoot 时下拉选择。请通过 `FRONTEND_URL` 填写的地址访问（首次启动需注册企业账号）。建议在反向代理中开启 HTTPS 并设置 `FORCE_SSL`。

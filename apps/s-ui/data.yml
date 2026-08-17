@@ -1,22 +1,31 @@
 name: S-UI
 tags:
-  - Web 服务器
-  - 实用工具
-  - 安全
+- Web 服务器
+- 实用工具
+- 安全
 title: 基于 Sing-Box 的多协议代理管理面板
 description: S-UI 是一个基于 SagerNet/Sing-Box 的多协议代理管理面板，提供入站管理、订阅服务、流量统计和路由配置。
 additionalProperties:
   key: s-ui
   name: S-UI
   tags:
-    - Server
-    - Tool
-    - Security
+  - Server
+  - Tool
+  - Security
   shortDescZh: 基于 Sing-Box 的多协议代理管理面板
   shortDescEn: Multi-protocol proxy management panel built on Sing-Box
   description:
-    en: S-UI is a multi-protocol proxy management panel built on SagerNet/Sing-Box.
-    zh: S-UI 是一个基于 SagerNet/Sing-Box 的多协议代理管理面板。
+    en: Multi-protocol proxy management panel built on Sing-Box.
+    es-es: Multi-protocol proxy management panel built on Sing-Box.
+    fa: Multi-protocol proxy management panel built on Sing-Box.
+    ja: Multi-protocol proxy management panel built on Sing-Box.
+    ms: Multi-protocol proxy management panel built on Sing-Box.
+    pt-br: Multi-protocol proxy management panel built on Sing-Box.
+    ru: Multi-protocol proxy management panel built on Sing-Box.
+    ko: Multi-protocol proxy management panel built on Sing-Box.
+    zh-hant: S-UI 是一个基于 Sing-Box 的多协议代理管理面板。
+    zh: S-UI 是一个基于 Sing-Box 的多协议代理管理面板。
+    tr: Multi-protocol proxy management panel built on Sing-Box.
   type: website
   crossVersionUpdate: true
   limit: 0
@@ -25,8 +34,8 @@ additionalProperties:
   github: https://github.com/alireza0/s-ui
   document: https://github.com/alireza0/s-ui/wiki
   architectures:
-    - amd64
-    - arm64
-    - arm/v7
-    - arm/v6
-    - 386
+  - amd64
+  - arm64
+  - arm/v7
+  - arm/v6
+  - 386

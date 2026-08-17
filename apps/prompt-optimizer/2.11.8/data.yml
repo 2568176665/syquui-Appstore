@@ -1,6 +1,6 @@
 additionalProperties:
   formFields:
-    - default: 8080
+    - default: 18080
       edit: true
       envKey: PANEL_APP_PORT_HTTP
       labelEn: Web Port
@@ -65,4 +65,4 @@ additionalProperties:
       labelEn: Custom API Model (Optional)
       labelZh: 自定义 API 模型 (可选)
       required: false
-      type: text 
+      type: text

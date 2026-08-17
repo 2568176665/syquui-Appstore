@@ -3,7 +3,7 @@
 ## 从本地 compose 生成草稿
 
 ```bash
-cd /root/github/1Panel-Appstore/skills
+cd .agents/skills/1panel-app-builder
 
 ./scripts/generate-app.sh \
   --app-key demo-app \
@@ -11,7 +11,7 @@ cd /root/github/1Panel-Appstore/skills
   --service web \
   --version 1.25.3 \
   --icon-mode skip \
-  --output ../apps \
+  --output ../../../apps \
   /tmp/demo-compose.yml
 ```
 
@@ -40,7 +40,7 @@ cd /root/github/1Panel-Appstore/skills
   --name NginxDemo \
   --version 1.25.3 \
   --icon-mode cache-only \
-  "docker run -d --name nginx-demo -p 8080:80 -v ./data/html:/usr/share/nginx/html nginx:1.25.3"
+  "docker run -d --name nginx-demo -p 18080:80 -v ./data/html:/usr/share/nginx/html nginx:1.25.3"
 ```
 
 脚本会解析：

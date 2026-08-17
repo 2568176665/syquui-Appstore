@@ -1,17 +1,17 @@
-name: chatwoot
+name: Chatwoot
 tags:
-  - 工具
-  - 客服
-  - 开源
+- 工具
+- 客服
+- 开源
 title: Chatwoot
 description: Chatwoot 是一个自托管、开源的全渠道客户支持平台，提供实时聊天、多平台收件箱、工单管理、自动化流程等功能。
 additionalProperties:
   key: chatwoot
   name: Chatwoot
   tags:
-    - 工具
-    - 客服
-    - 开源
+  - 工具
+  - 客服
+  - 开源
   shortDescZh: 开源全渠道客户支持平台
   shortDescEn: Chatwoot - Open Source Customer Engagement Platform
   type: website
@@ -19,7 +19,19 @@ additionalProperties:
   website: https://www.chatwoot.com
   github: https://github.com/chatwoot/chatwoot
   document: https://www.chatwoot.com/docs
-
   architectures:
-    - amd64
-    - arm64
+  - amd64
+  - arm64
+  description:
+    en: Self-hosted open-source omnichannel customer support platform.
+    es-es: Self-hosted open-source omnichannel customer support platform.
+    fa: Self-hosted open-source omnichannel customer support platform.
+    ja: Self-hosted open-source omnichannel customer support platform.
+    ms: Self-hosted open-source omnichannel customer support platform.
+    pt-br: Self-hosted open-source omnichannel customer support platform.
+    ru: Self-hosted open-source omnichannel customer support platform.
+    ko: Self-hosted open-source omnichannel customer support platform.
+    zh-hant: Chatwoot 是一个自托管、开源的全渠道客户支持平台。
+    zh: Chatwoot 是一个自托管、开源的全渠道客户支持平台。
+    tr: Self-hosted open-source omnichannel customer support platform.
+  limit: 0

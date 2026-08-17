@@ -1,20 +1,29 @@
 name: Qdrant
 tags:
-  - 数据库
-  - AI / 大模型
+- 数据库
+- AI / 大模型
 title: 面向 AI 应用的高性能向量数据库
 description: Qdrant 是一个开源的向量数据库和向量相似性搜索引擎，适用于语义搜索、推荐和 RAG 应用。
 additionalProperties:
   key: qdrant
   name: Qdrant
   tags:
-    - Database
-    - AI
+  - Database
+  - AI
   shortDescZh: 面向 AI 应用的开源向量数据库
   shortDescEn: Open-source vector database for AI applications
   description:
-    en: Qdrant is an open-source vector database and similarity search engine for AI applications.
-    zh: Qdrant 是一个面向 AI 应用的开源向量数据库和相似性搜索引擎。
+    en: Open-source vector database for AI applications.
+    es-es: Open-source vector database for AI applications.
+    fa: Open-source vector database for AI applications.
+    ja: Open-source vector database for AI applications.
+    ms: Open-source vector database for AI applications.
+    pt-br: Open-source vector database for AI applications.
+    ru: Open-source vector database for AI applications.
+    ko: Open-source vector database for AI applications.
+    zh-hant: Qdrant 是一个面向 AI 应用的开源向量数据库。
+    zh: Qdrant 是一个面向 AI 应用的开源向量数据库。
+    tr: Open-source vector database for AI applications.
   type: runtime
   crossVersionUpdate: true
   limit: 0
@@ -23,5 +32,5 @@ additionalProperties:
   github: https://github.com/qdrant/qdrant
   document: https://qdrant.tech/documentation/
   architectures:
-    - amd64
-    - arm64
+  - amd64
+  - arm64

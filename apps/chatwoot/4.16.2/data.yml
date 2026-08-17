@@ -1,74 +1,189 @@
 additionalProperties:
-    formFields:
-        - default: "8080"
-          edit: true
-          envKey: PANEL_APP_PORT_HTTP
-          labelEn: Service Port 8080
-          labelZh: 服务端口 8080
-          required: true
-          rule: paramPort
-          type: number
-        - default: ""
-          edit: true
-          envKey: PANEL_DB_HOST
-          key: postgresql
-          labelEn: Database Service
-          labelZh: 数据库服务
-          required: true
-          type: service
-        - default: chatwoot_production
-          edit: true
-          envKey: PANEL_DB_NAME
-          labelEn: Database Name
-          labelZh: 数据库名称
-          required: true
-          rule: paramCommon
-          type: text
-        - default: chatwoot
-          edit: true
-          envKey: PANEL_DB_USER
-          labelEn: Database User
-          labelZh: 数据库用户
-          required: true
-          rule: paramCommon
-          type: text
-        - default: ""
-          edit: true
-          envKey: PANEL_DB_USER_PASSWORD
-          labelEn: Database Password
-          labelZh: 数据库密码
-          required: true
-          rule: paramComplexity
-          type: password
-        - default: ""
-          edit: true
-          envKey: PANEL_REDIS_HOST
-          key: redis
-          labelEn: Redis Service
-          labelZh: Redis 服务
-          required: true
-          type: service
-        - default: ""
-          edit: true
-          envKey: PANEL_REDIS_ROOT_PASSWORD
-          labelEn: Redis Password
-          labelZh: Redis 密码
-          required: true
-          rule: paramComplexity
-          type: password
-        - default: ""
-          edit: true
-          envKey: SECRET_KEY_BASE
-          labelEn: Secret Key Base
-          labelZh: 密钥 Key Base
-          required: true
-          rule: paramComplexity
-          type: password
-        - default: ""
-          edit: true
-          envKey: FRONTEND_URL
-          labelEn: Frontend URL
-          labelZh: 前台访问地址
-          required: true
-          rule: paramExtUrl
-          type: text
+  formFields:
+  - default: 8003
+    envKey: PANEL_APP_PORT_HTTP
+    labelEn: Port
+    labelZh: 访问端口
+    label:
+      en: Port
+      es-es: Port
+      fa: Port
+      ja: Port
+      ms: Port
+      pt-br: Port
+      ru: Port
+      ko: Port
+      zh-hant: 访问端口
+      zh: 访问端口
+      tr: Port
+    required: true
+    type: number
+    edit: true
+    rule: paramPort
+  - child:
+      default: ''
+      envKey: PANEL_REDIS_HOST
+      required: true
+      type: service
+    default: redis
+    envKey: PANEL_REDIS_TYPE
+    labelEn: Redis Service
+    labelZh: Redis 服务
+    label:
+      en: Redis Service
+      es-es: Redis Service
+      fa: Redis Service
+      ja: Redis Service
+      ms: Redis Service
+      pt-br: Redis Service
+      ru: Redis Service
+      ko: Redis Service
+      zh-hant: Redis 服务
+      zh: Redis 服务
+      tr: Redis Service
+    required: true
+    type: apps
+    values:
+    - label: Redis
+      value: redis
+  - default: ''
+    envKey: PANEL_REDIS_ROOT_PASSWORD
+    labelEn: Redis Password
+    labelZh: Redis 密码
+    label:
+      en: Redis Password
+      es-es: Redis Password
+      fa: Redis Password
+      ja: Redis Password
+      ms: Redis Password
+      pt-br: Redis Password
+      ru: Redis Password
+      ko: Redis Password
+      zh-hant: Redis 密码
+      zh: Redis 密码
+      tr: Redis Password
+    required: false
+    type: password
+    edit: true
+  - default: 6
+    envKey: CHATWOOT_REDIS_DB
+    labelEn: Redis DB
+    labelZh: Redis DB
+    label:
+      en: Redis DB
+      es-es: Redis DB
+      fa: Redis DB
+      ja: Redis DB
+      ms: Redis DB
+      pt-br: Redis DB
+      ru: Redis DB
+      ko: Redis DB
+      zh-hant: Redis DB
+      zh: Redis DB
+      tr: Redis DB
+    required: true
+    type: number
+    edit: true
+    rule: paramPort
+  - default: chatwoot
+    envKey: CHATWOOT_POSTGRES_DB
+    labelEn: PostgreSQL Database
+    labelZh: PostgreSQL 数据库
+    label:
+      en: PostgreSQL Database
+      es-es: PostgreSQL Database
+      fa: PostgreSQL Database
+      ja: PostgreSQL Database
+      ms: PostgreSQL Database
+      pt-br: PostgreSQL Database
+      ru: PostgreSQL Database
+      ko: PostgreSQL Database
+      zh-hant: PostgreSQL 数据库
+      zh: PostgreSQL 数据库
+      tr: PostgreSQL Database
+    required: true
+    type: text
+    edit: true
+    rule: paramCommon
+  - default: postgres
+    envKey: CHATWOOT_POSTGRES_USER
+    labelEn: PostgreSQL User
+    labelZh: PostgreSQL 用户
+    label:
+      en: PostgreSQL User
+      es-es: PostgreSQL User
+      fa: PostgreSQL User
+      ja: PostgreSQL User
+      ms: PostgreSQL User
+      pt-br: PostgreSQL User
+      ru: PostgreSQL User
+      ko: PostgreSQL User
+      zh-hant: PostgreSQL 用户
+      zh: PostgreSQL 用户
+      tr: PostgreSQL User
+    required: true
+    type: text
+    edit: true
+    rule: paramCommon
+  - default: ''
+    envKey: CHATWOOT_POSTGRES_PASSWORD
+    labelEn: PostgreSQL Password
+    labelZh: PostgreSQL 密码
+    label:
+      en: PostgreSQL Password
+      es-es: PostgreSQL Password
+      fa: PostgreSQL Password
+      ja: PostgreSQL Password
+      ms: PostgreSQL Password
+      pt-br: PostgreSQL Password
+      ru: PostgreSQL Password
+      ko: PostgreSQL Password
+      zh-hant: PostgreSQL 密码
+      zh: PostgreSQL 密码
+      tr: PostgreSQL Password
+    required: true
+    type: password
+    edit: true
+    rule: paramComplexity
+    random: true
+  - default: ''
+    envKey: SECRET_KEY_BASE
+    labelEn: Secret Key Base
+    labelZh: Secret Key Base
+    label:
+      en: Secret Key Base
+      es-es: Secret Key Base
+      fa: Secret Key Base
+      ja: Secret Key Base
+      ms: Secret Key Base
+      pt-br: Secret Key Base
+      ru: Secret Key Base
+      ko: Secret Key Base
+      zh-hant: Secret Key Base
+      zh: Secret Key Base
+      tr: Secret Key Base
+    required: true
+    type: password
+    edit: true
+    rule: paramComplexity
+    random: true
+  - default: http://localhost:8003
+    envKey: FRONTEND_URL
+    labelEn: Frontend URL
+    labelZh: 前台访问地址
+    label:
+      en: Frontend URL
+      es-es: Frontend URL
+      fa: Frontend URL
+      ja: Frontend URL
+      ms: Frontend URL
+      pt-br: Frontend URL
+      ru: Frontend URL
+      ko: Frontend URL
+      zh-hant: 前台访问地址
+      zh: 前台访问地址
+      tr: Frontend URL
+    required: true
+    type: text
+    edit: true
+    rule: paramExtUrl
