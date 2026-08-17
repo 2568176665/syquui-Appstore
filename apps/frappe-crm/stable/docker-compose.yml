@@ -65,7 +65,6 @@ services:
         --mariadb-root-password $$PANEL_DB_ROOT_PASSWORD
         --admin-password $$FRAPPE_ADMIN_PASSWORD
         --install-app crm
-        --no-enqueue
     volumes:
       - ./sites:/home/frappe/frappe-bench/sites
     networks:
