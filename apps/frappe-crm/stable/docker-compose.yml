@@ -8,7 +8,11 @@ services:
       - bash
       - -c
     command:
-      - chown -R frappe:frappe sites
+      - >
+        set -e;
+        test -f sites/common_site_config.json ||
+        printf '{}\n' > sites/common_site_config.json;
+        chown -R frappe:frappe sites;
     volumes:
       - ./sites:/home/frappe/frappe-bench/sites
     networks:
