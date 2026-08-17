@@ -1,0 +1,11 @@
+additionalProperties:
+  formFields:
+    - default: NB_SETUP_KEY
+      envKey: NB_SETUP_KEY
+      label:
+        en: NetBird-API-Key
+        zh: NetBird密钥
+      required: true
+      type: text
+      edit: true
+      rule: paramCommon

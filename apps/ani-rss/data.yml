@@ -1,0 +1,37 @@
+name: ANI-RSS
+tags:
+    - RSS
+    - 动漫
+    - 订阅
+    - 追番
+title: 动漫自动订阅与下载工具
+description: ANI-RSS 是一款专为动漫爱好者设计的自动订阅与下载工具，支持多平台部署，自动追番、下载、推送，适配主流下载器。
+additionalProperties:
+    key: ani-rss
+    name: ANI-RSS
+    tags:
+        - RSS
+        - Anime
+        - Subscription
+    shortDescZh: 动漫自动订阅与下载工具，支持多平台和主流下载器。
+    shortDescEn: Anime RSS auto subscription and download tool, cross-platform and supports mainstream downloaders.
+    description:
+        en: Anime RSS auto subscription, download, and push tool. Supports Docker, qBittorrent, Aria2, and more. Easy to deploy, powerful and customizable.
+        ja: アニメ自動RSS購読・ダウンロード・プッシュツール。DockerやqBittorrent、Aria2等に対応。
+        ms: Alat langganan dan muat turun automatik RSS anime, menyokong pelbagai platform dan klien muat turun utama.
+        pt-br: Ferramenta de assinatura e download automático de RSS de anime, multiplataforma e compatível com principais clientes de download.
+        ru: Инструмент для автоматической подписки и загрузки аниме по RSS, поддержка Docker и популярных загрузчиков.
+        ko: 애니메이션 RSS 자동 구독 및 다운로드 도구, 다양한 플랫폼 및 주요 다운로드 클라이언트 지원.
+        zh-hant: 動漫自動訂閱與下載工具，支援多平台和主流下載器。
+        zh: ANI-RSS 是一款专为动漫爱好者设计的自动订阅与下载工具，支持多平台部署，自动追番、下载、推送，适配主流下载器。
+    type: website
+    crossVersionUpdate: true
+    limit: 0
+    recommend: 0
+    website: https://docs.wushuo.top/
+    github: https://github.com/wushuo894/ani-rss
+    document: https://docs.wushuo.top/deploy/docker
+    architectures:
+        - amd64
+        - arm64
+        - arm/v7 

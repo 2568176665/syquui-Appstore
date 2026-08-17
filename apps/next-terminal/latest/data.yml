@@ -1,0 +1,41 @@
+additionalProperties:
+  formFields:
+    - default: 40058
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Port
+      labelZh: 端口
+      required: true
+      rule: paramPort
+      type: number
+    - default: 40059
+      edit: true
+      envKey: PANEL_APP_PORT_SSH
+      labelEn: SSH Server Port
+      labelZh: SSH Server 端口 (可选)
+      required: false
+      rule: paramPort
+      type: number
+    - default: 40060
+      edit: true
+      envKey: PANEL_APP_PORT_PROXY_HTTP
+      labelEn: Proxy HTTP Port
+      labelZh: 资产反代 HTTP 端口 (可选)
+      required: false
+      rule: paramPort
+      type: number
+    - default: 40061
+      edit: true
+      envKey: PANEL_APP_PORT_PROXY_HTTPS
+      labelEn: Proxy HTTPS Port
+      labelZh: 资产反代 HTTPS 端口 (申请证书必需)
+      required: false
+      rule: paramPort
+      type: number
+    - default: ./data
+      edit: true
+      envKey: DATA_PATH
+      labelEn: Data folder path
+      labelZh: 数据文件夹路径
+      required: true
+      type: text

@@ -1,0 +1,28 @@
+name: 星空组网
+tags:
+  - Tool
+  - Security
+title: 星空组网 Docker 客户端
+description: 星空组网 Docker 客户端，用于将 Linux 主机或 NAS 容器环境接入 StarVPN 组网。
+
+additionalProperties:
+  key: starvpn
+  name: 星空组网
+  tags:
+    - Tool
+    - Security
+  shortDescZh: 将 Docker 宿主机接入 StarVPN 组网。
+  shortDescEn: Connect a Docker host to a StarVPN private network.
+  description:
+    en: StarVPN Docker client for connecting Linux hosts or NAS container environments to a StarVPN private network.
+    zh: 星空组网 Docker 客户端，用于将 Linux 主机或 NAS 容器环境接入 StarVPN 组网。
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://starvpn.cn/
+  document: https://doc.starvpn.cn/#/docker
+  architectures:
+    - amd64
+    - arm64
+    - arm/v7

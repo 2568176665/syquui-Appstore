@@ -1,0 +1,27 @@
+name: Browser-Use
+tags:
+  - 实用工具
+  - AI
+  - 开发工具
+title: 让 AI 代理可以访问网站。轻松实现在线任务自动化
+description:
+  en: Make websites accessible for AI agents. Automate tasks online with ease
+  zh: 让 AI 代理可以访问网站。轻松实现在线任务自动化
+additionalProperties:
+  key: browser-use
+  name: Browser-Use
+  tags:
+    - Tool
+    - AI
+    - DevTool
+  shortDescZh: 让 AI 代理可以访问网站。轻松实现在线任务自动化
+  shortDescEn: Make websites accessible for AI agents. Automate tasks online with ease
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  website: https://browser-use.com/
+  github: https://github.com/browser-use/web-ui
+  document: https://github.com/browser-use/web-ui
+  architectures:
+    - amd64
+    - arm64

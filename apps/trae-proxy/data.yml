@@ -1,0 +1,29 @@
+name: Trae-Proxy
+tags:
+  - 实用工具
+  - AI
+  - 开发工具
+title: 一个智能的API代理工具，专门用于拦截和重定向OpenAI API请求到自定义后端服务
+description:
+  en: An intelligent API proxy tool designed to intercept and redirect OpenAI
+    API requests.
+  zh: 一个智能的API代理工具，专门用于拦截和重定向OpenAI API请求到自定义后端服务
+additionalProperties:
+  key: trae-proxy
+  name: Trae-Proxy
+  tags:
+    - Tool
+    - AI
+    - DevTool
+  shortDescZh: 一个智能的API代理工具，专门用于拦截和重定向OpenAI API请求到自定义后端服务
+  shortDescEn: An intelligent API proxy tool designed to intercept and redirect
+    OpenAI API requests.
+  type: tool
+  crossVersionUpdate: true
+  limit: 0
+  website: https://github.com/arch3rPro/Trae-Proxy
+  github: https://github.com/arch3rPro/Trae-Proxy
+  document: https://github.com/arch3rPro/Trae-Proxy
+  architectures:
+    - amd64
+    - arm64

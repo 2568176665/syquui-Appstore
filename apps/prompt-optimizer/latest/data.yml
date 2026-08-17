@@ -1,0 +1,68 @@
+additionalProperties:
+  formFields:
+    - default: 8080
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Web Port
+      labelZh: Web端口
+      required: true
+      rule: paramPort
+      type: number
+    - default: ""
+      edit: true
+      envKey: PROMPT_OPTIMIZER_PASSWORD
+      labelEn: Basic Auth Password (Optional)
+      labelZh: 访问密码 (可选)
+      random: true
+      required: false
+      rule: paramComplexity
+      type: password
+    - default: ""
+      edit: true
+      envKey: VITE_OPENAI_API_KEY
+      labelEn: OpenAI API Key (Optional)
+      labelZh: OpenAI API 密钥 (可选)
+      required: false
+      type: text
+    - default: ""
+      edit: true
+      envKey: VITE_GEMINI_API_KEY
+      labelEn: Gemini API Key (Optional)
+      labelZh: Gemini API 密钥 (可选)
+      required: false
+      type: text
+    - default: ""
+      edit: true
+      envKey: VITE_DEEPSEEK_API_KEY
+      labelEn: DeepSeek API Key (Optional)
+      labelZh: DeepSeek API 密钥 (可选)
+      required: false
+      type: text
+    - default: ""
+      edit: true
+      envKey: VITE_SILICONFLOW_API_KEY
+      labelEn: SiliconFlow API Key (Optional)
+      labelZh: SiliconFlow API 密钥 (可选)
+      required: false
+      type: text
+    - default: ""
+      edit: true
+      envKey: VITE_CUSTOM_API_KEY
+      labelEn: Custom API Key (Optional)
+      labelZh: 自定义 API 密钥 (可选)
+      required: false
+      type: text
+    - default: ""
+      edit: true
+      envKey: VITE_CUSTOM_API_BASE_URL
+      labelEn: Custom API Base URL (Optional)
+      labelZh: 自定义 API 地址 (可选)
+      required: false
+      type: text
+    - default: ""
+      edit: true
+      envKey: VITE_CUSTOM_API_MODEL
+      labelEn: Custom API Model (Optional)
+      labelZh: 自定义 API 模型 (可选)
+      required: false
+      type: text 

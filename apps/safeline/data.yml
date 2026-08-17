@@ -1,0 +1,25 @@
+name: Safeline
+tags:
+  - 实用工具
+title: 一款足够简单、足够好用、足够强的免费 WAF
+description: 一款足够简单、足够好用、足够强的免费 WAF
+additionalProperties:
+  key: safeline
+  name: Safeline 雷池
+  tags:
+    - Security
+  shortDescZh: 一款足够简单、足够好用、足够强的免费 WAF
+  shortDescEn: A simple and easy to use WAF tool
+  description:
+    zh: 一款足够简单、足够好用、足够强的免费 WAF
+    en: A simple and easy to use WAF tool
+  type: website
+  crossVersionUpdate: true
+  limit: 1
+  recommend: 0
+  website: https://waf-ce.chaitin.cn/
+  github: https://github.com/chaitin/safeline
+  document: https://waf-ce.chaitin.cn/posts/guide_introduction
+  architectures:
+    - amd64
+    - arm64

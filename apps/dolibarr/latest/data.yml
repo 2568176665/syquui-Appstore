@@ -1,0 +1,70 @@
+additionalProperties:
+    formFields:
+        - default: "8080"
+          edit: true
+          envKey: PANEL_APP_PORT_HTTP
+          labelEn: Service Port 8080
+          labelZh: 服务端口 8080
+          required: true
+          rule: paramPort
+          type: number
+        - default: dolidb
+          edit: true
+          envKey: DOLI_DB_NAME
+          labelEn: Database Name
+          labelZh: 数据库名称
+          required: true
+          rule: paramCommon
+          type: text
+        - default: dolidbuser
+          edit: true
+          envKey: DOLI_DB_USER
+          labelEn: Database User
+          labelZh: 数据库用户
+          required: true
+          rule: paramCommon
+          type: text
+        - default: ""
+          edit: true
+          envKey: DOLI_DB_PASSWORD
+          labelEn: Database Password
+          labelZh: 数据库密码
+          required: true
+          rule: paramComplexity
+          type: password
+        - default: admin
+          edit: true
+          envKey: DOLI_ADMIN_LOGIN
+          labelEn: Admin Login
+          labelZh: 管理员账号
+          required: true
+          rule: paramCommon
+          type: text
+        - default: ""
+          edit: true
+          envKey: DOLI_ADMIN_PASSWORD
+          labelEn: Admin Password
+          labelZh: 管理员密码
+          required: true
+          rule: paramComplexity
+          type: password
+        - default: ""
+          edit: true
+          envKey: DOLI_URL_ROOT
+          labelEn: Site URL
+          labelZh: 站点访问地址
+          required: true
+          rule: paramExtUrl
+          type: text
+        - default: "0"
+          edit: true
+          envKey: DOLI_CRON
+          labelEn: Enable Cron
+          labelZh: 启用定时任务
+          required: true
+          type: select
+          values:
+            - label: 启用
+              value: "1"
+            - label: 禁用
+              value: "0"

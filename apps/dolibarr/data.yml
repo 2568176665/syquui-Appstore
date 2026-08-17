@@ -1,0 +1,27 @@
+name: dolibarr
+tags:
+  - 工具
+  - CRM
+  - ERP
+  - 开源
+title: Dolibarr
+description: Dolibarr 是一个自托管、开源的企业管理套件（ERP/CRM），支持客户关系管理、进销存、财务、项目、人事、开票等功能。
+additionalProperties:
+  key: dolibarr
+  name: Dolibarr
+  tags:
+    - 工具
+    - CRM
+    - ERP
+    - 开源
+  shortDescZh: 开源 ERP/CRM 企业管理套件
+  shortDescEn: Dolibarr - Open Source ERP & CRM
+  type: website
+  crossVersionUpdate: true
+  website: https://www.dolibarr.org
+  github: https://github.com/Dolibarr/dolibarr
+  document: https://docs.dolibarr.org
+
+  architectures:
+    - amd64
+    - arm64

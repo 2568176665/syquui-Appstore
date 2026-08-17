@@ -1,0 +1,18 @@
+additionalProperties:
+    formFields:
+        - default: "8888"
+          edit: true
+          envKey: PANEL_APP_PORT_HTTP
+          labelEn: WebUI Port 8888
+          labelZh: WebUI端口 8888
+          required: true
+          rule: paramPort
+          type: number
+        - default: "55555"
+          edit: true
+          envKey: PANEL_APP_PORT_SYNC
+          labelEn: Sync Port 55555
+          labelZh: 同步端口 55555
+          required: true
+          rule: paramPort
+          type: number

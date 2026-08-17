@@ -1,0 +1,31 @@
+name: Prompt Optimizer
+
+tags:
+  - AI
+  - LLM
+  - Prompt
+title: 高质量提示词优化器
+description: 一款提示词优化器，助力于编写高质量的提示词，支持多种大语言模型，提供可视化界面和 API。
+additionalProperties:
+  key: prompt-optimizer
+  name: Prompt Optimizer
+  tags:
+    - AI
+    - LLM
+    - Prompt
+    - Tool
+  shortDescZh: 一款提示词优化器，助力于编写高质量的提示词。
+  shortDescEn: An optimizer for crafting high-quality prompts.
+  description:
+    zh: Prompt Optimizer 是一款强大的提示词（Prompt）优化工具，旨在帮助用户轻松编写、优化和测试高质量的提示词。它支持多种主流的大语言模型（LLM），并提供直观的可视化界面，让提示词工程变得简单高效。
+    en: Prompt Optimizer is a powerful tool designed to help users easily write, optimize, and test high-quality prompts. It supports various mainstream Large Language Models (LLMs) and provides an intuitive visual interface to make prompt engineering simple and efficient.
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://prompt.always200.com/
+  github: https://github.com/linshenkx/prompt-optimizer
+  document: https://github.com/linshenkx/prompt-optimizer/blob/develop/docs/index.md
+  architectures:
+    - amd64
+    - arm64 

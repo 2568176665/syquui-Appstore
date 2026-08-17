@@ -1,0 +1,66 @@
+additionalProperties:
+    formFields:
+        - default: "8080"
+          edit: true
+          envKey: PANEL_APP_PORT_HTTP
+          labelEn: Service Port 8080
+          labelZh: 服务端口 8080
+          required: true
+          rule: paramPort
+          type: number
+        - default: espocrm
+          edit: true
+          envKey: ESPOCRM_DATABASE_NAME
+          labelEn: Database Name
+          labelZh: 数据库名称
+          required: true
+          rule: paramCommon
+          type: text
+        - default: espocrm
+          edit: true
+          envKey: ESPOCRM_DATABASE_USER
+          labelEn: Database User
+          labelZh: 数据库用户
+          required: true
+          rule: paramCommon
+          type: text
+        - default: ""
+          edit: true
+          envKey: ESPOCRM_DATABASE_PASSWORD
+          labelEn: Database Password
+          labelZh: 数据库密码
+          required: true
+          rule: paramComplexity
+          type: password
+        - default: admin
+          edit: true
+          envKey: ESPOCRM_ADMIN_USERNAME
+          labelEn: Admin Username
+          labelZh: 管理员用户名
+          required: true
+          rule: paramCommon
+          type: text
+        - default: ""
+          edit: true
+          envKey: ESPOCRM_ADMIN_PASSWORD
+          labelEn: Admin Password
+          labelZh: 管理员密码
+          required: true
+          rule: paramComplexity
+          type: password
+        - default: ""
+          edit: true
+          envKey: MARIADB_ROOT_PASSWORD
+          labelEn: Database Root Password
+          labelZh: 数据库 Root 密码
+          required: true
+          rule: paramComplexity
+          type: password
+        - default: ""
+          edit: true
+          envKey: ESPOCRM_SITE_URL
+          labelEn: Site URL
+          labelZh: 站点访问地址
+          required: true
+          rule: paramExtUrl
+          type: text

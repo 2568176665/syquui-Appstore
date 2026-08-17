@@ -1,0 +1,28 @@
+name: Higress
+tags:
+    - 网关
+    - 开发工具
+title: 阿里巴巴开源的下一代云原生网关
+description: 阿里巴巴开源的下一代云原生网关，实现了流量网关、微服务网关、安全网关三合一的高集成能力
+additionalProperties:
+  key: higress
+  name: Higress
+  tags:
+    - Gateway
+    - DevTool
+  shortDescZh: 阿里巴巴开源的下一代云原生网关
+  shortDescEn: Alibaba's next-generation cloud-native gateway
+  type: network
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://higress.io/
+  github: https://github.com/alibaba/higress
+  document: https://higress.io/zh-cn/docs/overview/what-is-higress
+  architectures:
+    - amd64
+    - arm64
+  description:
+    en: Higress is Alibaba's next-generation cloud-native gateway that integrates traffic gateway, microservice gateway, and security gateway capabilities.
+    zh: Higress 是阿里巴巴开源的下一代云原生网关，实现了流量网关、微服务网关、安全网关三合一的高集成能力。
+  memoryRequired: 1024

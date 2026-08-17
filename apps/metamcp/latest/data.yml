@@ -1,0 +1,94 @@
+additionalProperties:
+  formFields:
+    - default: 12008
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Web Port
+      labelZh: HTTP 端口
+      required: true
+      rule: paramPort
+      type: number
+      edit: true
+      label:
+        en: Web Port
+        zh: HTTP 端口
+    - default: metamcp_db
+      envKey: POSTGRES_DB
+      labelEn: Database
+      labelZh: 数据库名
+      required: true
+      rule: paramCommon
+      type: text
+      edit: true
+      label:
+        en: Database
+        zh: 数据库名
+    - default: metamcp_user
+      envKey: POSTGRES_USER
+      labelEn: User
+      labelZh: 数据库用户
+      random: true
+      required: true
+      rule: paramCommon
+      type: text
+      edit: true
+      label:
+        en: User
+        zh: 数据库用户
+    - default: m3t4mcp
+      envKey: POSTGRES_PASSWORD
+      labelEn: Password
+      labelZh: 数据库用户密码
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+      edit: true
+      label:
+        en: Password
+        zh: 数据库用户密码
+    - default: "http://localhost:12008"
+      envKey: APP_URL
+      labelEn: Application URL
+      labelZh: 应用访问地址
+      required: true
+      type: text
+      edit: true
+      label:
+        en: Application URL
+        zh: 应用访问地址
+    - default: "http://localhost:12008"
+      envKey: NEXT_PUBLIC_APP_URL
+      labelEn: Public Application URL
+      labelZh: 公共应用访问地址
+      required: true
+      type: text
+      edit: true
+      label:
+        en: Public Application URL
+        zh: 公共应用访问地址
+    - default: "your-super-secret-key-change-this-in-production"
+      envKey: BETTER_AUTH_SECRET
+      labelEn: Auth Secret
+      labelZh: 认证密钥
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+      edit: true
+      label:
+        en: Auth Secret
+        zh: 认证密钥
+    - default: "true"
+      envKey: TRANSFORM_LOCALHOST_TO_DOCKER_INTERNAL
+      labelEn: Transform Localhost
+      labelZh: 转换本地主机
+      required: true
+      type: select
+      values:
+        - label: "True"
+          value: "true"
+        - label: "False"
+          value: "false"
+      label:
+        en: Transform Localhost
+        zh: 转换本地主机

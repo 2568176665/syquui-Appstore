@@ -1,0 +1,25 @@
+name: espocrm
+tags:
+  - 工具
+  - CRM
+  - 开源
+title: EspoCRM
+description: EspoCRM 是一个自托管、开源的企业级 CRM 系统，支持联系人管理、销售管道、邮件集成、自动化流程等功能。
+additionalProperties:
+  key: espocrm
+  name: EspoCRM
+  tags:
+    - 工具
+    - CRM
+    - 开源
+  shortDescZh: 开源企业级 CRM 客户关系管理系统
+  shortDescEn: EspoCRM - Open Source Customer Relationship Management
+  type: website
+  crossVersionUpdate: true
+  website: https://www.espocrm.com
+  github: https://github.com/espocrm/espocrm
+  document: https://docs.espocrm.com
+
+  architectures:
+    - amd64
+    - arm64

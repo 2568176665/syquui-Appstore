@@ -1,0 +1,48 @@
+name: Lucky
+
+tags:
+    - 实用工具
+    - 网络工具
+    - 代理
+    - 防火墙
+    - 端口转发
+    - OpenWrt
+    - Docker
+    - 备份
+    - 跨平台
+title: 一站式网络加速与端口转发工具
+description: Lucky 是一款集端口转发、流量转发、WAF、备份等多功能于一体的网络加速与安全工具，支持多平台部署。
+additionalProperties:
+    key: lucky
+    name: Lucky
+    tags:
+        - Tool
+        - Network
+        - Proxy
+        - Firewall
+        - OpenWrt
+        - Docker
+        - Backup
+        - CrossPlatform
+    shortDescZh: 一站式网络加速与端口转发工具，支持多平台和多架构。
+    shortDescEn: All-in-one network acceleration and port forwarding tool, cross-platform and multi-architecture supported.
+    description:
+        en: All-in-one network acceleration, port forwarding, WAF, and backup tool. Supports OpenWrt, Docker, and more. Easy to deploy, powerful and secure.
+        ja: 多機能ネットワーク加速・ポート転送・WAF・バックアップツール。OpenWrtやDocker等に対応。
+        ms: Alat pecutan rangkaian, pemajuan port, WAF dan sandaran serba lengkap, menyokong pelbagai platform.
+        pt-br: Ferramenta completa de aceleração de rede, encaminhamento de portas, WAF e backup, com suporte multiplataforma.
+        ru: Многофункциональный инструмент для ускорения сети, проброса портов, WAF и резервного копирования, поддержка разных платформ.
+        ko: 네트워크 가속, 포트 포워딩, WAF, 백업을 지원하는 올인원 도구, 다양한 플랫폼 지원.
+        zh-hant: 一站式網絡加速與端口轉發工具，支援多平台和多架構。
+        zh: Lucky 是一款集端口转发、流量转发、WAF、备份等多功能于一体的网络加速与安全工具，支持多平台部署。
+    type: website
+    crossVersionUpdate: true
+    limit: 0
+    recommend: 0
+    website: https://lucky666.cn/
+    github: https://github.com/gdy666/lucky
+    document: https://lucky666.cn/docs/install
+    architectures:
+        - amd64
+        - arm64
+        - arm/v7 

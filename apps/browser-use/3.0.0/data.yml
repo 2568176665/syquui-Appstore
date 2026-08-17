@@ -1,0 +1,38 @@
+additionalProperties:
+  formFields:
+    - default: "7788"
+      envKey: PANEL_APP_PORT_HTTP
+      label:
+        en: Port
+        zh: 端口
+      required: true
+      type: number
+      edit: true
+      rule: paramPort
+    - default: "6080"
+      envKey: PANEL_APP_PORT_NOVNC
+      label:
+        en: noVNC Port
+        zh: noVNC 端口
+      required: true
+      type: number
+      edit: true
+      rule: paramPort
+    - default: "5901"
+      envKey: PANEL_APP_PORT_VNC
+      label:
+        en: VNC Port
+        zh: VNC 端口
+      required: true
+      type: number
+      edit: true
+      rule: paramPort
+    - default: "9222"
+      envKey: PANEL_APP_PORT_CDP
+      label:
+        en: Browser CDP Port
+        zh: 浏览器 CDP 端口
+      required: true
+      type: number
+      edit: true
+      rule: paramPort

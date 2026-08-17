@@ -1,0 +1,28 @@
+name: OpenDeepWiki
+tags:
+  - 知识库
+  - AI
+title: 开源AI知识库与文档协作平台
+description: OpenDeepWiki 是一款支持多模型、多数据库、智能文档生成的开源AI知识库系统，适合企业和个人搭建智能文档与知识协作平台。
+additionalProperties:
+  key: opendeepwiki
+  name: OpenDeepWiki
+  tags:
+    - KnowledgeBase
+    - AI
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 80
+  shortDescZh: 开源AI知识库与文档协作平台
+  shortDescEn: Open-source AI-powered knowledge base and documentation platform
+  website: https://opendeep.wiki/
+  github: https://github.com/AIDotNet/OpenDeepWiki
+  document: https://github.com/AIDotNet/OpenDeepWiki#readme
+  architectures:
+    - amd64
+    - arm64
+  memoryRequired: 1024
+  description:
+    zh: OpenDeepWiki 是一款支持多模型、多数据库、智能文档生成的开源AI知识库系统，适合企业和个人搭建智能文档与知识协作平台。
+    en: OpenDeepWiki is an open-source AI-powered knowledge base and documentation platform, supporting multi-model, multi-database, and intelligent document generation for teams and individuals. 

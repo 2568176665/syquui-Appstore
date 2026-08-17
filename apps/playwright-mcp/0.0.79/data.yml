@@ -1,0 +1,82 @@
+additionalProperties:
+  formFields:
+    - default: 8931
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      label:
+        en: Port
+        zh: 端口
+        zh-Hant: 埠
+        ja: ポート
+        ms: Port
+        pt-br: Porta
+        ru: Порт
+        ko: 포트
+      required: true
+      rule: paramPort
+      type: number
+    - default: "chromium"
+      envKey: BROWSER_TYPE
+      label:
+        en: Browser Type
+        zh: 浏览器类型
+        zh-Hant: 瀏覽器類型
+        ja: ブラウザタイプ
+        ms: Jenis Pelayar
+        pt-br: Tipo de Navegador
+        ru: Тип браузера
+        ko: 브라우저 유형
+      required: true
+      type: select
+      values:
+        - label: Chromium
+          value: "chromium"
+        - label: Firefox
+          value: "firefox"
+        - label: WebKit
+          value: "webkit"
+    - default: "true"
+      envKey: HEADLESS_MODE
+      label:
+        en: Headless Mode
+        zh: 无头模式
+        zh-Hant: 無頭模式
+        ja: ヘッドレスモード
+        ms: Mod Tanpa Kepala
+        pt-br: Modo Headless
+        ru: Безголовый режим
+        ko: 헤드리스 모드
+      required: true
+      type: select
+      values:
+        - label: "True"
+          value: "true"
+        - label: "False"
+          value: "false"
+    - default: "1280,720"
+      envKey: VIEWPORT_SIZE
+      label:
+        en: Viewport Size (width,height)
+        zh: 视窗大小 (宽度,高度)
+        zh-Hant: 視窗大小 (寬度,高度)
+        ja: ビューポートサイズ (幅,高さ)
+        ms: Saiz Viewport (lebar,tinggi)
+        pt-br: Tamanho da Viewport (largura,altura)
+        ru: Размер области просмотра (ширина,высота)
+        ko: 뷰포트 크기 (너비,높이)
+      required: false
+      rule: paramCommon
+      type: text
+    - default: "Mozilla/5.0 (Linux; x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+      envKey: USER_AGENT
+      label:
+        en: User Agent
+        zh: 用户代理
+        zh-Hant: 用戶代理
+        ja: ユーザーエージェント
+        ms: Ejen Pengguna
+        pt-br: Agente do Usuário
+        ru: Пользовательский агент
+        ko: 사용자 에이전트
+      required: false
+      type: text

@@ -1,0 +1,48 @@
+services:
+  wewe-rss:
+    image: "cooderl/wewe-rss:latest"
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks:
+      - 1panel-network
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:4000"
+    environment:
+      - DATABASE_URL=mysql://root:${PANEL_DB_ROOT_PASSWORD}@${CONTAINER_NAME}-mysql:3306/${PANEL_DB_NAME}?schema=public&connect_timeout=30&pool_timeout=30&socket_timeout=30
+      - AUTH_CODE=${AUTH_CODE}
+      - FEED_MODE=${FEED_MODE}
+      - CRON_EXPRESSION=${CRON_EXPRESSION}
+      - MAX_REQUEST_PER_MINUTE=${MAX_REQUEST_PER_MINUTE}
+      - SERVER_ORIGIN_URL=${SERVER_ORIGIN_URL}
+    depends_on:
+      - mysql
+    labels:
+      createdBy: "Apps"
+
+  mysql:
+    image: mysql:8.3.0
+    container_name: ${CONTAINER_NAME}-mysql
+    command: --mysql-native-password=ON
+    environment:
+      - MYSQL_ROOT_PASSWORD=${PANEL_DB_ROOT_PASSWORD}
+      - TZ=Asia/Shanghai
+      - MYSQL_DATABASE=${PANEL_DB_NAME}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - 1panel-network
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      timeout: 45s
+      interval: 10s
+      retries: 10
+
+    restart: always
+    labels:
+      createdBy: Apps
+networks:
+  1panel-network:
+    external: true
+
+volumes:
+  mysql_data:

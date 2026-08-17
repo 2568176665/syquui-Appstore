@@ -1,0 +1,33 @@
+additionalProperties:
+  formFields:
+    - default: 8090
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelZh: Web 端口
+      required: true
+      rule: paramPort
+      type: number
+    - default: "https://your-api-endpoint/v1"
+      edit: true
+      envKey: ENDPOINT
+      labelZh: API接口地址
+      required: true
+      type: text
+    - default: "your-api-key"
+      edit: true
+      envKey: CHAT_API_KEY
+      labelZh: API Key
+      required: true
+      type: password
+    - default: "DeepSeek-V3"
+      edit: true
+      envKey: CHAT_MODEL
+      labelZh: 对话模型
+      required: true
+      type: text
+    - default: ""
+      edit: true
+      envKey: ANALYSIS_MODEL
+      labelZh: 分析模型
+      required: true
+      type: text

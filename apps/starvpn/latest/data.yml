@@ -1,0 +1,19 @@
+additionalProperties:
+  networkMode: host
+  formFields:
+    - default: "host"
+      disabled: true
+      edit: false
+      envKey: NETWORK_MODE
+      labelEn: Network mode
+      labelZh: 网络模式
+      required: true
+      type: text
+    - default: "true"
+      disabled: true
+      edit: false
+      envKey: PRIVILEGED_MODE
+      labelEn: Privileged mode
+      labelZh: 特权模式
+      required: true
+      type: text

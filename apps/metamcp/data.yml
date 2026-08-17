@@ -1,0 +1,26 @@
+name: MetaMCP
+tags:
+    - 实用工具
+title: MCP 聚合器、编排器、中间件、网关于一体的 Docker 解决方案
+description: MCP 聚合器、编排器、中间件、网关于一体的 Docker 解决方案
+additionalProperties:
+  key: metamcp
+  name: MetaMCP
+  tags:
+    - Tool
+  shortDescZh: MCP 聚合器、编排器、中间件、网关于一体的解决方案
+  shortDescEn: MCP aggregator, orchestrator, middleware, and gateway in one Docker solution
+  type: tool
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://docs.metamcp.com
+  github: https://github.com/metatool-ai/metamcp
+  document: https://docs.metamcp.com
+  architectures:
+    - amd64
+    - arm64
+  description:
+    en: MCP aggregator, orchestrator, middleware, and gateway in one Docker solution
+    zh: MCP 聚合器、编排器、中间件、网关于一体的 Docker 解决方案
+  memoryRequired: 2048

@@ -1,0 +1,92 @@
+additionalProperties:
+  formFields:
+    - default: "3000"
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Port
+      labelZh: 端口
+      required: true
+      rule: paramPort
+      type: number
+    - default: "/root/flowise"
+      edit: true
+      envKey: DATABASE_PATH
+      labelEn: Database Path
+      labelZh: 数据库路径
+      required: true
+      rule: paramPath
+      type: text
+    - default: "/root/flowise"
+      edit: true
+      envKey: SECRETKEY_PATH
+      labelEn: Secret Key Path
+      labelZh: 密钥路径
+      required: true
+      rule: paramPath
+      type: text
+    - default: "/root/flowise/logs"
+      edit: true
+      envKey: LOG_PATH
+      labelEn: Log Path
+      labelZh: 日志路径
+      required: true
+      rule: paramPath
+      type: text
+    - default: "/root/flowise/storage"
+      edit: true
+      envKey: BLOB_STORAGE_PATH
+      labelEn: Storage Path
+      labelZh: 存储路径
+      required: true
+      rule: paramPath
+      type: text
+    - default: "AABBCCDDAABBCCDDAABBCCDDAABBCCDDAABBCCDD"
+      edit: true
+      envKey: JWT_AUTH_TOKEN_SECRET
+      labelEn: JWT Auth Token Secret
+      labelZh: JWT认证密钥
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+    - default: "AABBCCDDAABBCCDDAABBCCDDAABBCCDDAABBCCDD"
+      edit: true
+      envKey: JWT_REFRESH_TOKEN_SECRET
+      labelEn: JWT Refresh Token Secret
+      labelZh: JWT刷新密钥
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+    - default: "ISSUER"
+      edit: true
+      envKey: JWT_ISSUER
+      labelEn: JWT Issuer
+      labelZh: JWT发行者
+      required: true
+      rule: paramCommon
+      type: text
+    - default: "AUDIENCE"
+      edit: true
+      envKey: JWT_AUDIENCE
+      labelEn: JWT Audience
+      labelZh: JWT受众
+      required: true
+      rule: paramCommon
+      type: text
+    - default: "360"
+      edit: true
+      envKey: JWT_TOKEN_EXPIRY_IN_MINUTES
+      labelEn: JWT Token Expiry (minutes)
+      labelZh: JWT令牌过期时间(分钟)
+      required: true
+      rule: paramCommon
+      type: number
+    - default: "43200"
+      edit: true
+      envKey: JWT_REFRESH_TOKEN_EXPIRY_IN_MINUTES
+      labelEn: JWT Refresh Token Expiry (minutes)
+      labelZh: JWT刷新令牌过期时间(分钟)
+      required: true
+      rule: paramCommon
+      type: number

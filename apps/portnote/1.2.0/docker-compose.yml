@@ -1,0 +1,50 @@
+services:
+  web:
+    image: haedlessdev/portnote:1.2.0
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:3000"
+    environment:
+      JWT_SECRET: "changeme_jwt_secret"
+      USER_SECRET: "changeme_user_secret"
+      LOGIN_USERNAME: "admin"
+      LOGIN_PASSWORD: "admin"
+      DATABASE_URL: "postgresql://postgres:${PANEL_DB_USER_PASSWORD}@db:5432/postgres"
+    depends_on:
+      db:
+        condition: service_started
+    labels:
+      createdBy: Apps
+    networks:
+      - 1panel-network
+  agent:
+    image: haedlessdev/portnote-agent:1.2.0
+    environment:
+      DATABASE_URL: "postgresql://postgres:${PANEL_DB_USER_PASSWORD}@db:5432/postgres"
+    depends_on:
+      db:
+        condition: service_started
+    restart: always
+    labels:
+      createdBy: Apps
+    networks:
+      - 1panel-network
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${PANEL_DB_USER_PASSWORD}
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    labels:
+      createdBy: Apps
+    networks:
+      - 1panel-network
+volumes:
+  postgres_data:
+networks:
+  1panel-network:
+    external: true

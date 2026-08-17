@@ -1,0 +1,32 @@
+name: Remmina
+tags:
+    - 实用工具
+title: 跨平台远程桌面客户端
+description: Remmina 是一款开源、跨平台的远程桌面客户端，支持多种协议和Web界面
+additionalProperties:
+    key: remmina
+    name: Remmina
+    tags:
+        - Tool
+    shortDescZh: 跨平台远程桌面客户端
+    shortDescEn: Cross-platform remote desktop client
+    description:
+        en: Remmina is an open-source, cross-platform remote desktop client with web interface support
+        ja: RemminaはWebインターフェースをサポートするオープンソースのクロスプラットフォームリモートデスクトップクライアントです
+        ms: Remmina ialah klien desktop jauh sumber terbuka merentas platform dengan sokongan antara muka web
+        pt-br: Remmina é um cliente de desktop remoto de código aberto e multiplataforma com suporte a interface web
+        ru: Remmina — это кроссплатформенный клиент удаленного рабочего стола с открытым исходным кодом и поддержкой веб-интерфейса
+        ko: Remmina는 웹 인터페이스를 지원하는 오픈 소스 크로스 플랫폼 원격 데스크톱 클라이언트입니다
+        zh-Hant: Remmina 是一款開源、跨平台的遠端桌面客戶端，支援 Web 管理
+        zh: Remmina 是一款开源、跨平台的远程桌面客户端，支持多种协议和Web界面
+    type: website
+    crossVersionUpdate: true
+    limit: 0
+    recommend: 0
+    website: https://remmina.org/
+    github: https://github.com/FreeRDP/Remmina
+    document: https://remmina.org/how-to/
+    architectures:
+      - amd64
+      - arm64
+      - arm/v7 

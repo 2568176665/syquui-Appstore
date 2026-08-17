@@ -1,0 +1,60 @@
+additionalProperties:
+    formFields:
+        - default: 6274
+          envKey: PANEL_APP_PORT_HTTP
+          labelEn: Web UI Port
+          labelZh: Web界面端口
+          label:
+            en: Web UI Port
+            zh: Web界面端口
+            zh-Hant: Web界面埠
+          required: true
+          rule: paramPort
+          type: number
+        - default: 6277
+          envKey: PANEL_APP_PORT_PROXY
+          labelEn: Proxy Port
+          labelZh: 代理端口
+          label:
+            en: Proxy Port
+            zh: 代理端口
+            zh-Hant: 代理埠
+          required: true
+          rule: paramPort
+          type: number
+        - default: ""
+          envKey: DANGEROUSLY_OMIT_AUTH
+          labelEn: Disable Authentication
+          labelZh: 禁用身份验证 （默认不选择则不禁用）
+          label:
+            en: Disable Authentication
+            zh: 禁用身份验证 （默认不选择则不禁用）
+            zh-Hant: 禁用身份驗證
+          required: false
+          type: select
+          values:
+            - label: "True"
+              value: "true"
+            - label: "False"
+              value: ""
+        - default: "f056e8659d86a35843e4c7bb5b1782b6ba5c10d194e0ddd7ac507ea074f56ca9"
+          envKey: MCP_PROXY_AUTH_TOKEN
+          labelEn: Proxy Auth Token (openssl rand -hex 32)
+          labelZh: 代理认证令牌 (使用命令openssl rand -hex 32生成)
+          label:
+            en: Proxy Auth Token (openssl rand -hex 32)
+            zh: 代理认证令牌 (使用命令openssl rand -hex 32生成)
+            zh-Hant: 代理認證令牌
+          random: false
+          required: false
+          type: text
+        - default: "http://your-server-ip:6274"
+          envKey: ALLOWED_ORIGINS
+          labelEn: Allowed Origins
+          labelZh: 允许的网站来源
+          label:
+            en: Allowed Origins
+            zh: 允许的网站来源
+            zh-Hant: 允許的源站
+          required: false
+          type: text

@@ -1,0 +1,26 @@
+name: Tianji
+tags:
+    - 监控工具
+title: 开源 all-in-one 数据洞察中心
+description: Tianji 是一款开源的 all-in-one 数据洞察中心，集成网站分析、服务监控、服务器状态监控等功能
+additionalProperties:
+    key: tianji
+    name: Tianji
+    tags:
+        - Monitoring
+    shortDescZh: 开源 all-in-one 数据洞察中心
+    shortDescEn: Open-source all-in-one data insight center
+    description:
+        en: Tianji is an open-source all-in-one data insight center that combines website analytics, uptime monitoring, and server status monitoring
+        zh: Tianji 是一款开源的 all-in-one 数据洞察中心，集成网站分析、服务监控、服务器状态监控等功能
+    type: website
+    crossVersionUpdate: true
+    limit: 0
+    recommend: 0
+    website: https://tianji.dev/
+    github: https://github.com/msgbyte/tianji
+    document: https://tianji.dev/docs/intro
+    memoryRequired: 1024
+    architectures:
+      - arm64
+      - amd64

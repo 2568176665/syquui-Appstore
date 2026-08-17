@@ -1,0 +1,28 @@
+name: Raycast AI OpenRouter Proxy
+tags:
+    - AI / 大模型
+    - 开发工具
+title: Raycast AI OpenRouter代理
+description: 允许Raycast AI使用任何OpenAI兼容API的代理服务器，支持OpenAI、Gemini、OpenRouter等模型，无需Raycast Pro订阅。
+additionalProperties:
+  key: raycast-ai-openrouter-proxy
+  name: Raycast AI OpenRouter Proxy
+  tags:
+    - AI
+    - 开发工具
+  shortDescZh: Raycast AI的OpenAI兼容API代理
+  shortDescEn: OpenAI-compatible API proxy for Raycast AI
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/miikkaylisiurunen/raycast-ai-openrouter-proxy
+  github: https://github.com/miikkaylisiurunen/raycast-ai-openrouter-proxy
+  description:
+    en: A proxy server that allows Raycast AI to utilize models from any OpenAI-compatible API without requiring a Raycast Pro subscription
+    zh: 允许Raycast AI使用任何OpenAI兼容API的代理服务器，无需Raycast Pro订阅
+    zh-Hant: 允許Raycast AI使用任何OpenAI兼容API的代理服務器，無需Raycast Pro訂閱
+  memoryRequired: 512
+  architectures:
+    - amd64
+    - arm64

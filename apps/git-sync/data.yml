@@ -1,0 +1,43 @@
+name: Git-Sync
+
+tags:
+    - Git
+    - 同步
+    - 备份
+    - Docker
+    - 自动化
+    - 持久化
+    - 代码
+    - 定时
+    - 跨平台
+title: Git 仓库自动同步与备份工具
+
+description: Git-Sync 是一款支持多平台的 Git 仓库自动同步与备份工具，支持定时任务、Docker 快速部署，适合个人和团队代码备份。
+
+additionalProperties:
+    key: git-sync
+    name: Git-Sync
+    tags:
+        - Git
+        - Sync
+        - Backup
+        - Automation
+        - Docker
+        - Cron
+        - Code
+        - CrossPlatform
+    shortDescZh: Git 仓库自动同步与备份工具，支持定时任务和多平台。
+    shortDescEn: Git repository auto sync and backup tool, supports cron and multi-platform.
+    description:
+        en: Git repository auto sync and backup tool. Supports Docker, cron jobs, and multi-platform deployment. Easy to use and highly customizable.
+        zh: Git-Sync 是一款支持多平台的 Git 仓库自动同步与备份工具，支持定时任务、Docker 快速部署，适合个人和团队代码备份。
+    type: tool
+    crossVersionUpdate: true
+    limit: 0
+    recommend: 0
+    website: https://github.com/AkashRajpurohit/git-sync
+    github: https://github.com/AkashRajpurohit/git-sync
+    document: https://github.com/AkashRajpurohit/git-sync/wiki/Installation#with-docker
+    architectures:
+        - amd64
+        - arm64 

@@ -1,0 +1,33 @@
+name: PanSou
+tags:
+  - 实用工具
+  - 网盘搜索
+title: 高性能网盘资源搜索API服务
+description: PanSou是一个高性能的网盘资源搜索API服务，支持TG频道和插件搜索，系统设计以性能和可扩展性为核心，支持多频道多插件并发搜索、结果智能排序和网盘类型分类。Docker集成前后端，一键启动，开箱即用。
+additionalProperties:
+  key: pansou
+  name: PanSou
+  tags:
+    - Tool
+  shortDescZh: 高性能网盘资源搜索API服务
+  shortDescEn: High-performance cloud drive search API service
+  description:
+    en: A high-performance cloud drive resource search API service that supports Telegram channel and plugin searches. The system is designed with performance and scalability at its core, supporting concurrent searches across multiple channels and plugins, intelligent result sorting, and cloud drive type categorization. Docker integrates front-end and back-end for one-click startup and out-of-the-box use.
+    ja: 高性能なクラウドドライブリソース検索APIサービス，Telegramチャンネルとプラグイン検索をサポート。性能とスケーラビリティを中心としたシステム設計。
+    ms: Perkhidmatan API carian sumber pemacu awan berprestasi tinggi yang menyokong carian saluran Telegram dan plugin. Sistem direka dengan prestasi dan skalabiliti sebagai teras.
+    pt-br: Serviço de API de pesquisa de recursos de armazenamento em nuvem de alto desempenho que suporta pesquisas de canais Telegram e plugins. Sistema projetado com desempenho e escalabilidade como núcleo.
+    ru: Высокопроизводительный API-сервис поиска ресурсов облачных дисков, поддерживающий поиск по Telegram-каналам и плагинам.
+    ko: Telegram 채널 및 플러그인 검색을 지원하는 고성능 클라우드 드라이브 리소스 검색 API 서비스. 성능과 확장성을 핵심으로 한 시스템 설계.
+    zh-Hant: 高性能的雲端硬碟資源搜索API服務，支持Telegram頻道和插件搜索。系統設計以性能和可擴展性為核心，支持多頻道多插件並發搜索、結果智能排序和雲端硬碟類型分類。
+    zh: PanSou是一个高性能的网盘资源搜索API服务，支持TG频道和插件搜索。系统设计以性能和可扩展性为核心，支持多频道多插件并发搜索、结果智能排序和网盘类型分类。Docker集成前后端，一键启动，开箱即用。
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/fish2018/pansou
+  github: https://github.com/fish2018/pansou
+  document: https://github.com/fish2018/pansou
+  memoryRequired: 512
+  architectures:
+    - amd64
+    - arm64

@@ -1,0 +1,29 @@
+name: Netbird
+tags:
+  - 实用工具
+  - 本地
+  - 开发工具
+title: 基于WireGuard协议的VPN网络工具
+description:
+  en: Connect your devices into a secure WireGuard®-based overlay network with
+    SSO, MFA and granular access controls.
+  zh: 基于WireGuard协议的VPN网络工具
+additionalProperties:
+  key: netbird
+  name: Netbird
+  tags:
+    - Tool
+    - Local
+    - DevTool
+  shortDescZh: 基于WireGuard协议的VPN网络工具
+  shortDescEn: Connect your devices into a secure WireGuard®-based overlay
+    network with SSO, MFA and granular access controls.
+  type: tool
+  crossVersionUpdate: true
+  limit: 0
+  website: https://netbird.io/
+  github: https://github.com/netbirdio/netbird
+  document: https://docs.netbird.io
+  architectures:
+    - amd64
+    - arm64

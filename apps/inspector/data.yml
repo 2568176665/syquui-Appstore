@@ -1,0 +1,29 @@
+name: MCP Inspector
+tags:
+    - AI / 大模型
+    - 开发工具
+title: Model Context Protocol (MCP) 服务器调试工具
+description: MCP Inspector 是一个用于测试和调试 Model Context Protocol (MCP) 服务器的开发工具，提供直观的 Web UI 界面和命令行接口，支持连接管理、能力探索和请求/响应检查等功能。
+additionalProperties:
+  key: inspector
+  name: MCP Inspector
+  tags:
+    - AI
+    - 开发工具
+  shortDescZh: MCP 服务器测试与调试工具
+  shortDescEn: Testing and debugging tool for MCP servers
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/modelcontextprotocol/inspector
+  github: https://github.com/modelcontextprotocol/inspector
+  document: https://github.com/modelcontextprotocol/inspector
+  description:
+    en: A development tool for testing and debugging Model Context Protocol (MCP) servers, featuring a React-based Web UI client and a Node.js proxy server
+    zh: 用于测试和调试 Model Context Protocol (MCP) 服务器的开发工具，包含基于 React 的 Web UI 客户端和 Node.js 代理服务器
+    zh-Hant: 用於測試和調試 Model Context Protocol (MCP) 服務器的開發工具，包含基於 React 的 Web UI 客戶端和 Node.js 代理服務器
+  memoryRequired: 1024
+  architectures:
+    - amd64
+    - arm64

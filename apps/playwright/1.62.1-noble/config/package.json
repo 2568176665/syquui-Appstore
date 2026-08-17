@@ -1,0 +1,17 @@
+{
+  "name": "playwright-test-environment",
+  "version": "1.0.0",
+  "description": "Playwright test environment for 1Panel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.55.0",
+    "express": "^4.18.2"
+  },
+  "keywords": ["playwright", "testing", "automation"],
+  "author": "1Panel-Appstore",
+  "license": "MIT"
+}

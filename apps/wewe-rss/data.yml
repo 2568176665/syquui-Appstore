@@ -1,0 +1,26 @@
+name: WeWe RSS
+tags:
+  - 实用工具
+title: 更优雅的微信公众号订阅方式
+description: WeWe RSS 是一个优雅的微信公众号订阅工具，支持RSS输出和文章存档
+additionalProperties:
+  key: wewe-rss
+  name: WeWe RSS
+  tags:
+    - Tool
+  shortDescZh: 更优雅的微信公众号订阅方式
+  shortDescEn: A more elegant way to subscribe to WeChat Official Accounts
+  description:
+    en: WeWe RSS is an elegant tool for subscribing to WeChat Official Accounts with RSS output and article archiving
+    zh-Hant: WeWe RSS 是一個優雅的微信公眾號訂閱工具，支持RSS輸出和文章存檔
+    zh: WeWe RSS 是一个优雅的微信公众号订阅工具，支持RSS输出和文章存档
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/cooderl/wewe-rss
+  github: https://github.com/cooderl/wewe-rss
+  document: https://github.com/cooderl/wewe-rss
+  architectures:
+    - amd64
+    - arm64

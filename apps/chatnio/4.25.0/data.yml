@@ -1,0 +1,137 @@
+additionalProperties:
+  formFields:
+    - default: 8094
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      required: true
+      rule: paramPort
+      type: number
+      label:
+        en: Web Port
+        ja: Webポート
+        ms: Port Web
+        pt-br: Porta Web
+        ru: Веб-порт
+        ko: 웹 포트
+        zh-Hant: Web 埠
+        zh: Web 端口
+    - default: chatnio
+      envKey: PANEL_DB_NAME
+      random: true
+      required: true
+      rule: paramCommon
+      type: text
+      label:
+        en: Database Name
+        ja: データベース名
+        ms: Nama Pangkalan Data
+        pt-br: Nome do Banco de Dados
+        ru: Имя базы данных
+        ko: 데이터베이스 이름
+        zh-Hant: 資料庫名稱
+        zh: 数据库名
+    - default: chatnio
+      envKey: PANEL_DB_USER
+      random: true
+      required: true
+      rule: paramCommon
+      type: text
+      label:
+        en: Database User
+        ja: データベースユーザー
+        ms: Pengguna Pangkalan Data
+        pt-br: Usuário do Banco de Dados
+        ru: Пользователь базы данных
+        ko: 데이터베이스 사용자
+        zh-Hant: 資料庫使用者
+        zh: 数据库用户
+    - default: chatnio
+      envKey: PANEL_DB_USER_PASSWORD
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+      label:
+        en: Database Password
+        ja: データベースパスワード
+        ms: Kata Laluan Pangkalan Data
+        pt-br: Senha do Banco de Dados
+        ru: Пароль базы данных
+        ko: 데이터베이스 비밀번호
+        zh-Hant: 資料庫密碼
+        zh: 数据库密码
+    - default: chatnio
+      envKey: PANEL_DB_ROOT_PASSWORD
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+      label:
+        en: Database Root Password
+        ja: データベースルートパスワード
+        ms: Kata Laluan Root Pangkalan Data
+        pt-br: Senha Root do Banco de Dados
+        ru: Пароль root базы данных
+        ko: 데이터베이스 루트 비밀번호
+        zh-Hant: 資料庫 Root 密碼
+        zh: 数据库 Root 密码
+    - default: chatnio
+      envKey: PANEL_REDIS_ROOT_PASSWORD
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+      label:
+        en: Redis Password
+        ja: Redis パスワード
+        ms: Kata Laluan Redis
+        pt-br: Senha Redis
+        ru: Пароль Redis
+        ko: Redis 비밀번호
+        zh-Hant: Redis 密碼
+        zh: Redis 密码
+    - default: "0"
+      envKey: REDIS_DB
+      required: true
+      type: select
+      values:
+        - label: "0"
+          value: "0"
+        - label: "1"
+          value: "1"
+        - label: "2"
+          value: "2"
+        - label: "3"
+          value: "3"
+        - label: "4"
+          value: "4"
+        - label: "5"
+          value: "5"
+      label:
+        en: Redis Database
+        ja: Redis データベース
+        ms: Pangkalan Data Redis
+        pt-br: Banco de Dados Redis
+        ru: База данных Redis
+        ko: Redis 데이터베이스
+        zh-Hant: Redis 資料庫
+        zh: Redis 数据库
+    - default: "true"
+      edit: true
+      envKey: SERVE_STATIC
+      required: true
+      type: select
+      values:
+        - label: "Enable"
+          value: "true"
+        - label: "Disable"
+          value: "false"
+      label:
+        en: Serve Static Files
+        ja: 静的ファイルサービス
+        ms: Perkhidmatan Fail Statik
+        pt-br: Servir Arquivos Estáticos
+        ru: Обслуживание статических файлов
+        ko: 정적 파일 서비스
+        zh-Hant: 靜態檔案服務
+        zh: 静态文件服务

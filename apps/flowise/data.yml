@@ -1,0 +1,29 @@
+name: Flowise
+tags:
+  - AI工具
+title: 可视化构建AI/LLM流程
+description: Flowise是一个可视化工具，用于构建和部署LLM应用程序和AI代理
+additionalProperties:
+  key: flowise
+  name: Flowise
+  tags:
+    - AI
+  shortDescZh: 可视化构建AI/LLM流程
+  shortDescEn: Visually Build AI/LLM Flows
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://flowiseai.com/
+  github: https://github.com/FlowiseAI/Flowise
+  document: https://docs.flowiseai.com/
+  description:
+    en: Flowise is a visual tool for building and deploying LLM applications and AI agents
+    zh: Flowise是一个可视化工具，用于构建和部署LLM应用程序和AI代理
+    zh-Hant: Flowise是一個可視化工具，用於構建和部署LLM應用程序和AI代理
+    ja: FlowiseはLLMアプリケーションとAIエージェントを構築・デプロイするためのビジュアルツールです
+    ko: Flowise는 LLM 애플리케이션 및 AI 에이전트를 구축하고 배포하기 위한 시각적 도구입니다
+  memoryRequired: 1024
+  architectures:
+    - amd64
+    - arm64

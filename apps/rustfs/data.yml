@@ -1,0 +1,26 @@
+name: RustFS
+tags:
+    - 云存储
+title: 高性能Rust对象存储系统
+description: 用Rust编写的高性能分布式对象存储系统，提供S3兼容API
+additionalProperties:
+    key: rustfs
+    name: RustFS
+    tags:
+        - Storage
+    shortDescZh: 高性能Rust对象存储系统
+    shortDescEn: High-performance Rust object storage system
+    description:
+        en: High-performance distributed object storage system written in Rust with S3 compatible API
+        zh: 用Rust编写的高性能分布式对象存储系统，提供S3兼容API
+    type: website
+    crossVersionUpdate: true
+    limit: 1
+    recommend: 0
+    website: https://github.com/rustfs/rustfs
+    github: https://github.com/rustfs/rustfs
+    document: https://github.com/rustfs/rustfs/wiki
+    memoryRequired: 2048
+    architectures:
+      - arm64
+      - amd64

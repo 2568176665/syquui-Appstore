@@ -1,0 +1,87 @@
+services:
+  espocrm:
+    image: espocrm/espocrm:10.0.4
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    ports:
+      - ${PANEL_APP_PORT_HTTP}:80
+    volumes:
+      - ./data:/var/www/html/data
+      - ./custom:/var/www/html/custom
+      - ./client-custom:/var/www/html/client/custom
+    networks:
+      - 1panel-network
+    environment:
+      - ESPOCRM_DATABASE_HOST=${CONTAINER_NAME}-Db
+      - ESPOCRM_DATABASE_NAME=${ESPOCRM_DATABASE_NAME}
+      - ESPOCRM_DATABASE_USER=${ESPOCRM_DATABASE_USER}
+      - ESPOCRM_DATABASE_PASSWORD=${ESPOCRM_DATABASE_PASSWORD}
+      - ESPOCRM_ADMIN_USERNAME=${ESPOCRM_ADMIN_USERNAME}
+      - ESPOCRM_ADMIN_PASSWORD=${ESPOCRM_ADMIN_PASSWORD}
+      - ESPOCRM_SITE_URL=${ESPOCRM_SITE_URL}
+      - ESPOCRM_CONFIG_USE_WEB_SOCKET=true
+      - ESPOCRM_CONFIG_WEB_SOCKET_URL=ws://${CONTAINER_NAME}-Websocket:8080
+      - ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBSCRIBER_DSN=tcp://*:7777
+      - ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBMISSION_DSN=tcp://${CONTAINER_NAME}-Websocket:7777
+    depends_on:
+      - espocrm-db
+    labels:
+      createdBy: Apps
+  espocrm-daemon:
+    image: espocrm/espocrm:10.0.4
+    container_name: ${CONTAINER_NAME}-Daemon
+    restart: always
+    entrypoint: docker-daemon.sh
+    volumes:
+      - ./data:/var/www/html/data
+      - ./custom:/var/www/html/custom
+      - ./client-custom:/var/www/html/client/custom
+    networks:
+      - 1panel-network
+    environment:
+      - ESPOCRM_DATABASE_HOST=${CONTAINER_NAME}-Db
+      - ESPOCRM_DATABASE_NAME=${ESPOCRM_DATABASE_NAME}
+      - ESPOCRM_DATABASE_USER=${ESPOCRM_DATABASE_USER}
+      - ESPOCRM_DATABASE_PASSWORD=${ESPOCRM_DATABASE_PASSWORD}
+    depends_on:
+      - espocrm
+    labels:
+      createdBy: Apps
+  espocrm-websocket:
+    image: espocrm/espocrm:10.0.4
+    container_name: ${CONTAINER_NAME}-Websocket
+    restart: always
+    entrypoint: docker-websocket.sh
+    volumes:
+      - ./data:/var/www/html/data
+      - ./custom:/var/www/html/custom
+      - ./client-custom:/var/www/html/client/custom
+    networks:
+      - 1panel-network
+    environment:
+      - ESPOCRM_CONFIG_USE_WEB_SOCKET=true
+      - ESPOCRM_CONFIG_WEB_SOCKET_URL=ws://${CONTAINER_NAME}-Websocket:8080
+      - ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBSCRIBER_DSN=tcp://*:7777
+      - ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBMISSION_DSN=tcp://${CONTAINER_NAME}-Websocket:7777
+    depends_on:
+      - espocrm
+    labels:
+      createdBy: Apps
+  espocrm-db:
+    image: mariadb:11.4
+    container_name: ${CONTAINER_NAME}-Db
+    restart: always
+    volumes:
+      - ./db-data:/var/lib/mysql
+    networks:
+      - 1panel-network
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${ESPOCRM_DATABASE_NAME}
+      - MARIADB_USER=${ESPOCRM_DATABASE_USER}
+      - MARIADB_PASSWORD=${ESPOCRM_DATABASE_PASSWORD}
+    labels:
+      createdBy: Apps
+networks:
+  1panel-network:
+    external: true

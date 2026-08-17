@@ -1,0 +1,29 @@
+name: NPS
+tags:
+  - 工具
+title: 轻量级、高性能、功能强大的内网穿透代理服务器
+description: 基于 nps 0.26 的基础上由djylb二次开发
+additionalProperties:
+  key: nps
+  name: NPS
+  tags:
+    - Tool
+  shortDescZh: 轻量级、高性能、功能强大的内网穿透代理服务器
+  shortDescEn: Lightweight, high-performance, powerful intranet penetration proxy server
+  description:
+    zh: 轻量级、高性能、功能强大的内网穿透代理服务器
+    en: Lightweight, high-performance, powerful intranet penetration proxy server
+  type: website
+  crossVersionUpdate: true
+  limit: 1
+  recommend: 0
+  website: https://d-jy.net/docs/nps/
+  github: https://github.com/djylb/nps
+  document: https://d-jy.net/docs/nps/
+  architectures:
+    - amd64
+    - arm64
+    - arm/v7
+    - 386
+    - ppc64le
+    - s390x

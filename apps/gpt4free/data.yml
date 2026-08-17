@@ -1,0 +1,27 @@
+name: GPT4Free
+tags:
+    - AI / 大模型
+title: 免费的GPT-4和其他大语言模型API接口
+description: GPT4Free是一个开源项目，提供免费的GPT-4和其他大语言模型API接口，支持多种模型如GPT-4、Claude、Gemini等。
+additionalProperties:
+  key: gpt4free
+  name: GPT4Free
+  tags:
+    - AI
+  shortDescZh: 免费的GPT-4和其他大语言模型API接口
+  shortDescEn: Free API for GPT-4 and other large language models
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://g4f.dev/
+  github: https://github.com/xtekky/gpt4free
+  document: https://github.com/gpt4free/g4f.dev/blob/main/docs
+  description:
+    en: Free API for GPT-4 and other large language models
+    zh: 免费的GPT-4和其他大语言模型API接口
+    zh-Hant: 免費的GPT-4和其他大語言模型API接口
+  memoryRequired: 2048
+  architectures:
+    - amd64
+    - arm64

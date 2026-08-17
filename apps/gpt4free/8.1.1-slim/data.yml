@@ -1,0 +1,24 @@
+additionalProperties:
+  formFields:
+    - default: 8080
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Web Interface Port
+      labelZh: Web界面端口
+      label:
+        en: Web Interface Port
+        zh: Web界面端口
+        zh-Hant: Web界面埠
+      required: true
+      rule: paramPort
+      type: number
+    - default: 1337
+      envKey: PANEL_APP_PORT_API
+      labelEn: API Port
+      labelZh: API接口端口
+      label:
+        en: API Port
+        zh: API接口端口
+        zh-Hant: API接口埠
+      required: true
+      rule: paramPort
+      type: number

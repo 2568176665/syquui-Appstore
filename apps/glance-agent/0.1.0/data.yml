@@ -1,0 +1,21 @@
+additionalProperties:
+  formFields:
+    - default: "27973"
+      envKey: PANEL_APP_PORT_HTTP
+      label:
+        en: Agent-Port
+        zh: Agent-端口
+      required: true
+      type: number
+      edit: true
+      rule: paramPort
+    - default: your_auth_token_here
+      envKey: AGENT_TOKEN
+      label:
+        en: Agent-Token
+        zh: Agent-Token
+      required: false
+      type: text
+      edit: true
+      random: true
+      values: []

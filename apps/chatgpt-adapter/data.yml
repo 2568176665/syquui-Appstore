@@ -1,0 +1,27 @@
+name: ChatGPT Adapter
+tags:
+    - AI / 大模型
+title: 多款AI聊天接口适配到OpenAI标准接口
+description: ChatGPT Adapter是一个开源项目，将多款AI聊天逆向接口（如coze、deepseek、cursor、bing等）适配到OpenAI API标准接口服务端，支持高速流式输出和多轮对话。
+additionalProperties:
+  key: chatgpt-adapter
+  name: ChatGPT Adapter
+  tags:
+    - AI
+  shortDescZh: 多款AI聊天接口适配到OpenAI标准接口
+  shortDescEn: Multiple AI chat interfaces adapted to OpenAI standard API
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://bincooo.github.io/chatgpt-adapter
+  github: https://github.com/bincooo/chatgpt-adapter
+  document: https://bincooo.github.io/chatgpt-adapter
+  description:
+    en: Multiple AI chat interfaces adapted to OpenAI standard API
+    zh: 多款AI聊天接口适配到OpenAI标准接口
+    zh-Hant: 多款AI聊天接口適配到OpenAI標準接口
+  memoryRequired: 512
+  architectures:
+    - amd64
+    - arm64

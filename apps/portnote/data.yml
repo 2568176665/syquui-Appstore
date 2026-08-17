@@ -1,0 +1,39 @@
+name: PortNote
+
+tags:
+  - 运维
+  - 资产管理
+  - 端口管理
+  - 可视化
+  - Docker
+  - 网络
+
+title: 服务器端口管理与可视化工具
+
+description: 轻量级服务器端口管理与可视化工具，支持多平台部署，适合资产与端口信息管理。
+
+additionalProperties:
+  key: portnote
+  name: PortNote
+  tags:
+    - Tool
+    - Port
+    - Network
+    - Ops
+  shortDescZh: 轻量级服务器端口管理与可视化工具，支持多平台部署。
+  shortDescEn: Lightweight server port management and visualization tool,
+    cross-platform supported.
+  description:
+    zh: PortNote 是一款轻量级服务器端口管理与可视化工具，支持多平台部署，适合资产与端口信息管理。
+    en: PortNote is a lightweight server port management and visualization tool,
+      suitable for asset and port information management.
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/crocofied/PortNote
+  github: https://github.com/crocofied/PortNote
+  document: https://github.com/crocofied/PortNote/blob/main/README.md
+  architectures:
+    - amd64
+    - arm64

@@ -1,0 +1,36 @@
+name: 微力同步
+tags:
+    - 文件同步
+    - NAS
+    - 备份
+title: 智能P2P极速文件同步工具
+description: 微力同步（Verysync）是一款基于P2P技术的极速文件同步工具，支持多平台部署，适合家庭、企业、开发者等多场景使用。
+additionalProperties:
+    key: verysync
+    name: 微力同步
+    tags:
+        - Sync
+        - NAS
+        - Backup
+    shortDescZh: 极速P2P文件同步，支持多平台和多架构。
+    shortDescEn: Fast P2P file sync, cross-platform and multi-architecture supported.
+    description:
+        en: Fast P2P file synchronization tool based on intelligent technology. Supports multi-platform deployment, suitable for home, enterprise, and developer scenarios.
+        ja: 高速P2Pファイル同期ツール。多プラットフォーム対応。
+        ms: Alat penyegerakan fail P2P pantas, menyokong pelbagai platform.
+        pt-br: Ferramenta de sincronização de arquivos P2P rápida, com suporte multiplataforma.
+        ru: Быстрый инструмент P2P-синхронизации файлов, поддержка различных платформ.
+        ko: 빠른 P2P 파일 동기화 도구, 다양한 플랫폼 지원.
+        zh-hant: 極速P2P檔案同步工具，支援多平台。
+        zh: 微力同步是一款基于P2P技术的极速文件同步工具，支持多平台部署，适合家庭、企业、开发者等多场景使用。
+    type: website
+    crossVersionUpdate: true
+    limit: 0
+    recommend: 0
+    website: https://www.verysync.com/
+    github: https://github.com/Jonnyan404/verysync
+    document: https://www.verysync.com/manual/install/docker.html
+    architectures:
+        - amd64
+        - arm64
+        - arm/v7 

@@ -1,0 +1,17 @@
+additionalProperties:
+    formFields:
+        - default: 16601
+          edit: true
+          envKey: PANEL_APP_PORT_HTTP
+          labelEn: Port
+          labelZh: 管理端口
+          required: true
+          rule: paramPort
+          type: number
+        - default: ./luckyconf
+          edit: true
+          envKey: LUCKY_CONF_PATH
+          labelEn: Config Path
+          labelZh: 配置目录
+          required: true
+          type: string 

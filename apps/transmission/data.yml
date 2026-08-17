@@ -1,0 +1,31 @@
+name: Transmission
+tags:
+    - 实用工具
+title: 高性能BT/PT下载工具
+description: Transmission 是一款开源、高性能的BT/PT下载工具，支持Web界面和多平台
+additionalProperties:
+    key: transmission
+    name: Transmission
+    tags:
+        - Tool
+    shortDescZh: 高性能BT/PT下载工具
+    shortDescEn: High-performance BT/PT downloader
+    description:
+        en: Transmission is an open-source, high-performance BT/PT downloader with web interface support
+        ja: TransmissionはWebインターフェースをサポートするオープンソースの高性能BT/PTダウンローダーです
+        ms: Transmission ialah pemuat turun BT/PT berprestasi tinggi sumber terbuka dengan sokongan antara muka web
+        pt-br: Transmission é um downloader BT/PT de alto desempenho e código aberto com suporte a interface web
+        ru: Transmission — это высокопроизводительный загрузчик BT/PT с открытым исходным кодом и поддержкой веб-интерфейса
+        ko: Transmission은 웹 인터페이스를 지원하는 오픈 소스 고성능 BT/PT 다운로더입니다
+        zh-Hant: Transmission 是一款開源、高性能的 BT/PT 下載工具，支援 Web 管理
+        zh: Transmission 是一款开源、高性能的BT/PT下载工具，支持Web界面和多平台
+    type: website
+    crossVersionUpdate: true
+    limit: 0
+    recommend: 0
+    website: https://transmissionbt.com/
+    github: https://github.com/transmission/transmission
+    document: https://github.com/transmission/transmission/wiki
+    architectures:
+      - amd64
+      - arm64

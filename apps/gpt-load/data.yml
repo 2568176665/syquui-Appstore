@@ -1,0 +1,27 @@
+name: GPT-Load
+tags:
+    - AI / 大模型
+title: 智能密钥轮询的多渠道 AI 代理
+description: GPT-Load 是一个高性能、企业级的 AI 接口透明代理服务，专门为需要集成多种 AI 服务的企业和开发者设计。采用 Go 语言开发，具备智能密钥管理、负载均衡和完善的监控功能。
+additionalProperties:
+  key: gpt-load
+  name: GPT-Load
+  tags:
+    - AI
+  shortDescZh: 智能密钥轮询的多渠道 AI 代理
+  shortDescEn: Intelligent key rotation multi-channel AI proxy
+  description:
+    en: A high-performance, enterprise-grade AI API transparent proxy service designed specifically for enterprises and developers who need to integrate multiple AI services. Built with Go, featuring intelligent key management, load balancing, and comprehensive monitoring capabilities.
+    zh: 一个高性能、企业级的 AI 接口透明代理服务，专门为需要集成多种 AI 服务的企业和开发者设计。采用 Go 语言开发，具备智能密钥管理、负载均衡和完善的监控功能。
+    zh-Hant: 一個高性能、企業級的 AI 接口透明代理服務，專門為需要集成多種 AI 服務的企業和開發者設計。採用 Go 語言開發，具備智能密鑰管理、負載均衡和完善的監控功能。
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://www.gpt-load.com
+  github: https://github.com/tbphp/gpt-load
+  document: https://www.gpt-load.com/docs
+  memoryRequired: 1024
+  architectures:
+    - amd64
+    - arm64
