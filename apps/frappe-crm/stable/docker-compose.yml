@@ -62,6 +62,10 @@ services:
       - >
         test -d sites/$$FRAPPE_SITE_NAME ||
         bench new-site $$FRAPPE_SITE_NAME
+        --db-name $$PANEL_DB_NAME
+        --db-user $$PANEL_DB_USER
+        --db-password $$PANEL_DB_USER_PASSWORD
+        --no-setup-db
         --mariadb-root-password $$PANEL_DB_ROOT_PASSWORD
         --admin-password $$FRAPPE_ADMIN_PASSWORD
         --install-app crm
@@ -71,6 +75,9 @@ services:
       - 1panel-network
     environment:
       - FRAPPE_SITE_NAME=${FRAPPE_SITE_NAME}
+      - PANEL_DB_NAME=${PANEL_DB_NAME}
+      - PANEL_DB_USER=${PANEL_DB_USER}
+      - PANEL_DB_USER_PASSWORD=${PANEL_DB_USER_PASSWORD}
       - PANEL_DB_ROOT_PASSWORD=${PANEL_DB_ROOT_PASSWORD}
       - FRAPPE_ADMIN_PASSWORD=${FRAPPE_ADMIN_PASSWORD}
     depends_on:

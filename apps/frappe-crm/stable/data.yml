@@ -16,6 +16,30 @@ additionalProperties:
           labelZh: 数据库服务
           required: true
           type: service
+        - default: frappe_crm
+          envKey: PANEL_DB_NAME
+          random: true
+          required: true
+          rule: paramCommon
+          type: text
+          labelEn: Database Name
+          labelZh: 数据库名称
+        - default: frappe_crm
+          envKey: PANEL_DB_USER
+          random: true
+          required: true
+          rule: paramCommon
+          type: text
+          labelEn: Database User
+          labelZh: 数据库用户
+        - default: ""
+          envKey: PANEL_DB_USER_PASSWORD
+          random: true
+          required: true
+          rule: paramComplexity
+          type: password
+          labelEn: Database Password
+          labelZh: 数据库密码
         - default: ""
           edit: true
           envKey: PANEL_DB_ROOT_PASSWORD
