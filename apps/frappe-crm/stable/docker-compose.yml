@@ -1,4 +1,20 @@
 services:
+  init-permissions:
+    image: ghcr.io/frappe/crm:stable
+    container_name: ${CONTAINER_NAME}-InitPermissions
+    user: root
+    restart: "no"
+    entrypoint:
+      - bash
+      - -c
+    command:
+      - chown -R frappe:frappe sites
+    volumes:
+      - ./sites:/home/frappe/frappe-bench/sites
+    networks:
+      - 1panel-network
+    labels:
+      createdBy: "Apps"
   configurator:
     image: ghcr.io/frappe/crm:stable
     container_name: ${CONTAINER_NAME}-Configurator
@@ -26,6 +42,9 @@ services:
       - REDIS_CACHE=${PANEL_REDIS_HOST}:6379
       - REDIS_QUEUE=${PANEL_REDIS_HOST}:6379
       - SOCKETIO_PORT=9000
+    depends_on:
+      init-permissions:
+        condition: service_completed_successfully
     labels:
       createdBy: Apps
   create-site:
