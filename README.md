@@ -1,6 +1,6 @@
 # 1Panel 本地应用商店
 
-一个第三方维护的 1Panel 本地应用商店，收录了 115 个可直接在 1Panel 中一键安装的自托管应用，涵盖 AI、CRM、网盘、监控、内网穿透、开发工具等类别。
+一个第三方维护的 1Panel 本地应用商店。
 
 ## 包含的应用
 
@@ -10,7 +10,6 @@
 | 9router | 免费 AI 路由器和 Token 节省工具 |
 | adguardhome-sync | AdGuardHome 配置同步工具 |
 | affine | 将文档、白板和数据库完全整合的工作空间 |
-| alist | 支持多存储的文件列表程序和私人网盘 |
 | ani-rss | 动漫自动订阅与下载工具 |
 | apipark | 开源企业级 API 全生命周期管理平台 |
 | arcane | 现代化 Docker 管理面板 |
