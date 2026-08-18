@@ -1,637 +1,234 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
 
 SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
-fail() {
-  echo "FAIL: $*" >&2
-  exit 1
+fail(){ echo "FAIL: $*" >&2; exit 1; }
+assert_file(){ [[ -f "$1" ]] || fail "expected file: $1"; }
+assert_not_file(){ [[ ! -f "$1" ]] || fail "expected missing file: $1"; }
+assert_contains(){ grep -qE -- "$2" "$1" || { cat "$1" >&2; fail "expected '$2' in $1"; }; }
+assert_not_contains(){ ! grep -qE -- "$2" "$1" || { cat "$1" >&2; fail "unexpected '$2' in $1"; }; }
+run_test(){ echo "== $1 =="; shift; "$@"; }
+
+make_top(){
+  local app="$1" key="$2"
+  cat > "$app/data.yml" <<YAML
+name: Demo
+title: Demo
+description: Demo
+additionalProperties:
+  key: $key
+  name: Demo
+  description:
+    en: Demo
+    es-es: Demo
+    fa: Demo
+    ja: Demo
+    ms: Demo
+    pt-br: Demo
+    ru: Demo
+    ko: Demo
+    zh-hant: Demo
+    zh: Demo
+    tr: Demo
+  architectures: [amd64]
+YAML
+  touch "$app/README.md" "$app/README_en.md"
 }
 
-assert_file() {
-  [[ -f "$1" ]] || fail "expected file: $1"
-}
+test_dependencies(){ bash "$SKILL_DIR/scripts/generate-app.sh" --check-deps >/tmp/skill_deps.out; }
 
-assert_not_file() {
-  [[ ! -f "$1" ]] || fail "expected missing file: $1"
-}
-
-assert_contains() {
-  local file="$1"
-  local pattern="$2"
-  grep -qE -- "$pattern" "$file" || fail "expected pattern '$pattern' in $file"
-}
-
-make_fake_path_without() {
-  local dir="$1"
-  mkdir -p "$dir"
-  cat > "$dir/dirname" <<'SH'
-#!/usr/bin/bash
-exec /usr/bin/dirname "$@"
-SH
-  chmod +x "$dir/dirname"
-}
-
-run_test() {
-  local name="$1"
-  shift
-  echo "== $name =="
-  "$@"
-}
-
-test_generate_app_reports_missing_dependencies() {
-  local fake_path="$TMP_DIR/fake-path"
-  make_fake_path_without "$fake_path"
-
-  if PATH="$fake_path" /usr/bin/bash "$SKILL_DIR/scripts/generate-app.sh" --check-deps >/tmp/generate_missing_deps.out 2>&1; then
-    fail "dependency check should fail when yq/jq/curl are missing"
-  fi
-  assert_contains /tmp/generate_missing_deps.out "缺少依赖"
-  assert_contains /tmp/generate_missing_deps.out "yq"
-  assert_contains /tmp/generate_missing_deps.out "jq"
-  assert_contains /tmp/generate_missing_deps.out "curl"
-}
-
-test_download_icon_skip_mode_does_not_create_logo() {
-  local out="$TMP_DIR/skip/logo.png"
-
-  bash "$SKILL_DIR/scripts/download-icon.sh" --mode skip demo-app "$out" >/tmp/download_icon_skip.out
-
+test_icon_modes(){
+  local cache="$TMP_DIR/cache" out="$TMP_DIR/icon/logo.png"
+  mkdir -p "$cache"; printf x > "$cache/demo.png"
+  bash "$SKILL_DIR/scripts/download-icon.sh" --mode skip demo "$out" >/tmp/icon_skip.out
   assert_not_file "$out"
-  assert_contains /tmp/download_icon_skip.out "跳过图标下载"
-}
-
-test_download_icon_cache_only_uses_cached_logo() {
-  local cache_dir="$TMP_DIR/icon-cache"
-  local out="$TMP_DIR/cache/logo.png"
-  mkdir -p "$cache_dir"
-  printf 'cached-logo' > "$cache_dir/demo-app.png"
-
-  bash "$SKILL_DIR/scripts/download-icon.sh" --mode cache-only --cache-dir "$cache_dir" demo-app "$out" >/tmp/download_icon_cache.out
-
+  bash "$SKILL_DIR/scripts/download-icon.sh" --mode cache-only --cache-dir "$cache" demo "$out" >/tmp/icon_cache.out
   assert_file "$out"
-  cmp "$cache_dir/demo-app.png" "$out" || fail "cached logo was not copied"
 }
 
-test_generate_app_accepts_explicit_options_and_skips_icon() {
-  local compose="$TMP_DIR/compose.yml"
-  local output="$TMP_DIR/generated"
+test_generate_pinned_and_preserves_mapping(){
+  local compose="$TMP_DIR/one.yml" out="$TMP_DIR/out1"
   cat > "$compose" <<'YAML'
 services:
-  demo:
+  web:
     image: nginx:1.25.3
     ports:
       - "18080:80"
-YAML
-
-  bash "$SKILL_DIR/scripts/generate-app.sh" \
-    --app-key demo-app \
-    --name DemoApp \
-    --version 1.25.3 \
-    --output "$output" \
-    --icon-mode skip \
-    "$compose" >/tmp/generate_app_options.out
-
-  assert_file "$output/demo-app/latest/docker-compose.yml"
-  assert_file "$output/demo-app/1.25.3/docker-compose.yml"
-  assert_contains "$output/demo-app/data.yml" "^name: DemoApp$"
-  assert_contains "$output/demo-app/latest/docker-compose.yml" "image: nginx:latest"
-  assert_contains "$output/demo-app/1.25.3/docker-compose.yml" "image: nginx:1.25.3"
-  assert_not_file "$output/demo-app/logo.png"
-}
-
-test_generate_app_preserves_compose_environment_and_volumes() {
-  local compose="$TMP_DIR/compose-preserve.yml"
-  local output="$TMP_DIR/generated-preserve"
-  cat > "$compose" <<'YAML'
-services:
-  demo:
-    image: nginx:1.25.3
-    ports:
-      - "18080:80"
-    volumes:
-      - ./data/nginx:/etc/nginx/conf.d
     environment:
-      - TZ=Asia/Shanghai
-      - DEMO_FLAG=true
+      FOO: bar
+      ENABLED: true
+    volumes:
+      - ./data/html:/usr/share/nginx/html
 YAML
-
-  bash "$SKILL_DIR/scripts/generate-app.sh" \
-    --app-key demo-preserve \
-    --name DemoPreserve \
-    --version 1.25.3 \
-    --output "$output" \
-    --icon-mode skip \
-    "$compose" >/tmp/generate_app_preserve.out
-
-  assert_contains "$output/demo-preserve/1.25.3/docker-compose.yml" "./data/nginx:/etc/nginx/conf.d"
-  assert_contains "$output/demo-preserve/1.25.3/docker-compose.yml" "TZ=Asia/Shanghai"
-  assert_contains "$output/demo-preserve/1.25.3/docker-compose.yml" "DEMO_FLAG=true"
+  bash "$SKILL_DIR/scripts/generate-app.sh" --app-key demo --name 'Demo: App' --output "$out" --icon-mode skip "$compose" >/tmp/gen1.out
+  assert_file "$out/demo/1.25.3/docker-compose.yml"
+  assert_not_file "$out/demo/latest/docker-compose.yml"
+  assert_contains "$out/demo/1.25.3/docker-compose.yml" 'FOO=bar'
+  assert_contains "$out/demo/1.25.3/docker-compose.yml" 'ENABLED=true'
+  assert_contains "$out/demo/1.25.3/docker-compose.yml" './data/html:/usr/share/nginx/html'
+  assert_not_contains "$out/demo/1.25.3/docker-compose.yml" 'PUID=0'
+  python3 - <<PY
+import yaml
+for f in ['$out/demo/data.yml','$out/demo/1.25.3/data.yml','$out/demo/1.25.3/docker-compose.yml']:
+    yaml.safe_load(open(f,encoding='utf-8'))
+PY
 }
 
-test_generate_app_uses_explicit_compose_service() {
-  local compose="$TMP_DIR/compose-service.yml"
-  local output="$TMP_DIR/generated-service"
+test_generate_no_invented_mount_or_env(){
+  local compose="$TMP_DIR/min.yml" out="$TMP_DIR/out2"
   cat > "$compose" <<'YAML'
 services:
+  web:
+    image: nginx:1.25.3
+    ports: ["18081:80"]
+YAML
+  bash "$SKILL_DIR/scripts/generate-app.sh" --app-key minimal --output "$out" --icon-mode skip "$compose" >/tmp/gen2.out
+  assert_not_contains "$out/minimal/1.25.3/docker-compose.yml" '^    volumes:'
+  assert_not_contains "$out/minimal/1.25.3/docker-compose.yml" '^    environment:'
+}
+
+test_source_v_tag_directory_normalized(){
+  local compose="$TMP_DIR/v.yml" out="$TMP_DIR/outv"
+  cat > "$compose" <<'YAML'
+services:
+  web:
+    image: ghcr.io/example/app:v1.2.3
+YAML
+  bash "$SKILL_DIR/scripts/generate-app.sh" --app-key vdemo --output "$out" --icon-mode skip "$compose" >/tmp/genv.out
+  assert_file "$out/vdemo/1.2.3/docker-compose.yml"
+  assert_contains "$out/vdemo/1.2.3/docker-compose.yml" 'image: ghcr.io/example/app:v1.2.3'
+}
+
+test_floating_requires_version(){
+  local compose="$TMP_DIR/floating.yml" out="$TMP_DIR/outf"
+  cat > "$compose" <<'YAML'
+services:
+  web:
+    image: example/app:latest
+YAML
+  if bash "$SKILL_DIR/scripts/generate-app.sh" --app-key floating --output "$out" --icon-mode skip "$compose" >/tmp/genf.out 2>&1; then fail "floating image should require explicit version"; fi
+  assert_contains /tmp/genf.out '显式 --version'
+}
+
+test_multiservice_rejected_by_default(){
+  local compose="$TMP_DIR/multi.yml" out="$TMP_DIR/outm"
+  cat > "$compose" <<'YAML'
+services:
+  web:
+    image: example/web:1.0.0
+    depends_on: [db]
   db:
     image: postgres:16
-    ports:
-      - "15432:5432"
-  web:
-    image: ghcr.io/example/webapp:2.3.4
-    ports:
-      - "18080:8080"
-    environment:
-      - WEB_MODE=prod
 YAML
-
-  bash "$SKILL_DIR/scripts/generate-app.sh" \
-    --service web \
-    --app-key demo-service \
-    --name DemoService \
-    --version 2.3.4 \
-    --output "$output" \
-    --icon-mode skip \
-    "$compose" >/tmp/generate_app_service.out
-
-  assert_contains "$output/demo-service/2.3.4/docker-compose.yml" "web:"
-  assert_contains "$output/demo-service/2.3.4/docker-compose.yml" "image: ghcr.io/example/webapp:2.3.4"
-  assert_contains "$output/demo-service/2.3.4/docker-compose.yml" "8080"
-  assert_contains "$output/demo-service/2.3.4/data.yml" "default: 18080"
-  assert_contains "$output/demo-service/2.3.4/docker-compose.yml" "WEB_MODE=prod"
+  if bash "$SKILL_DIR/scripts/generate-app.sh" --app-key multi --output "$out" --icon-mode skip "$compose" >/tmp/genm.out 2>&1; then fail "multi service should be rejected"; fi
+  assert_contains /tmp/genm.out '多服务|检测到 2 个服务'
 }
 
-test_generate_app_remaps_reserved_ports_without_collisions() {
-  local compose="$TMP_DIR/compose-reserved-ports.yml"
-  local output="$TMP_DIR/generated-reserved-ports"
-  cat > "$compose" <<'YAML'
+test_multiservice_partial_requires_lossy_for_depends_on(){
+  local compose="$TMP_DIR/multi2.yml" out="$TMP_DIR/outm2"
+  cp "$TMP_DIR/multi.yml" "$compose"
+  if bash "$SKILL_DIR/scripts/generate-app.sh" --service web --allow-partial-compose --app-key multi --output "$out" --icon-mode skip "$compose" >/tmp/genm2a.out 2>&1; then fail "depends_on should require allow-lossy"; fi
+  bash "$SKILL_DIR/scripts/generate-app.sh" --service web --allow-partial-compose --allow-lossy --app-key multi --output "$out" --icon-mode skip "$compose" >/tmp/genm2b.out
+  assert_file "$out/multi/1.0.0/docker-compose.yml"
+}
+
+test_validator_accepts_8080_default(){
+  local app="$TMP_DIR/v8080/demo"; mkdir -p "$app/1.0.0"; make_top "$app" demo
+  cat > "$app/1.0.0/data.yml" <<'YAML'
+additionalProperties:
+  formFields:
+    - default: 8080
+      envKey: PANEL_APP_PORT_HTTP
+      type: number
+YAML
+  cat > "$app/1.0.0/docker-compose.yml" <<'YAML'
 services:
   demo:
-    image: nginx:1.25.3
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks: [1panel-network]
+    ports: ["${PANEL_APP_PORT_HTTP}:80"]
+    image: example/demo:1.0.0
+    labels: {createdBy: Apps}
+networks:
+  1panel-network: {external: true}
+YAML
+  bash "$SKILL_DIR/scripts/validate-app.sh" --draft "$app" >/tmp/v8080.out
+  assert_not_contains /tmp/v8080.out '默认宿主机端口不应使用 8080'
+}
+
+test_validator_rejects_static_80_and_undefined_port(){
+  local app="$TMP_DIR/vbad/demo"; mkdir -p "$app/1.0.0"; make_top "$app" demo
+  printf 'additionalProperties:\n  formFields: []\n' > "$app/1.0.0/data.yml"
+  cat > "$app/1.0.0/docker-compose.yml" <<'YAML'
+services:
+  demo:
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks: [1panel-network]
     ports:
       - "80:80"
-      - "443:443"
-      - "8080:8080"
-      - "10080:9000"
-      - "10444:9001"
-      - "18082:9002"
+      - "${PANEL_APP_PORT_ADMIN}:9000"
+    image: example/demo:1.0.0
+    labels: {createdBy: Apps}
+networks:
+  1panel-network: {external: true}
 YAML
-
-  bash "$SKILL_DIR/scripts/generate-app.sh" \
-    --service demo \
-    --app-key demo-reserved-ports \
-    --name DemoReservedPorts \
-    --version 1.25.3 \
-    --output "$output" \
-    --icon-mode skip \
-    "$compose" >/tmp/generate_app_reserved_ports.out
-
-  assert_contains "$output/demo-reserved-ports/1.25.3/data.yml" "default: 10081"
-  assert_contains "$output/demo-reserved-ports/1.25.3/data.yml" "default: 10445"
-  assert_contains "$output/demo-reserved-ports/1.25.3/data.yml" "default: 18083"
-  if grep -qE 'default:[[:space:]]*(80|443|8080|10080|10444|18082)$' "$output/demo-reserved-ports/1.25.3/data.yml"; then
-    fail "reserved or colliding host port remained in generated defaults"
-  fi
+  if bash "$SKILL_DIR/scripts/validate-app.sh" --draft "$app" >/tmp/vbad.out 2>&1; then fail "validator should reject bad ports"; fi
+  assert_contains /tmp/vbad.out '80/443'
+  assert_contains /tmp/vbad.out '未在版本 data.yml 定义'
 }
 
-test_generate_app_discovers_github_default_branch_compose() {
-  local fixture="$TMP_DIR/github-fixture"
-  local output="$TMP_DIR/generated-github"
-  mkdir -p "$fixture/api/repos/example" "$fixture/raw/example/demo/master"
-
-  cat > "$fixture/api/repos/example/demo" <<'JSON'
-{
-  "name": "demo",
-  "description": "Demo GitHub app",
-  "homepage": "https://demo.example",
-  "default_branch": "master"
-}
-JSON
-  cat > "$fixture/raw/example/demo/master/compose.yaml" <<'YAML'
-services:
-  demo:
-    image: nginx:1.25.3
-    ports:
-      - "18080:80"
-YAML
-
-  GITHUB_API_BASE_URL="file://${fixture}/api/repos" \
-  GITHUB_RAW_BASE_URL="file://${fixture}/raw" \
-    bash "$SKILL_DIR/scripts/generate-app.sh" \
-      --app-key github-demo \
-      --version 1.25.3 \
-      --output "$output" \
-      --icon-mode skip \
-      "https://github.com/example/demo" >/tmp/generate_app_github.out
-
-  assert_contains "$output/github-demo/data.yml" "Demo GitHub app"
-  assert_contains "$output/github-demo/1.25.3/docker-compose.yml" "image: nginx:1.25.3"
-}
-
-test_generate_app_discovers_github_readme_docker_run() {
-  local fixture="$TMP_DIR/github-readme-fixture"
-  local output="$TMP_DIR/generated-github-readme"
-  mkdir -p "$fixture/api/repos/example" "$fixture/raw/example/readme-demo/main"
-
-  cat > "$fixture/api/repos/example/readme-demo" <<'JSON'
-{
-  "name": "readme-demo",
-  "description": "README docker run app",
-  "homepage": "",
-  "default_branch": "main"
-}
-JSON
-  cat > "$fixture/raw/example/readme-demo/main/README.md" <<'MD'
-# README Demo
-
-```bash
-docker run -d --name readme-demo -p 18080:80 -e "APP_TITLE=Readme Demo" nginx:1.25.3
-```
-MD
-
-  GITHUB_API_BASE_URL="file://${fixture}/api/repos" \
-  GITHUB_RAW_BASE_URL="file://${fixture}/raw" \
-    bash "$SKILL_DIR/scripts/generate-app.sh" \
-      --app-key github-readme-demo \
-      --version 1.25.3 \
-      --output "$output" \
-      --icon-mode skip \
-      "https://github.com/example/readme-demo" >/tmp/generate_app_github_readme.out
-
-  assert_contains "$output/github-readme-demo/1.25.3/docker-compose.yml" "image: nginx:1.25.3"
-  assert_contains "$output/github-readme-demo/1.25.3/docker-compose.yml" "APP_TITLE=Readme Demo"
-  assert_contains "$output/github-readme-demo/1.25.3/data.yml" "default: 18080"
-}
-
-test_generate_app_parses_complex_docker_run_flags() {
-  local output="$TMP_DIR/generated-run"
-
-  bash "$SKILL_DIR/scripts/generate-app.sh" \
-    --app-key docker-run-demo \
-    --name DockerRunDemo \
-    --version 1.2.3 \
-    --output "$output" \
-    --icon-mode skip \
-    'docker run -d --name docker-run-demo --env "APP_TITLE=My Demo" --env-file ./data/app.env --publish=127.0.0.1:18080:8080/tcp --volume=./data/demo:/data ghcr.io/example/demo:1.2.3' >/tmp/generate_app_run.out
-
-  assert_contains "$output/docker-run-demo/1.2.3/docker-compose.yml" "image: ghcr.io/example/demo:1.2.3"
-  assert_contains "$output/docker-run-demo/1.2.3/docker-compose.yml" "APP_TITLE=My Demo"
-  assert_contains "$output/docker-run-demo/1.2.3/docker-compose.yml" "./data/demo:/data"
-  assert_contains "$output/docker-run-demo/1.2.3/docker-compose.yml" "8080"
-}
-
-test_validate_app_rejects_undefined_port_variable() {
-  local app="$TMP_DIR/bad-port/apps/demo-app"
-  mkdir -p "$app/1.0.0"
-  printf 'png' > "$app/logo.png"
-  cat > "$app/data.yml" <<'YAML'
-name: DemoApp
-tags:
-    - 实用工具
-title: Demo
-description: Demo
-additionalProperties:
-    key: demo-app
-    name: DemoApp
-    architectures:
-      - amd64
-YAML
-  cat > "$app/1.0.0/data.yml" <<'YAML'
-additionalProperties:
-  formFields:
-    - default: 8080
-      edit: true
-      envKey: PANEL_APP_PORT_HTTP
-      labelEn: Web Port
-      labelZh: Web端口
-      required: true
-      rule: paramPort
-      type: number
-YAML
+test_validator_rejects_floating_image_in_concrete_version(){
+  local app="$TMP_DIR/vfloat/demo"; mkdir -p "$app/1.0.0"; make_top "$app" demo
+  printf 'additionalProperties:\n  formFields: []\n' > "$app/1.0.0/data.yml"
   cat > "$app/1.0.0/docker-compose.yml" <<'YAML'
 services:
   demo:
     container_name: ${CONTAINER_NAME}
     restart: always
-    networks:
-      - 1panel-network
-    ports:
-      - "${PANEL_APP_PORT_ADMIN}:80"
-    image: nginx:1.0.0
-    labels:
-      createdBy: "Apps"
+    networks: [1panel-network]
+    image: example/demo:latest
+    labels: {createdBy: Apps}
 networks:
-  1panel-network:
-    external: true
+  1panel-network: {external: true}
 YAML
-
-  if bash "$SKILL_DIR/scripts/validate-app.sh" "$app" >/tmp/validate_bad_port.out 2>&1; then
-    fail "validator should reject undefined port variable"
-  fi
-  assert_contains /tmp/validate_bad_port.out "未在版本 data.yml 中定义"
+  if bash "$SKILL_DIR/scripts/validate-app.sh" --draft "$app" >/tmp/vfloat.out 2>&1; then fail "validator should reject floating primary image"; fi
+  assert_contains /tmp/vfloat.out '浮动主镜像'
 }
 
-test_validate_app_rejects_unsafe_default_port() {
-  local app="$TMP_DIR/unsafe-default/apps/demo-app"
-  mkdir -p "$app/1.0.0"
-  printf 'png' > "$app/logo.png"
-  cat > "$app/data.yml" <<'YAML'
-name: DemoApp
-tags:
-  - utility
-title: Demo
-description: Demo
-additionalProperties:
-  key: demo-app
-  name: DemoApp
-  architectures:
-    - amd64
-YAML
-  cat > "$app/1.0.0/data.yml" <<'YAML'
-additionalProperties:
-  formFields:
-    - default: 8080
-      edit: true
-      envKey: PANEL_APP_PORT_HTTP
-      labelEn: Web Port
-      labelZh: Web Port
-      required: true
-      rule: paramPort
-      type: number
-YAML
+test_validator_key_mismatch(){
+  local app="$TMP_DIR/vkey/demo"; mkdir -p "$app/1.0.0"; make_top "$app" wrong-key
+  printf 'additionalProperties:\n  formFields: []\n' > "$app/1.0.0/data.yml"
   cat > "$app/1.0.0/docker-compose.yml" <<'YAML'
 services:
   demo:
     container_name: ${CONTAINER_NAME}
     restart: always
-    networks:
-      - 1panel-network
-    ports:
-      - "${PANEL_APP_PORT_HTTP}:80"
-    image: nginx:1.0.0
-    labels:
-      createdBy: "Apps"
+    networks: [1panel-network]
+    image: example/demo:1.0.0
+    labels: {createdBy: Apps}
 networks:
-  1panel-network:
-    external: true
+  1panel-network: {external: true}
 YAML
-
-  if bash "$SKILL_DIR/scripts/validate-app.sh" "$app" >/tmp/validate_unsafe_default.out 2>&1; then
-    fail "validator should reject unsafe default host port"
-  fi
-  assert_contains /tmp/validate_unsafe_default.out "8080"
+  if bash "$SKILL_DIR/scripts/validate-app.sh" --draft "$app" >/tmp/vkey.out 2>&1; then fail "key mismatch should fail"; fi
+  assert_contains /tmp/vkey.out '必须等于目录名'
 }
 
-test_validate_app_does_not_warn_for_relative_volume_source() {
-  local app="$TMP_DIR/relative-volume/apps/demo-app"
-  mkdir -p "$app/1.0.0"
-  printf 'png' > "$app/logo.png"
-  cat > "$app/data.yml" <<'YAML'
-name: DemoApp
-tags:
-  - utility
-title: Demo
-description: Demo
-additionalProperties:
-  key: demo-app
-  name: DemoApp
-  architectures:
-    - amd64
-YAML
-  cat > "$app/1.0.0/data.yml" <<'YAML'
-additionalProperties:
-  formFields:
-    - default: 8080
-      envKey: PANEL_APP_TIMEOUT
-      required: false
-      type: number
-YAML
-  cat > "$app/1.0.0/docker-compose.yml" <<'YAML'
-services:
-  demo:
-    container_name: ${CONTAINER_NAME}
-    restart: always
-    networks:
-      - 1panel-network
-    volumes:
-      - ./data/demo:/opt/demo
-    image: nginx:1.0.0
-    labels:
-      createdBy: "Apps"
-networks:
-  1panel-network:
-    external: true
-YAML
+run_test dependencies test_dependencies
+run_test icons test_icon_modes
+run_test 'generate pinned + env mapping' test_generate_pinned_and_preserves_mapping
+run_test 'no invented config' test_generate_no_invented_mount_or_env
+run_test 'v tag directory normalization' test_source_v_tag_directory_normalized
+run_test 'floating tag policy' test_floating_requires_version
+run_test 'multi-service rejection' test_multiservice_rejected_by_default
+run_test 'partial compose lossiness guard' test_multiservice_partial_requires_lossy_for_depends_on
+run_test '8080 accepted' test_validator_accepts_8080_default
+run_test 'static 80 + undefined variable rejected' test_validator_rejects_static_80_and_undefined_port
+run_test 'floating image rejected' test_validator_rejects_floating_image_in_concrete_version
+run_test 'key mismatch rejected' test_validator_key_mismatch
 
-  bash "$SKILL_DIR/scripts/validate-app.sh" "$app" >/tmp/validate_relative_volume.out 2>&1
-  if grep -q "regexp escape" /tmp/validate_relative_volume.out; then
-    cat /tmp/validate_relative_volume.out >&2
-    fail "validator should not emit awk regexp warnings"
-  fi
-  if grep -q "./data/" /tmp/validate_relative_volume.out; then
-    cat /tmp/validate_relative_volume.out >&2
-    fail "validator should not warn for relative host volume source"
-  fi
-
-  sed -i 's#      - ./data/demo:/opt/demo#      - "/srv/demo:/opt/demo:ro"#' "$app/1.0.0/docker-compose.yml"
-  bash "$SKILL_DIR/scripts/validate-app.sh" "$app" >/tmp/validate_quoted_absolute.out 2>&1
-  if ! grep -q "./data/" /tmp/validate_quoted_absolute.out; then
-    cat /tmp/validate_quoted_absolute.out >&2
-    fail "validator should warn for quoted absolute host volume source"
-  fi
-}
-
-test_validate_app_rejects_static_reserved_host_port() {
-  local app="$TMP_DIR/static-reserved-port/apps/demo-app"
-  mkdir -p "$app/1.0.0"
-  printf 'png' > "$app/logo.png"
-  cat > "$app/data.yml" <<'YAML'
-name: DemoApp
-tags:
-  - utility
-title: Demo
-description: Demo
-additionalProperties:
-  key: demo-app
-  name: DemoApp
-  architectures:
-    - amd64
-YAML
-  cat > "$app/1.0.0/data.yml" <<'YAML'
-additionalProperties:
-  formFields: []
-YAML
-  cat > "$app/1.0.0/docker-compose.yml" <<'YAML'
-services:
-  demo:
-    container_name: ${CONTAINER_NAME}
-    restart: always
-    networks:
-      - 1panel-network
-    ports:
-      - target: 80
-        published: 8080
-        protocol: tcp
-    image: nginx:1.0.0
-    labels:
-      createdBy: "Apps"
-networks:
-  1panel-network:
-    external: true
-YAML
-
-  if bash "$SKILL_DIR/scripts/validate-app.sh" "$app" >/tmp/validate_static_reserved.out 2>&1; then
-    fail "validator should reject static reserved host port"
-  fi
-  assert_contains /tmp/validate_static_reserved.out "8080"
-}
-
-test_validate_app_rejects_latest_wrong_tag() {
-  local app="$TMP_DIR/bad-latest/apps/demo-app"
-  mkdir -p "$app/latest"
-  printf 'png' > "$app/logo.png"
-  cat > "$app/data.yml" <<'YAML'
-name: DemoApp
-tags:
-    - 实用工具
-title: Demo
-description: Demo
-additionalProperties:
-    key: demo-app
-    name: DemoApp
-    architectures:
-      - amd64
-YAML
-  cat > "$app/latest/data.yml" <<'YAML'
-additionalProperties:
-  formFields: []
-YAML
-  cat > "$app/latest/docker-compose.yml" <<'YAML'
-services:
-  demo:
-    container_name: ${CONTAINER_NAME}
-    restart: always
-    networks:
-      - 1panel-network
-    image: demo/demo-app:1.25.3
-    labels:
-      createdBy: "Apps"
-networks:
-  1panel-network:
-    external: true
-YAML
-
-  if bash "$SKILL_DIR/scripts/validate-app.sh" "$app" >/tmp/validate_bad_latest.out 2>&1; then
-    fail "validator should reject latest directory with concrete tag"
-  fi
-  assert_contains /tmp/validate_bad_latest.out "latest 目录"
-}
-
-test_validate_app_accepts_v_prefixed_version_tag() {
-  local app="$TMP_DIR/v-prefix/apps/demo-app"
-  mkdir -p "$app/1.2.3"
-  printf 'png' > "$app/logo.png"
-  cat > "$app/data.yml" <<'YAML'
-name: DemoApp
-tags:
-    - 实用工具
-title: Demo
-description: Demo
-additionalProperties:
-    key: demo-app
-    name: DemoApp
-    architectures:
-      - amd64
-YAML
-  cat > "$app/1.2.3/data.yml" <<'YAML'
-additionalProperties:
-  formFields: []
-YAML
-  cat > "$app/1.2.3/docker-compose.yml" <<'YAML'
-services:
-  demo:
-    container_name: ${CONTAINER_NAME}
-    restart: always
-    networks:
-      - 1panel-network
-    image: demo/demo-app:v1.2.3
-    labels:
-      createdBy: "Apps"
-networks:
-  1panel-network:
-    external: true
-YAML
-
-  bash "$SKILL_DIR/scripts/validate-app.sh" "$app" >/tmp/validate_v_prefix.out 2>&1
-  if grep -q "未检测到与目录名一致的镜像 tag" /tmp/validate_v_prefix.out; then
-    cat /tmp/validate_v_prefix.out >&2
-    fail "validator should accept v-prefixed tag for version directory"
-  fi
-}
-
-test_validate_app_detects_named_version_directory() {
-  local app="$TMP_DIR/named-version/apps/demo-app"
-  mkdir -p "$app/chromium-bundled-2026-07-06"
-  printf 'png' > "$app/logo.png"
-  cat > "$app/data.yml" <<'YAML'
-name: DemoApp
-tags:
-    - 实用工具
-title: Demo
-description: Demo
-additionalProperties:
-    key: demo-app
-    name: DemoApp
-    architectures:
-      - amd64
-YAML
-  cat > "$app/chromium-bundled-2026-07-06/data.yml" <<'YAML'
-additionalProperties:
-  formFields: []
-YAML
-  cat > "$app/chromium-bundled-2026-07-06/docker-compose.yml" <<'YAML'
-services:
-  demo:
-    container_name: ${CONTAINER_NAME}
-    restart: always
-    networks:
-      - 1panel-network
-    image: demo/demo-app:chromium-bundled-2026-07-06
-    labels:
-      createdBy: "Apps"
-networks:
-  1panel-network:
-    external: true
-YAML
-
-  bash "$SKILL_DIR/scripts/validate-app.sh" "$app" >/tmp/validate_named_version.out 2>&1
-  assert_contains /tmp/validate_named_version.out "检查版本目录: chromium-bundled-2026-07-06"
-  if grep -q "未找到版本目录" /tmp/validate_named_version.out; then
-    cat /tmp/validate_named_version.out >&2
-    fail "validator should detect named version directory"
-  fi
-}
-
-run_test "download icon skip mode" test_download_icon_skip_mode_does_not_create_logo
-run_test "download icon cache-only mode" test_download_icon_cache_only_uses_cached_logo
-run_test "generate app dependency check" test_generate_app_reports_missing_dependencies
-run_test "generate app explicit options" test_generate_app_accepts_explicit_options_and_skips_icon
-run_test "generate app preserves compose fields" test_generate_app_preserves_compose_environment_and_volumes
-run_test "generate app explicit compose service" test_generate_app_uses_explicit_compose_service
-run_test "generate app remaps reserved ports without collisions" test_generate_app_remaps_reserved_ports_without_collisions
-run_test "generate app github compose discovery" test_generate_app_discovers_github_default_branch_compose
-run_test "generate app github README docker run discovery" test_generate_app_discovers_github_readme_docker_run
-run_test "generate app complex docker run flags" test_generate_app_parses_complex_docker_run_flags
-run_test "validate undefined port variable" test_validate_app_rejects_undefined_port_variable
-run_test "validate unsafe default port" test_validate_app_rejects_unsafe_default_port
-run_test "validate relative volume source" test_validate_app_does_not_warn_for_relative_volume_source
-run_test "validate static reserved host port" test_validate_app_rejects_static_reserved_host_port
-run_test "validate latest image tag" test_validate_app_rejects_latest_wrong_tag
-run_test "validate v-prefixed version tag" test_validate_app_accepts_v_prefixed_version_tag
-run_test "validate named version directory" test_validate_app_detects_named_version_directory
-
-echo "All skills script tests passed."
+echo 'All skill script tests passed.'

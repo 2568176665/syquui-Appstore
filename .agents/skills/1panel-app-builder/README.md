@@ -1,71 +1,116 @@
 # 1Panel App Builder
 
-这个目录提供 1Panel 本地应用商店打包辅助脚本。AI 使用入口是 `SKILL.md`，人工常用入口是下面几个脚本。
+用于把 Docker 部署整理成 **可维护、可审查、偏生产使用** 的 1Panel 本地应用商店包。
+
+AI 使用入口是 `SKILL.md`；人工常用入口是 `scripts/` 下的生成、验证和图标脚本。
+
+## 设计原则
+
+- 默认只生成**固定版本**，不自动创建 `latest/` / `stable/`。
+- 优先保留已经验证过的上游具体镜像 tag，不自动追新。
+- 多服务 Compose 默认拒绝“只抽主服务”，避免把 DB / Redis / worker / init / websocket 等依赖丢掉。
+- 不凭空添加来源中不存在的 `/app/data`、PUID、PGID、UMASK 等配置。
+- 生成器只负责安全草稿；正式包必须结合上游生产部署文档人工复核。
+- 可复用 1Panel 的 MariaDB/MySQL/PostgreSQL/Redis，但只有在上游明确支持外部服务时才这么做。
+- 遇到 pgvector 等特殊数据库扩展时，不为了统一而强行复用普通 1Panel 数据库。
 
 ## 快速使用
 
+从技能目录执行：
+
 ```bash
-cd /root/github/1Panel-Appstore/skills
-
-# 从 compose 生成草稿，跳过图标下载
-./scripts/generate-app.sh --app-key my-app --name MyApp --version 1.2.3 --icon-mode skip ./docker-compose.yml
-
-# 多服务 compose 指定主服务
-./scripts/generate-app.sh --service web --app-key my-app --name MyApp --version 1.2.3 --icon-mode skip ./docker-compose.yml
-
 # 检查依赖
-./scripts/generate-app.sh --check-deps
+bash ./scripts/generate-app.sh --check-deps
 
-# 下载或复用图标
-./scripts/download-icon.sh --mode cache-only my-app ../apps/my-app/logo.png
-./scripts/download-icon.sh --mode required --url https://example.com/logo.png my-app ../apps/my-app/logo.png
+# 从单服务 Compose 生成固定版本草稿
+bash ./scripts/generate-app.sh \
+  --app-key my-app \
+  --name MyApp \
+  --version 1.2.3 \
+  --icon-mode skip \
+  ./docker-compose.yml
 
-# 验证应用
-./scripts/validate-app.sh ../apps/my-app
+# 验证最终应用
+bash ./scripts/validate-app.sh ./apps/my-app
 
-# 验证 skills 工具链
-./tests/run_all.sh
+# 草稿验证（缺少图标时只警告）
+bash ./scripts/validate-app.sh --draft ./apps/my-app
+
+# 验证技能脚本
+bash ./tests/run_all.sh
 ```
 
-## 生成脚本
+## 多服务 Compose
 
-`scripts/generate-app.sh` 支持 GitHub URL、compose URL、本地 compose 文件和 `docker run` 命令。
+默认不会自动生成，因为把多服务堆栈缩成单容器通常会得到一个“看起来能装、实际启动失败”的包。
 
-GitHub URL 会按仓库默认分支、`main`、`master` 顺序尝试常见 compose 文件路径，例如 `docker-compose.yml`、`compose.yaml`、`deploy/docker-compose.yml`。如果没有找到 compose，会从 README 中尝试提取单行 `docker run` 命令作为草稿来源。
+如果只是为了快速提取某个服务做草稿：
 
-常用参数：
+```bash
+bash ./scripts/generate-app.sh \
+  --service web \
+  --allow-partial-compose \
+  --allow-lossy \
+  --version 1.2.3 \
+  ./docker-compose.yml
+```
+
+最终发布前必须手工补回依赖，或明确改成 1Panel 托管数据库/Redis。
+
+## 版本策略
+
+如果来源镜像已经是：
 
 ```text
---output <dir>       输出目录，默认 ./apps
---app-key <key>      指定应用目录名
---name <name>        指定应用显示名
---service <name>     指定多服务 compose 的主服务
---version <tag>      指定具体版本目录和镜像 tag
---icon-mode <mode>   auto|required|skip|cache-only
---icon-url <url>     使用指定图标 URL
---force              允许覆盖已有生成目录
---dry-run            只解析并输出结果，不写文件
---check-deps         只检查依赖工具
+myorg/myapp:v1.2.3
 ```
+
+生成器默认直接使用这个具体版本，不会偷偷改成 registry 当前最新版本。
+
+如果来源只有 `latest` / `stable`，默认会要求你显式提供：
+
+```bash
+--version v1.2.3
+```
+
+只有明确知道自己在做什么时才使用：
+
+```bash
+--resolve-version
+```
+
+## 依赖
+
+生成器需要：
+
+- Bash
+- curl
+- jq
+- Python 3
+- PyYAML（`python3 -c "import yaml"` 可成功）
+
+`yq` 不是必需依赖；验证器如果检测到 Mike Farah `yq` v4+ 会优先使用，否则自动使用 Python + PyYAML。
 
 ## 图标策略
 
-脚本不会创建占位图。图标模式：
+- `auto`: 缓存优先，缺失时尝试网络源。
+- `skip`: 完全跳过，适合草稿。
+- `cache-only`: 只读 `.cache/icons`。
+- `required`: 最终包模式；找不到真实图标则失败。
 
-- `auto`: 优先缓存，缺失时尝试网络源；找不到也不阻塞生成。
-- `skip`: 跳过图标处理，适合草稿生成。
-- `cache-only`: 只读 `skills/.cache/icons`，不访问网络。
-- `required`: 找不到有效图标时失败。
+不会创建伪造的占位图。
 
-## 校验范围
+## 主要验证项
 
-`scripts/validate-app.sh` 会检查：
+- YAML 能否解析。
+- `additionalProperties.key` 是否与目录一致。
+- 固定版本目录是否意外使用 `latest/stable` 主镜像。
+- `PANEL_APP_PORT_*` 是否有对应表单字段。
+- `${VAR}` 是否存在未定义来源。
+- 是否静态占用宿主机 80/443。
+- 是否存在可疑绝对数据卷。
+- `env_file` 是否在包内缺失。
+- 浏览器 WebSocket URL 是否误写 Docker 内部 hostname。
+- `logo.png` 是否实际是图片而不是 HTML 错误页。
 
-- 应用目录结构和必需文件。
-- `additionalProperties.key` 是否等于目录名。
-- `PANEL_APP_PORT_*` 是否在版本 `data.yml` 中定义。
-- `latest/` 镜像是否使用 `latest` tag。
-- `logo.png` 是否疑似 HTML/XML 错误响应。
-- 1Panel 常见 compose 约束，如 `${CONTAINER_NAME}`、`1panel-network`、`createdBy: "Apps"`。
-
-生成结果仍需要人工审查 metadata、README、架构、端口语义和多服务依赖。
+更详细的规则见 `SKILL.md`。

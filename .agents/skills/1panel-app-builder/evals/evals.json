@@ -4,19 +4,31 @@
     {
       "id": 1,
       "prompt": "帮我把这个项目打包成1Panel本地应用：https://github.com/0xJacky/nginx-ui 这是一个Nginx配置管理工具，用docker部署，默认端口是9000",
-      "expected_output": "Create a 1Panel app package draft for nginx-ui with proper directory structure, data.yml metadata, docker-compose.yml variable substitution, README files, and either a real logo.png or a clear note that the icon is missing; never create a placeholder logo",
+      "expected_output": "Inspect the upstream production deployment and a current official 1Panel app example first. Create a pinned-version 1Panel app draft with correct directory structure, metadata, variableized ports, external 1panel-network, relative persistence paths where upstream documents them, and a real logo or an explicit draft warning. Do not invent generic mounts or runtime environment variables.",
       "files": []
     },
     {
       "id": 2,
-      "prompt": "我有一个docker-compose.yml文件，内容如下：\n```yaml\nversion: '3'\nservices:\n  memos:\n    image: neosmemo/memos:latest\n    container_name: memos\n    ports:\n      - \"5230:5230\"\n    volumes:\n      - ./memos_data:/var/opt/memos\n    restart: always\n```\n帮我生成1Panel应用商店的配置",
-      "expected_output": "Parse the docker-compose file and generate a 1Panel app package for memos with PANEL_APP_PORT_HTTP, matching version data.yml port field, preserved volume mapping, and validation-ready supporting files",
+      "prompt": "我有一个docker-compose.yml文件，内容如下：\n```yaml\nservices:\n  memos:\n    image: neosmemo/memos:0.25.0\n    container_name: memos\n    ports:\n      - \"5230:5230\"\n    volumes:\n      - ./memos_data:/var/opt/memos\n    environment:\n      MEMOS_MODE: prod\n    restart: always\n```\n帮我生成1Panel应用商店的配置",
+      "expected_output": "Preserve the concrete 0.25.0 image tag, mapping-form environment, volume mapping and container port. Generate only the concrete version directory by default, use PANEL_APP_PORT_HTTP for the host port, and produce validation-ready 1Panel files without an extra latest directory.",
       "files": []
     },
     {
       "id": 3,
-      "prompt": "docker run -d --name umami -p 3000:3000 -e DATABASE_URL=postgresql://user:pass@db:5432/umami ghcr.io/umami-software/umami:postgresql-latest\n请帮我把这个umami网站统计工具做成1Panel应用",
-      "expected_output": "Parse the docker run command, extract port 3000 and DATABASE_URL, preserve the environment setting, and generate a 1Panel app package with appropriate form fields and validation guidance",
+      "prompt": "这个compose有web、postgres、redis、worker四个服务，帮我直接抽web做成1Panel应用",
+      "expected_output": "Do not silently drop postgres, redis or worker. Explain that multi-service Compose is preserved by default. Prefer adapting supported dependencies to existing 1Panel services when upstream supports external DB/Redis, otherwise retain required services. Only permit partial extraction as an explicitly marked draft with allow-partial-compose and lossiness checks.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "docker run -d --name umami -p 3000:3000 -e DATABASE_URL=postgresql://user:pass@db:5432/umami ghcr.io/umami-software/umami:postgresql-latest 请帮我做成1Panel应用",
+      "expected_output": "Parse the docker run command but reject a production package with the floating postgresql-latest tag unless the user supplies a concrete version or explicitly asks to resolve it. Preserve DATABASE_URL and port 3000. Do not make up volumes, PUID, PGID or UMASK.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "帮我检查这个1Panel应用，默认端口8080，有没有问题？",
+      "expected_output": "Do not reject 8080 merely because it is 8080. Validate that the port variable is declared, that the actual host port is available, and flag 80/443 as common reverse-proxy conflict defaults. Also validate image pinning, unresolved variables, persistence, external 1panel-network and browser-facing WebSocket URLs.",
       "files": []
     }
   ]
