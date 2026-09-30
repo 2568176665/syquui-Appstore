@@ -1,0 +1,29 @@
+services:
+  qq-farm-bot:
+    build:
+      context: https://github.com/liyangpengs/qq-farm-bot.git#master
+      dockerfile: core/Dockerfile
+    image: qq-farm-bot:latest
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:3007"
+    volumes:
+      - ./data:/app/core/data
+    environment:
+      - NODE_ENV=production
+      - TZ=Asia/Shanghai
+      - ADMIN_PORT=3007
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - 1panel-network
+    labels:
+      createdBy: "Apps"
+
+networks:
+  1panel-network:
+    external: true

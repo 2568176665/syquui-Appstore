@@ -1,0 +1,34 @@
+name: QQ Farm Bot
+tags:
+  - 实用工具
+title: QQ Farm Bot - QQ 农场多账号自动化工具
+description:
+  en: Node.js-based QQ farm automation tool with multi-account management and a web control panel
+  zh: 基于 Node.js 的 QQ 农场自动化工具，支持多账号管理和 Web 控制面板
+additionalProperties:
+  key: qq-farm-bot
+  name: QQ Farm Bot
+  tags:
+    - Tool
+  shortDescZh: QQ 农场多账号自动化与 Web 控制面板
+  shortDescEn: QQ farm automation with multi-account management and a web panel
+  description:
+    en: Multi-account QQ Farm automation with a web control panel.
+    es-es: Automatización de QQ Farm con gestión de varias cuentas y panel web.
+    fa: ابزار خودکارسازی مزرعه QQ با پشتیبانی از چند حساب و پنل وب
+    ja: 複数アカウント管理とWebパネルを備えたQQ農場自動化ツール。
+    ms: Alat automasi QQ Farm dengan pengurusan berbilang akaun dan panel web.
+    pt-br: Ferramenta de automação do QQ Farm com gerenciamento de várias contas e painel web.
+    ru: Инструмент автоматизации QQ Farm с поддержкой нескольких аккаунтов и веб-панелью.
+    ko: 다중 계정 관리와 웹 패널을 지원하는 QQ 농장 자동화 도구.
+    zh-hant: 支援多帳號管理與 Web 控制面板的 QQ 農場自動化工具。
+    zh: 基于 Node.js 的 QQ 农场自动化工具，支持多账号管理和 Web 控制面板。
+    tr: Çoklu hesap yönetimi ve web paneli sunan QQ Çiftliği otomasyon aracı.
+  type: website
+  crossVersionUpdate: false
+  limit: 0
+  website: https://github.com/liyangpengs/qq-farm-bot
+  github: https://github.com/liyangpengs/qq-farm-bot
+  document: https://github.com/liyangpengs/qq-farm-bot#readme
+  architectures:
+    - amd64

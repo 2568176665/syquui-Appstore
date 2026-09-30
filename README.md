@@ -85,6 +85,7 @@
 | prompt-optimizer | 高质量提示词优化器 |
 | qdrant | 面向 AI 应用的开源向量数据库 |
 | qexo | 快速、强大、美观的在线静态博客编辑器 |
+| qq-farm-bot | QQ 农场多账号自动化与 Web 控制面板 |
 | qwen-free-api | 阿里通义千问 3 大模型逆向 API |
 | raycast-ai-openrouter-proxy | Raycast AI OpenRouter 代理 |
 | remmina | 跨平台远程桌面客户端 |
