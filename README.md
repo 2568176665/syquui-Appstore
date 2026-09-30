@@ -118,7 +118,7 @@
 在 1Panel 所在服务器执行以下命令，将本仓库的 `apps/` 目录复制到 1Panel 的本地应用目录：
 
 ```bash
-git clone https://github.com/2568176665/syquui-Appstore /opt/1panel/resource/apps/local/appstore-localApps
+git clone https://github.com/2568176665/syquui-Appstore/opt/1panel/resource/apps/local/appstore-localApps
 
 cp -rf /opt/1panel/resource/apps/local/appstore-localApps/apps/* /opt/1panel/resource/apps/local/
 

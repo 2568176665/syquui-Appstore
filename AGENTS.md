@@ -1,8 +1,7 @@
 # 仓库指南
 
-参考项目：
-https://github.com/1Panel-dev/appstore
-https://github.com/okxlin/appstore
+官方仓库：https://github.com/1Panel-dev/appstore
+第三方仓库：https://github.com/okxlin/appstore
 
 ## 项目形态
 
