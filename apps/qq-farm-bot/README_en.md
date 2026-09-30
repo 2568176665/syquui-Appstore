@@ -5,6 +5,7 @@ QQ Farm Bot is a Node.js-based QQ farm automation tool with multi-account manage
 ## Usage
 
 - After installation, open `http://server-address:port` to access the panel. The default port is `3007`.
+- You can select QQ Farm Bot in 1Panel under “Websites → Create Website → One-Click Deployment” (install a new app or select an installed one), then configure the domain and HTTPS. The app's web port defaults to `3007`.
 - The initial username and password are both `admin`. Change the administrator password immediately in “Settings → System Settings”. The initial administrator password cannot be configured through environment variables.
 - QQ QR-code login requires the external `qq-miniapp-auth` service, which is not bundled with this app. Deploy that service first, then configure its reachable NapCat API address and API signature in the panel before enabling QQ QR-code login.
 - Runtime data and logs are persisted in the app `data/` directory. Back up this directory before rebuilding the container.
