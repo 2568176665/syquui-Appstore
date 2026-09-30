@@ -1,9 +1,6 @@
 services:
   qq-farm-bot:
-    build:
-      context: https://github.com/liyangpengs/qq-farm-bot.git#864caf335192321c6a6c3737f4801f9b6a2b3a82
-      dockerfile: core/Dockerfile
-    image: qq-farm-bot:20260928
+    image: ghcr.io/2568176665/qq-farm-bot:864caf335192321c6a6c3737f4801f9b6a2b3a82
     container_name: ${CONTAINER_NAME}
     restart: always
     ports:

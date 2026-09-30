@@ -10,9 +10,9 @@ QQ Farm Bot is a Node.js-based QQ farm automation tool with multi-account manage
 - QQ QR-code login requires the external `qq-miniapp-auth` service, which is not bundled with this app. Deploy that service first, then configure its reachable NapCat API address and API signature in the panel before enabling QQ QR-code login.
 - Runtime data and logs are persisted in the app `data/` directory. Back up this directory before rebuilding the container.
 
-## Build
+## Images and versions
 
-The upstream project does not provide a pre-built Docker image. This app offers two versions: `20260928` is pinned to commit `864caf335192321c6a6c3737f4801f9b6a2b3a82`, while `latest` follows the upstream `master` branch and builds from its current source at installation time. The first installation requires access to GitHub and the npm registry and may take some time.
+The app pulls pre-built images from `ghcr.io/2568176665/qq-farm-bot`; it does not build from source during installation. `20260928` is pinned to commit `864caf335192321c6a6c3737f4801f9b6a2b3a82`. The fork's GitHub Actions workflow builds and publishes `latest` after syncing upstream changes. After the first publish, the repository owner must make the GHCR package public so 1Panel can pull it anonymously.
 
 ## Security
 
