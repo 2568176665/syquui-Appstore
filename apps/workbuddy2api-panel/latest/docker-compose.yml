@@ -1,0 +1,21 @@
+services:
+  workbuddy2api-panel:
+    image: ghcr.io/linguo2625469/workbuddy2api-panel:latest
+    container_name: ${CONTAINER_NAME}
+    entrypoint: ["/app/wb2api", "-config", "/app/data/config.json"]
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    networks:
+      - 1panel-network
+    volumes:
+      - ./data/auths:/app/auths
+      - ./data:/app/data
+    ports:
+      - ${PANEL_APP_PORT_HTTP}:7863
+    labels:
+      createdBy: "Apps"
+
+networks:
+  1panel-network:
+    external: true

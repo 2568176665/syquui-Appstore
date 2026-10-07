@@ -1,0 +1,26 @@
+name: WorkBuddy2API Panel
+tags:
+  - AI / 大模型
+  - 开发工具
+title: 腾讯 CodeBuddy 账号的 OpenAI 兼容网关与管理面板
+description:
+  en: OpenAI-compatible gateway and web panel for personal CodeBuddy accounts.
+  zh: 面向个人 CodeBuddy 账号的 OpenAI 兼容网关和管理面板。
+additionalProperties:
+  key: workbuddy2api-panel
+  name: WorkBuddy2API Panel
+  tags:
+    - AI
+    - Tool
+  shortDescZh: CodeBuddy 账号的 OpenAI 兼容网关
+  shortDescEn: OpenAI-compatible gateway for CodeBuddy accounts
+  type: tool
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/linguo2625469/workbuddy2api-panel
+  github: https://github.com/linguo2625469/workbuddy2api-panel
+  document: https://github.com/linguo2625469/workbuddy2api-panel
+  architectures:
+    - amd64
+    - arm64

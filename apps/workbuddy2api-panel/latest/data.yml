@@ -1,0 +1,10 @@
+additionalProperties:
+  formFields:
+    - default: 7863
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: API and Panel Port
+      labelZh: API 与面板端口
+      required: true
+      rule: paramPort
+      type: number
