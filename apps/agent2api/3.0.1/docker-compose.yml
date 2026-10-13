@@ -4,6 +4,7 @@ services:
     container_name: ${CONTAINER_NAME}
     restart: always
     ports:
+      - "${PANEL_APP_PORT_HTTP}:3066"
       - "${PANEL_APP_PORT_API}:3065"
     environment:
       AGENT2API_PANEL_PORT: "3066"
