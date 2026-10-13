@@ -1,0 +1,25 @@
+name: Agent2API
+tags:
+  - AI / 大模型
+title: 本地 AI API 网关
+description: 将桌面 AI 客户端的登录态转为 OpenAI 兼容接口。
+additionalProperties:
+  key: agent2api
+  name: Agent2API
+  tags:
+    - AI
+  shortDescZh: 将 AI 客户端登录态转换为 OpenAI 兼容 API
+  shortDescEn: Turn AI client sessions into an OpenAI-compatible API
+  description:
+    zh: Agent2API 将多个 AI 编程客户端的登录态转换为 OpenAI 兼容 API，并提供管理面板。
+    en: Agent2API turns sessions from AI coding clients into an OpenAI-compatible API with a management panel.
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/aimod-cc/agent2api
+  github: https://github.com/aimod-cc/agent2api
+  document: https://github.com/aimod-cc/agent2api/blob/main/README.md
+  architectures:
+    - amd64
+    - arm64
