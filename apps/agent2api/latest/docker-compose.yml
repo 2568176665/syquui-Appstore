@@ -1,0 +1,18 @@
+services:
+  agent2api:
+    image: aimodcc/agent2api:latest
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    ports:
+      - "${PANEL_APP_PORT_API}:3065"
+    environment:
+      AGENT2API_PANEL_PORT: "3066"
+    volumes:
+      - ./data:/data
+    networks:
+      - 1panel-network
+    labels:
+      createdBy: "Apps"
+networks:
+  1panel-network:
+    external: true
