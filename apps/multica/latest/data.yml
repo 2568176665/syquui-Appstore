@@ -1,0 +1,79 @@
+additionalProperties:
+  formFields:
+    - default: 3300
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Web Port (localhost only)
+      labelZh: Web 端口（仅本机）
+      required: true
+      rule: paramPort
+      type: number
+    - default: 8380
+      edit: true
+      envKey: PANEL_APP_PORT_API
+      labelEn: API Port (localhost only)
+      labelZh: API 端口（仅本机）
+      required: true
+      rule: paramPort
+      type: number
+    - default: http://localhost:3300
+      edit: true
+      envKey: MULTICA_APP_URL
+      labelEn: Public Web URL (no trailing slash)
+      labelZh: Web 访问地址（不含末尾斜杠）
+      required: true
+      type: text
+    - default: http://localhost:8380
+      edit: true
+      envKey: MULTICA_PUBLIC_URL
+      labelEn: Public API URL (no trailing slash)
+      labelZh: API 访问地址（不含末尾斜杠）
+      required: true
+      type: text
+    - default: ""
+      edit: true
+      envKey: POSTGRES_PASSWORD
+      labelEn: Database Password (letters and digits only)
+      labelZh: 数据库密码（至少 32 位，仅字母和数字）
+      required: true
+      type: password
+    - default: ""
+      edit: true
+      envKey: JWT_SECRET
+      labelEn: JWT Secret (at least 64 hex characters)
+      labelZh: JWT 密钥（至少 64 位十六进制字符）
+      required: true
+      type: password
+    - default: ""
+      edit: true
+      envKey: RESEND_API_KEY
+      labelEn: Resend API Key (optional)
+      labelZh: Resend API 密钥（可选）
+      required: false
+      type: password
+    - default: noreply@multica.ai
+      edit: true
+      envKey: RESEND_FROM_EMAIL
+      labelEn: Sender Email (verified in Resend)
+      labelZh: 发件邮箱（需在 Resend 验证）
+      required: true
+      type: text
+    - default: "true"
+      edit: true
+      envKey: ALLOW_SIGNUP
+      labelEn: Allow Signup
+      labelZh: 允许注册
+      required: true
+      type: select
+      values:
+        - label: "true"
+          value: "true"
+        - label: "false"
+          value: "false"
+    - default: ""
+      edit: true
+      envKey: ALLOWED_EMAILS
+      labelEn: Allowed Emails (comma separated, empty allows all)
+      labelZh: 允许注册的邮箱（逗号分隔，留空不限制）
+      required: false
+      type: text

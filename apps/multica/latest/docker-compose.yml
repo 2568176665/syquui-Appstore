@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    restart: always
+    environment:
+      POSTGRES_DB: multica
+      POSTGRES_USER: multica
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Database password is required}
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U multica -d multica"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - default
+    labels:
+      createdBy: "Apps"
+  backend:
+    image: ghcr.io/multica-ai/multica-backend:latest
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${PANEL_APP_PORT_API}:8080"
+    volumes:
+      - ./data/uploads:/app/data/uploads
+    environment:
+      DATABASE_URL: postgres://multica:${POSTGRES_PASSWORD}@postgres:5432/multica?sslmode=disable
+      PORT: "8080"
+      JWT_SECRET: ${JWT_SECRET:?JWT secret is required}
+      APP_ENV: production
+      FRONTEND_ORIGIN: ${MULTICA_APP_URL}
+      MULTICA_APP_URL: ${MULTICA_APP_URL}
+      MULTICA_PUBLIC_URL: ${MULTICA_PUBLIC_URL}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL}
+      ALLOW_SIGNUP: ${ALLOW_SIGNUP}
+      ALLOWED_EMAILS: ${ALLOWED_EMAILS}
+      DO_NOT_TRACK: "true"
+    networks:
+      - default
+    labels:
+      createdBy: "Apps"
+  frontend:
+    image: ghcr.io/multica-ai/multica-web:latest
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "127.0.0.1:${PANEL_APP_PORT_HTTP}:3000"
+    environment:
+      HOSTNAME: "0.0.0.0"
+      REMOTE_API_URL: http://backend:8080
+    networks:
+      - default
+      - 1panel-network
+    labels:
+      createdBy: "Apps"
+networks:
+  default:
+  1panel-network:
+    external: true

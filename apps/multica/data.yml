@@ -1,0 +1,36 @@
+name: Multica
+tags:
+  - AI / 大模型
+  - 开发工具
+title: 人与 AI 编程代理协作工作空间
+description: 将团队成员与 AI 编程代理连接到同一工作空间，管理任务、执行进度和审核。
+additionalProperties:
+  key: multica
+  name: Multica
+  tags:
+    - AI
+    - DevTool
+  shortDescZh: 人与 AI 编程代理协作工作空间
+  shortDescEn: A shared workspace for humans and AI coding agents
+  description:
+    zh: 人与 AI 编程代理协作工作空间
+    en: A shared workspace for humans and AI coding agents
+    zh-Hant: 人與 AI 程式代理協作工作空間
+    es-es: Espacio de trabajo para personas y agentes de programación de IA
+    fa: فضای کاری مشترک انسان‌ها و عامل‌های برنامه‌نویسی هوش مصنوعی
+    ja: 人と AI コーディングエージェントの共同ワークスペース
+    ms: Ruang kerja bersama manusia dan ejen pengekodan AI
+    pt-br: Espaço de trabalho para pessoas e agentes de programação de IA
+    ru: Рабочее пространство для людей и ИИ-агентов программирования
+    ko: 사람과 AI 코딩 에이전트를 위한 공동 작업 공간
+    tr: İnsanlar ve yapay zeka kodlama ajanları için ortak çalışma alanı
+  type: website
+  crossVersionUpdate: false
+  limit: 0
+  recommend: 0
+  website: https://multica.ai
+  github: https://github.com/multica-ai/multica
+  document: https://github.com/multica-ai/multica/blob/main/SELF_HOSTING.md
+  architectures:
+    - amd64
+    - arm64

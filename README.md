@@ -63,6 +63,7 @@
 | metamcp | MCP 聚合器、编排器、中间件、网关于一体的 Docker 解决方案 |
 | minimax-free-api | MiniMax 大模型海螺 AI 逆向 API |
 | moontv | 开箱即用的、跨平台的影视聚合播放站 |
+| multica | 人与 AI 编程代理协作工作空间 |
 | myip | IP 与网络检测工具箱 |
 | n8n-zh | n8n 汉化版，具有原生 AI 能力的 Fair-code 工作流自动化平台 |
 | netbird | 基于 WireGuard 协议的 VPN 网络工具 |
