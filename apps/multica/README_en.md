@@ -9,8 +9,8 @@ Multica brings humans and AI coding agents into a shared workspace for task assi
 
 ## Installation
 
-1. Generate an alphanumeric database password of at least 32 characters, for example with `openssl rand -hex 16`. It is embedded in a database URI: do not use unencoded `@`, `:`, `/`, or other special characters.
-2. Generate the JWT secret with `openssl rand -hex 32`. Keep both secrets safe. Changing the form password after database initialization does not change the existing database password.
+1. Installation automatically generates a 48-character hexadecimal database password and a 64-character hexadecimal JWT secret from the system random source. No manual input is required.
+2. Credentials are stored in `./data/secrets.env` under the application installation directory, readable and writable only by its owner. Restarts and upgrades reuse the file; upgrades from older packages preserve credentials from the original `.env`. Back up this file and do not delete it or change the password of an existing database.
 3. Set the actual browser-facing Web and API URLs without trailing slashes. Use HTTPS domains for remote access instead of the default localhost URLs.
 4. Configure a Resend API key and verified sender address. Without email, temporary login codes appear in backend logs as `[DEV] Verification code for ...:`. Configure email for production.
 5. Default Web / API host ports are `3300` / `8380`, bound only to `127.0.0.1`. Direct access through the server IP is unavailable.

@@ -2,10 +2,10 @@ services:
   postgres:
     image: pgvector/pgvector:pg17
     restart: always
+    env_file: ./data/secrets.env
     environment:
       POSTGRES_DB: multica
       POSTGRES_USER: multica
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Database password is required}
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
     healthcheck:
@@ -27,10 +27,9 @@ services:
       - "127.0.0.1:${PANEL_APP_PORT_API}:8080"
     volumes:
       - ./data/uploads:/app/data/uploads
+    env_file: ./data/secrets.env
     environment:
-      DATABASE_URL: postgres://multica:${POSTGRES_PASSWORD}@postgres:5432/multica?sslmode=disable
       PORT: "8080"
-      JWT_SECRET: ${JWT_SECRET:?JWT secret is required}
       APP_ENV: production
       FRONTEND_ORIGIN: ${MULTICA_APP_URL}
       MULTICA_APP_URL: ${MULTICA_APP_URL}
