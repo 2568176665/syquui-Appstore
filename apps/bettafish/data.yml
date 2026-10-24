@@ -1,0 +1,37 @@
+name: BettaFish
+tags:
+  - AI / 大模型
+  - BI
+title: 微舆 - 多 Agent 舆情分析平台
+description: 从零实现的舆情分析系统，通过多个 Agent 协同完成全网舆情监测、深度分析与报告生成。
+additionalProperties:
+  key: bettafish
+  name: BettaFish
+  tags:
+    - AI
+    - BI
+  shortDescZh: 多 Agent 协同的舆情分析与报告生成平台
+  shortDescEn: Multi-agent public opinion analysis and reporting platform
+  description:
+    zh: 微舆（BettaFish）是一个从零实现的多 Agent 舆情分析系统，包含私有数据库挖掘、多模态内容分析、联网检索与报告生成等 Agent，可自动完成舆情监测、深度分析和结构化报告输出。
+    en: BettaFish is a multi-agent public opinion analysis system built from scratch. Insight, media, query and report agents work together to collect signals, run deep analysis and produce structured reports.
+    zh-Hant: 微輿（BettaFish）是一個從零實現的多 Agent 輿情分析系統，包含私有資料庫挖掘、多模態內容分析、聯網檢索與報告生成等 Agent，可自動完成輿情監測、深度分析與結構化報告輸出。
+    ja: BettaFish はゼロから実装されたマルチエージェント型の世論分析システムです。インサイト、メディア、クエリ、レポートの各エージェントが連携し、情報収集から深掘り分析、構造化レポートの生成までを自動化します。
+    ms: BettaFish ialah sistem analisis pendapat umum berbilang ejen yang dibina dari awal, menggabungkan ejen insight, media, pertanyaan dan laporan untuk pengumpulan isyarat, analisis mendalam dan penjanaan laporan berstruktur.
+    pt-br: BettaFish é um sistema multiagente de análise de opinião pública construído do zero, combinando agentes de insight, mídia, consulta e relatório para coleta de sinais, análise profunda e geração de relatórios estruturados.
+    ru: BettaFish — многoагентная система анализа общественного мнения, реализованная с нуля. Агенты insight, media, query и report собирают сигналы, проводят глубокий анализ и формируют структурированные отчёты.
+    ko: BettaFish는 처음부터 구현된 멀티 에이전트 여론 분석 시스템으로, 인사이트·미디어·쿼리·리포트 에이전트가 협력해 신호 수집, 심층 분석, 구조화된 보고서 생성을 자동화합니다.
+    tr: BettaFish, sıfırdan geliştirilen çok ajanlı bir kamuoyu analiz sistemidir. Insight, medya, sorgu ve rapor ajanları sinyal toplama, derin analiz ve yapılandırılmış rapor üretimini birlikte yürütür.
+    es-es: BettaFish es un sistema multiagente de análisis de opinión pública creado desde cero, con agentes de insight, medios, consultas y generación de informes para la recolección de señales, el análisis profundo y la producción de informes estructurados.
+    fa: BettaFish یک سامانه چندعامله تحلیل افکار عمومی است که از صفر ساخته شده و عامل‌های بینش، رسانه، پرس‌وجو و گزارش را برای گردآوری داده، تحلیل عمیق و تولید گزارش ساختاریافته به کار می‌گیرد.
+  type: website
+  crossVersionUpdate: false
+  limit: 0
+  recommend: 0
+  website: https://deepwiki.com/666ghj/BettaFish
+  github: https://github.com/666ghj/BettaFish
+  document: https://github.com/666ghj/BettaFish/blob/main/README.md
+  memoryRequired: 4096
+  architectures:
+    - amd64
+    - arm64

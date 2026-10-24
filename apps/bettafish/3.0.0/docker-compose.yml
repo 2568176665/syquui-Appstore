@@ -1,0 +1,52 @@
+services:
+  bettafish:
+    image: ghcr.io/666ghj/bettafish:v3.0.0
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:5000"
+      - "${PANEL_APP_PORT_INSIGHT}:8501"
+      - "${PANEL_APP_PORT_MEDIA}:8502"
+      - "${PANEL_APP_PORT_QUERY}:8503"
+    environment:
+      PYTHONUNBUFFERED: "1"
+      STREAMLIT_SERVER_ENABLE_FILE_WATCHER: "false"
+    volumes:
+      - ./.env:/app/.env
+      - ./data/logs:/app/logs
+      - ./data/final_reports:/app/final_reports
+      - ./data/insight_engine_streamlit_reports:/app/insight_engine_streamlit_reports
+      - ./data/media_engine_streamlit_reports:/app/media_engine_streamlit_reports
+      - ./data/query_engine_streamlit_reports:/app/query_engine_streamlit_reports
+    networks:
+      - 1panel-network
+    labels:
+      createdBy: "Apps"
+
+  db:
+    image: postgres:15
+    container_name: ${CONTAINER_NAME}-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      TZ: Asia/Shanghai
+    volumes:
+      - ./data/db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -p 5432"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - 1panel-network
+    labels:
+      createdBy: "Apps"
+
+networks:
+  1panel-network:
+    external: true

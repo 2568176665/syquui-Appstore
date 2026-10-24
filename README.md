@@ -14,6 +14,7 @@
 | arcane | 现代化 Docker 管理面板 |
 | axonhub | 一站式 AI 开发平台 - 统一 API 网关，支持多种 LLM 提供商 |
 | beszel-agent | 轻量易用的服务器监控（客户端） |
+| bettafish | 微舆 - 多 Agent 舆情分析平台 |
 | browser-use | 让 AI 代理可以访问网站。轻松实现在线任务自动化 |
 | chatgpt-adapter | 多款 AI 聊天接口适配到 OpenAI 标准接口 |
 | chatnio | 下一代 AI 一站式解决方案 |
