@@ -1,6 +1,6 @@
 #!/bin/sh
 set -eu
-app=$(cd "$(dirname "$0")/.." && pwd)
+app=$(cd "$(dirname "$0")/../../apps/multica" && pwd)
 temporary=$(mktemp -d)
 trap 'rm -rf "$temporary"' EXIT HUP INT TERM
 

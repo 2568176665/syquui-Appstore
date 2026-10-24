@@ -69,6 +69,17 @@ find_version_dirs() {
   done
 }
 
+check_stray_dirs() {
+  local app_dir="$1" dir name
+  while IFS= read -r dir; do
+    [[ -n "$dir" ]] || continue
+    name=$(basename "$dir")
+    log_error "1Panel 会把应用目录下每个子目录当作版本目录，$name/ 缺少 docker-compose.yml，同步时会报错；请移到 apps/<app-key>/ 之外"
+  done < <(find "$app_dir" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | while IFS= read -r dir; do
+    [[ -f "$dir/data.yml" || -f "$dir/docker-compose.yml" ]] || echo "$dir"
+  done)
+}
+
 check_directory_structure() {
   local app_dir="$1" version_dirs
   log_info "检查目录结构: $(basename "$app_dir")"
@@ -77,6 +88,7 @@ check_directory_structure() {
   if [[ ! -f "$app_dir/README.md" ]]; then [[ "$DRAFT" == true ]] && log_warn "缺少 README.md" || log_warn "缺少 README.md（发布前应补充）"; fi
   [[ -f "$app_dir/README_en.md" ]] || log_warn "缺少 README_en.md"
   version_dirs=$(find_version_dirs "$app_dir" || true)
+  check_stray_dirs "$app_dir"
   [[ -n "$version_dirs" ]] || { log_error "未找到版本目录"; return; }
   while IFS= read -r dir; do
     [[ -n "$dir" ]] || continue
