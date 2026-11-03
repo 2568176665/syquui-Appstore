@@ -1,0 +1,70 @@
+name: WorkBuddy Manager
+tags:
+  - AI / 大模型
+  - 开发工具
+title: 腾讯 CodeBuddy 账号池管理与反代网关
+description: WorkBuddy Manager 是 workbuddy2api 的 Web 管理控制台。
+additionalProperties:
+  key: workbuddy-manager
+  name: WorkBuddy Manager
+  tags:
+    - AI
+    - DevTool
+  shortDescZh: CodeBuddy 账号池管理控制台与反代网关
+  shortDescEn: Web console and gateway for CodeBuddy account pools
+  description:
+    zh: >-
+      WorkBuddy Manager 是 workbuddy2api 的 Web 管理控制台：扫码纳管账号、
+      定时签到与保活、多密钥分发、IP 与模型白名单、调用日志与用量统计，
+      并对外提供 OpenAI 兼容的 /v1 接口。
+    en: >-
+      WorkBuddy Manager is the web console for workbuddy2api. It manages
+      accounts by QR login, runs scheduled check-ins and keep-alive tasks,
+      distributes API keys with IP and model allowlists, and records logs.
+    zh-Hant: >-
+      WorkBuddy Manager 是 workbuddy2api 的 Web 管理主控台：掃碼納管帳號、
+      定時簽到與保活、多金鑰分發、IP 與模型白名單、呼叫日誌與用量統計，
+      並對外提供 OpenAI 相容的 /v1 介面。
+    ja: >-
+      WorkBuddy Manager は workbuddy2api の Web 管理コンソールです。QR
+      コードでのアカウント登録、定時チェックインとキープアライブ、
+      API キー配布、利用状況とコールログの記録を提供します。
+    ms: >-
+      WorkBuddy Manager ialah konsol web untuk workbuddy2api. Ia mengurus
+      akaun melalui log masuk QR, menjalankan daftar masuk berjadual dan
+      tugas keep-alive, serta mengedarkan kunci API.
+    pt-br: >-
+      WorkBuddy Manager é o console web do workbuddy2api. Ele gerencia
+      contas por login via QR code, executa check-ins agendados e tarefas
+      de keep-alive, e distribui chaves de API.
+    ru: >-
+      WorkBuddy Manager — веб-консоль для workbuddy2api. Она управляет
+      аккаунтами через вход по QR-коду, выполняет ежедневные отметки и
+      задачи поддержания активности, раздаёт API-ключи.
+    ko: >-
+      WorkBuddy Manager는 workbuddy2api용 웹 콘솔입니다. QR 로그인으로
+      계정을 등록하고, 예약된 체크인과 연결 유지 작업을 실행하며,
+      API 키를 배포하고 사용量과 호출 로그를 기록합니다.
+    tr: >-
+      WorkBuddy Manager, workbuddy2api için web konsoludur. Hesapları
+      QR oturum açma ile yönetir, zamanlanmış check-in ve canlı tutma
+      görevlerini çalıştırır, API anahtarları dağıtır.
+    es-es: >-
+      WorkBuddy Manager es la consola web de workbuddy2api. Gestiona
+      cuentas mediante inicio de sesión con QR, ejecuta check-ins
+      programados y tareas de keep-alive, y distribuye claves de API.
+    fa: >-
+      WorkBuddy Manager کنسول وب workbuddy2api است. حساب‌ها را با ورود
+      از طریق QR مدیریت می‌کند، وظایف زمان‌بندی‌شده را اجرا می‌کند و
+      کلیدهای API را توزیع می‌کند.
+  type: tool
+  crossVersionUpdate: false
+  limit: 0
+  recommend: 0
+  website: https://github.com/ithtelab/workbuddy-manager
+  github: https://github.com/ithtelab/workbuddy-manager
+  document: https://github.com/ithtelab/workbuddy-manager
+  memoryRequired: 1024
+  architectures:
+    - amd64
+    - arm64
