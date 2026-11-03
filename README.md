@@ -35,7 +35,6 @@
 | espocrm | 开源企业级 CRM 客户关系管理系统 |
 | fast-note-sync-service | 高性能低延迟的 Obsidian 笔记同步服务 |
 | firecrawl | 将任意网站转换为适合大语言模型的结构化数据 |
-| flowise | 可视化构建 AI/LLM 流程 |
 | frappe-crm | 开源 CRM 客户关系管理系统 |
 | frappe-insights | 开源商业智能与数据分析平台 |
 | git-sync | Git 仓库自动同步与备份工具 |
@@ -48,12 +47,10 @@
 | hubcmdui | HubCMD-UI Docker 镜像加速 UI 面板 |
 | ignis | 在浏览器中运行 Obsidian 的兼容层 |
 | inspector | Model Context Protocol (MCP) 服务器调试工具 |
-| jdxb | 一站式远程管理与网络加速工具 |
 | kali-linux | Kali Linux 渗透测试环境 |
 | karakeep | 智能书签和笔记管理工具 |
 | keepassxc | 跨平台密码管理器 |
 | kimi-free-api | KIMI AI 长文本大模型逆向 API |
-| kspeeder | Docker 镜像加速与私有部署服务 |
 | linkwarden | Linkwarden 书签归档与协作工具 |
 | litellm | 使用 OpenAI 格式调用所有 LLM API |
 | lobe-chat-data | LobeChat 服务端数据库版 - 开源、现代设计的 ChatGPT/LLMs UI/框架 |
@@ -104,7 +101,8 @@
 | transmission | 高性能 BT/PT 下载工具 |
 | verysync | 智能 P2P 极速文件同步工具 |
 | we-mp-rss | 微信公众号订阅助手 |
-| wewe-rss | 更优雅的微信公众号订阅方式 |
+| workbuddy-manager | 腾讯 CodeBuddy 账号池管理与反代网关 |
+| workbuddy2api-panel | CodeBuddy 账号的 OpenAI 兼容网关与面板 |
 | wud | 监控 Docker 基础镜像自动更新 |
 
 ## 在 1Panel 中使用
