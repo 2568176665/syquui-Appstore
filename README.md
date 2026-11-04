@@ -9,6 +9,7 @@
 | 1panel-tools | 轻松将您的 Docker Compose 文件转换为 1Panel 应用商店格式 |
 | 9router | 免费 AI 路由器和 Token 节省工具 |
 | adguardhome-sync | AdGuardHome 配置同步工具 |
+| agent2api | 将 AI 客户端登录态转换为 OpenAI 兼容 API |
 | ani-rss | 动漫自动订阅与下载工具 |
 | apipark | 开源企业级 API 全生命周期管理平台 |
 | arcane | 现代化 Docker 管理面板 |
