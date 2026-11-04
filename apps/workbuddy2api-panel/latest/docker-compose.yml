@@ -1,11 +1,12 @@
 services:
   workbuddy2api-panel:
-    image: ghcr.io/linguo2625469/workbuddy2api-panel:latest
+    image: ghcr.io/misakano7545/workbuddy2api-panel:latest
     container_name: ${CONTAINER_NAME}
     entrypoint: ["/app/wb2api", "-config", "/app/data/config.json"]
     restart: always
     environment:
       TZ: Asia/Shanghai
+      WB2A_LISTEN: 0.0.0.0:7863
     networks:
       - 1panel-network
     volumes:
