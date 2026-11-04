@@ -11,8 +11,8 @@
 
 - `data.yaml`：应用商店元数据以及分类/标签定义。
 - `apps/<app-key>/`：每个应用一个目录。
-- `skills/`：应用生成指南、模板和辅助脚本。
-- `update/`：更新检测与 README 版本同步脚本。
+- `.agents/skills/`：应用生成指南、模板和辅助脚本。
+- `tests/<app-key>/`：应用测试脚本，不能放在 `apps/` 内（会被当成版本目录）。
 
 ## 应用包目录结构
 
@@ -47,15 +47,14 @@ apps/<app-key>/
 
 ## 应用创建流程
 
-添加或修改应用包之前，先阅读 `skills/SKILL.md`。它记录了预期的 1Panel 打包流程、元数据字段、compose 转换规则、README 形态以及图标查找顺序。
+添加或修改应用包之前，先阅读 `.agents/skills/1panel-app-builder/SKILL.md`。它记录了预期的 1Panel 打包流程、元数据字段、compose 转换规则、README 形态以及图标查找顺序。
 
-常用辅助脚本：
+常用辅助脚本（在仓库根目录执行）：
 
 ```bash
-cd /root/github/1Panel-Appstore/skills
-./scripts/generate-app.sh <github-url-or-compose-or-docker-run>
-./scripts/download-icon.sh <app-name> <output-path> 200
-./scripts/validate-app.sh ../apps/<app-key>
+./.agents/skills/1panel-app-builder/scripts/generate-app.sh <github-url-or-compose-or-docker-run>
+./.agents/skills/1panel-app-builder/scripts/download-icon.sh <app-name> <output-path> 200
+./.agents/skills/1panel-app-builder/scripts/validate-app.sh ./apps/<app-key>
 ```
 
 生成器只是起点。在认为应用完成之前，请检查并调整生成的元数据、端口、卷、环境变量、README 内容和图标。
@@ -65,15 +64,10 @@ cd /root/github/1Panel-Appstore/skills
 对改动的应用运行：
 
 ```bash
-cd /root/github/1Panel-Appstore
-./skills/scripts/validate-app.sh ./apps/<app-key>
+./.agents/skills/1panel-app-builder/scripts/validate-app.sh ./apps/<app-key>
 ```
 
 对 YAML 或 Compose 的修改，还应直接检查受影响的文件。验证器基于 shell/grep，能发现常见的结构性问题，但不能发现所有语义问题。
-
-## 更新脚本
-
-`update/` 中的脚本可能执行网络请求和 `git pull`。在做局部应用修改时不要随意运行它们。如需使用，请先检查脚本和当前工作区状态。
 
 ## 编辑说明
 

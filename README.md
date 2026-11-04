@@ -114,12 +114,16 @@
 
 ### 方式二：命令行部署
 
-在 1Panel 所在服务器执行以下命令，将本仓库的 `apps/` 目录复制到 1Panel 的本地应用目录：
+在 1Panel 所在服务器执行以下命令，将本仓库的 `apps/` 目录同步到 1Panel 的本地应用目录。按应用逐个替换而不是整目录覆盖，可避免仓库中已改名或删除的版本目录残留在本地（残留目录会让同步报“docker-compose.yml 文件不存在”）：
 
 ```bash
-git clone https://github.com/2568176665/syquui-Appstore/opt/1panel/resource/apps/local/appstore-localApps
+git clone https://github.com/2568176665/syquui-Appstore /opt/1panel/resource/apps/local/appstore-localApps
 
-cp -rf /opt/1panel/resource/apps/local/appstore-localApps/apps/* /opt/1panel/resource/apps/local/
+for app in /opt/1panel/resource/apps/local/appstore-localApps/apps/*/; do
+    name=$(basename "$app")
+    rm -rf "/opt/1panel/resource/apps/local/$name"
+    cp -rf "$app" /opt/1panel/resource/apps/local/
+done
 
 rm -rf /opt/1panel/resource/apps/local/appstore-localApps
 ```
@@ -129,9 +133,17 @@ rm -rf /opt/1panel/resource/apps/local/appstore-localApps
 3. 复制完成后，在 1Panel「应用商店」页面点击「更新应用列表」按钮同步本地应用。
 4. 回到「应用商店 → 本地应用」，选择所需应用安装即可。
 
+### 同步失败：docker-compose.yml 文件不存在
+
+1Panel 会把 `apps/<app-key>/` 下的每个子目录都当作版本目录。日志出现 `xxx 同步版本 tests 失败！docker-compose.yml 文件不存在` 这类提示，说明本地应用目录里残留了仓库已不存在的旧版本目录（多为旧版复制方式遗留）；删除残留目录后重新同步即可，例如：
+
+```bash
+rm -rf /opt/1panel/resource/apps/local/multica/tests
+```
+
 ## 添加自己的应用
 
-参考 [ADD_APP.md](./ADD_APP.md) 了解应用打包规范，或使用 `skills/` 目录下的生成脚本。
+参考 [ADD_APP.md](./ADD_APP.md) 了解应用打包规范，或使用 `.agents/skills/` 目录下的生成脚本。
 
 ## 目录结构
 
