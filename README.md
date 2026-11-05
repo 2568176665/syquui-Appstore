@@ -16,7 +16,6 @@
 | axonhub | 一站式 AI 开发平台 - 统一 API 网关，支持多种 LLM 提供商 |
 | beszel-agent | 轻量易用的服务器监控（客户端） |
 | browser-use | 让 AI 代理可以访问网站。轻松实现在线任务自动化 |
-| chatgpt-adapter | 多款 AI 聊天接口适配到 OpenAI 标准接口 |
 | chatnio | 下一代 AI 一站式解决方案 |
 | chatwoot | 开源全渠道客户支持平台 |
 | claude-code-hub | 智能 AI API 代理中转服务平台 |
@@ -24,7 +23,6 @@
 | codex-universal | OpenAI Codex 的基础 Docker 镜像，提供完整的开发环境 |
 | craft-agents | AI Agent 工作空间，支持多 LLM 提供商和 MCP 集成 |
 | cup | 自动检测 Docker 容器基础镜像的工具 |
-| deepseek-free-api | DeepSeek-V3 & R1 大模型逆向 API |
 | deeptutor | DeepTutor - 终身个性化 AI 辅导平台 |
 | dify | Dify 是一个开源的 LLM 应用开发平台 |
 | diun | Docker 镜像更新通知工具 |
@@ -39,7 +37,6 @@
 | frappe-insights | 开源商业智能与数据分析平台 |
 | git-sync | Git 仓库自动同步与备份工具 |
 | glance-agent | 远程服务器监控数据采集 agent |
-| glm-free-api | 智谱清言 ChatGLM-4-Plus 大模型逆向 API |
 | gpt-load | 智能密钥轮询的多渠道 AI 代理 |
 | gpt4free | 免费的 GPT-4 和其他大语言模型 API 接口 |
 | hexo | 快速、简洁且高效的博客框架 |
@@ -50,7 +47,6 @@
 | kali-linux | Kali Linux 渗透测试环境 |
 | karakeep | 智能书签和笔记管理工具 |
 | keepassxc | 跨平台密码管理器 |
-| kimi-free-api | KIMI AI 长文本大模型逆向 API |
 | linkwarden | Linkwarden 书签归档与协作工具 |
 | litellm | 使用 OpenAI 格式调用所有 LLM API |
 | lobe-chat-data | LobeChat 服务端数据库版 - 开源、现代设计的 ChatGPT/LLMs UI/框架 |
@@ -59,7 +55,6 @@
 | mcphub | MCP 服务器统一管理中心 |
 | md | 微信 Markdown 编辑器 |
 | metamcp | MCP 聚合器、编排器、中间件、网关于一体的 Docker 解决方案 |
-| minimax-free-api | MiniMax 大模型海螺 AI 逆向 API |
 | moontv | 开箱即用的、跨平台的影视聚合播放站 |
 | multica | 人与 AI 编程代理协作工作空间 |
 | myip | IP 与网络检测工具箱 |
@@ -80,13 +75,10 @@
 | piclist | 一款高效的云存储和图床平台管理工具 |
 | playwright | 专业的 Web 应用自动化测试环境 |
 | playwright-mcp | 提供浏览器自动化功能的 MCP 服务器 |
-| portnote | 服务器端口管理与可视化工具 |
 | prompt-optimizer | 高质量提示词优化器 |
 | qdrant | 面向 AI 应用的开源向量数据库 |
 | qexo | 快速、强大、美观的在线静态博客编辑器 |
 | qq-farm-bot | QQ 农场多账号自动化与 Web 控制面板 |
-| qwen-free-api | 阿里通义千问 3 大模型逆向 API |
-| raycast-ai-openrouter-proxy | Raycast AI OpenRouter 代理 |
 | remmina | 跨平台远程桌面客户端 |
 | resilio-sync | 基于点对点技术的文件同步和分享工具 |
 | safeline | 一款足够简单、足够好用、足够强的免费 WAF |
@@ -97,7 +89,6 @@
 | tailscale | 私有 WireGuard 网络组网工具 |
 | tailscale-derp | Tailscale DERP 中继服务器 |
 | tianji | 开源 all-in-one 数据洞察中心 |
-| trae-proxy | 智能 API 代理工具，用于拦截和重定向 OpenAI API 请求 |
 | transmission | 高性能 BT/PT 下载工具 |
 | verysync | 智能 P2P 极速文件同步工具 |
 | we-mp-rss | 微信公众号订阅助手 |
