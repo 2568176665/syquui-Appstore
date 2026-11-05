@@ -1,6 +1,8 @@
 services:
   workbuddy2api:
     image: ghcr.io/ithtelab/workbuddy2api:latest
+    # 固定容器名与上游一致：面板的 WB2API_CONTAINER 靠它 docker exec 重载/读日志
+    container_name: workbuddy2api
     restart: always
     environment:
       TZ: Asia/Shanghai
