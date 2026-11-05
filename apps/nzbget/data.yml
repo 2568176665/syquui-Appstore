@@ -24,7 +24,7 @@ additionalProperties:
     limit: 0
     recommend: 0
     website: https://nzbget.net/
-    github: https://github.com/nzbget/nzbget
+    github: https://github.com/nzbgetcom/nzbget
     document: https://nzbget.net/documentation
     architectures:
       - amd64

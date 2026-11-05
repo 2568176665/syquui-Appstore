@@ -24,7 +24,7 @@ additionalProperties:
     limit: 0
     recommend: 0
     website: https://remmina.org/
-    github: https://github.com/FreeRDP/Remmina
+    github: https://gitlab.com/Remmina/Remmina
     document: https://remmina.org/how-to/
     architectures:
       - amd64

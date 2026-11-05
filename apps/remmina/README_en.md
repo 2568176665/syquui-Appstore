@@ -24,6 +24,6 @@ Remmina is an open-source, cross-platform remote desktop client with web interfa
 ## Links
 
 - [Official Website](https://remmina.org/)
-- [GitHub Project](https://github.com/FreeRDP/Remmina)
+- [GitLab Project](https://gitlab.com/Remmina/Remmina)
 - [Official Documentation](https://remmina.org/how-to/)
 - [Docker Hub](https://hub.docker.com/r/linuxserver/remmina) 

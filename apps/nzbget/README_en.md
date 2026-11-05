@@ -24,6 +24,6 @@ NZBGet is a high-performance Usenet downloader with web interface and automation
 ## Links
 
 - [Official Website](https://nzbget.net/)
-- [GitHub Project](https://github.com/nzbget/nzbget)
+- [GitHub Project](https://github.com/nzbgetcom/nzbget)
 - [Official Documentation](https://nzbget.net/documentation)
-- [Docker Hub](https://hub.docker.com/r/linuxserver/nzbget) 
+- [Docker Hub](https://hub.docker.com/r/nzbgetcom/nzbget) 

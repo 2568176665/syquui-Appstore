@@ -13,7 +13,6 @@ additionalProperties:
     type: website
     crossVersionUpdate: true
     website: https://www.resilio.com/sync/
-    github: https://github.com/resilio-inc
     document: https://docs.linuxserver.io/images/docker-resilio-sync/
     architectures:
       - amd64

@@ -24,6 +24,6 @@ NZBGet 是一个高性能的Usenet下载工具，支持Web界面管理和自动�
 ## 相关链接
 
 - [官方网站](https://nzbget.net/)
-- [GitHub 项目](https://github.com/nzbget/nzbget)
+- [GitHub 项目](https://github.com/nzbgetcom/nzbget)
 - [官方文档](https://nzbget.net/documentation)
-- [Docker Hub](https://hub.docker.com/r/linuxserver/nzbget) 
+- [Docker Hub](https://hub.docker.com/r/nzbgetcom/nzbget) 

@@ -24,6 +24,6 @@ Remmina 是一款开源、跨平台的远程桌面客户端，支持多种协议
 ## 相关链接
 
 - [官方网站](https://remmina.org/)
-- [GitHub 项目](https://github.com/FreeRDP/Remmina)
+- [GitLab 项目](https://gitlab.com/Remmina/Remmina)
 - [官方文档](https://remmina.org/how-to/)
 - [Docker Hub](https://hub.docker.com/r/linuxserver/remmina) 
