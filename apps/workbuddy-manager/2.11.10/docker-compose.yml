@@ -1,0 +1,48 @@
+services:
+  workbuddy2api:
+    image: ghcr.io/ithtelab/workbuddy2api:2.11.10
+    # 固定容器名与上游一致：面板的 WB2API_CONTAINER 靠它 docker exec 重载/读日志
+    container_name: workbuddy2api
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./data/upstream/config.json:/app/config.json:ro
+      - ./data/upstream/auths:/app/auths
+      - ./data/upstream/data:/app/data
+    networks:
+      - 1panel-network
+    labels:
+      createdBy: "Apps"
+
+  workbuddy-manager:
+    image: ghcr.io/ithtelab/workbuddy-manager:2.11.10
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    depends_on:
+      workbuddy2api:
+        # 上游 /healthz 在账号池没有可受理账号时返回 503（镜像内置健康检查据此判 unhealthy），
+        # 首次安装尚无账号，用 service_healthy 会让管理端永远起不来。
+        condition: service_started
+    environment:
+      TZ: Asia/Shanghai
+      WB2API_BASE: http://workbuddy2api:7863
+      WB2API_CONTAINER: workbuddy2api
+      WB_UPSTREAM_DIR: /opt/workbuddy2api
+      WB_UPSTREAM_CONFIG: /opt/workbuddy2api/config.json
+      WB_AUTH_DIR: /opt/workbuddy2api/auths
+      WB_TRUST_PROXY: "1"
+      WB_ENABLE_DOCS: "0"
+    volumes:
+      - ./data:/app/data
+      - ./data/upstream:/opt/workbuddy2api
+    ports:
+      - ${PANEL_APP_PORT_HTTP}:7864
+    networks:
+      - 1panel-network
+    labels:
+      createdBy: "Apps"
+
+networks:
+  1panel-network:
+    external: true

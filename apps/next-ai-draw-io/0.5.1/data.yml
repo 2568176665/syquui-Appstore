@@ -1,0 +1,18 @@
+additionalProperties:
+  formFields:
+    - default: "3000"
+      envKey: PANEL_APP_PORT_HTTP
+      required: true
+      type: number
+      labelEn: Port
+      labelZh: 应用端口
+      edit: true
+      rule: paramPort
+    - default: "18085"
+      envKey: PANEL_APP_PORT_API
+      required: true
+      type: number
+      labelEn: Draw.io Port
+      labelZh: Draw.io 端口
+      edit: true
+      rule: paramPort

@@ -1,0 +1,135 @@
+additionalProperties:
+  formFields:
+    - default: 18288
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      required: true
+      rule: paramPort
+      type: number
+      label:
+        en: Web Port
+        ja: Webポート
+        ms: Port Web
+        pt-br: Porta Web
+        ru: Веб-порт
+        ko: 웹 포트
+        zh-Hant: Web 埠
+        zh: Web 端口
+    - default: apipark
+      envKey: PANEL_DB_NAME
+      random: true
+      required: true
+      rule: paramCommon
+      type: text
+      label:
+        en: Database Name
+        ja: データベース名
+        ms: Nama Pangkalan Data
+        pt-br: Nome do Banco de Dados
+        ru: Имя базы данных
+        ko: 데이터베이스 이름
+        zh-Hant: 資料庫名稱
+        zh: 数据库名
+    - default: apipark
+      envKey: PANEL_DB_ROOT_PASSWORD
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+      label:
+        en: Database Root Password
+        ja: データベースルートパスワード
+        ms: Kata Laluan Root Pangkalan Data
+        pt-br: Senha Root do Banco de Dados
+        ru: Пароль root базы данных
+        ko: 데이터베이스 루트 비밀번호
+        zh-Hant: 資料庫 Root 密碼
+        zh: 数据库 Root 密码
+    - default: apipark
+      envKey: PANEL_REDIS_ROOT_PASSWORD
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+      label:
+        en: Redis Password
+        ja: Redis パスワード
+        ms: Kata Laluan Redis
+        pt-br: Senha Redis
+        ru: Пароль Redis
+        ko: Redis 비밀번호
+        zh-Hant: Redis 密碼
+        zh: Redis 密码
+    - default: admin123
+      envKey: ADMIN_PASSWORD
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+      label:
+        en: Admin Password
+        ja: 管理者パスワード
+        ms: Kata Laluan Pentadbir
+        pt-br: Senha do Administrador
+        ru: Пароль администратора
+        ko: 관리자 비밀번호
+        zh-Hant: 管理員密碼
+        zh: 管理员密码
+    - default: Key123qaz
+      envKey: INFLUXDB_ADMIN_PASSWORD
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+      label:
+        en: InfluxDB Admin Password
+        ja: InfluxDB 管理者パスワード
+        ms: Kata Laluan Pentadbir InfluxDB
+        pt-br: Senha do Administrador InfluxDB
+        ru: Пароль администратора InfluxDB
+        ko: InfluxDB 관리자 비밀번호
+        zh-Hant: InfluxDB 管理員密碼
+        zh: InfluxDB 管理员密码
+    - default: apipark-token
+      envKey: INFLUXDB_TOKEN
+      random: true
+      required: true
+      rule: paramCommon
+      type: text
+      label:
+        en: InfluxDB Token
+        ja: InfluxDB トークン
+        ms: Token InfluxDB
+        pt-br: Token InfluxDB
+        ru: Токен InfluxDB
+        ko: InfluxDB 토큰
+        zh-Hant: InfluxDB 權杖
+        zh: InfluxDB 令牌
+    - default: "info"
+      envKey: LOG_LEVEL
+      required: true
+      type: select
+      values:
+        - label: "DEBUG"
+          value: "debug"
+        - label: "INFO"
+          value: "info"
+        - label: "WARNING"
+          value: "warning"
+        - label: "ERROR"
+          value: "error"
+        - label: "FATAL"
+          value: "fatal"
+        - label: "PANIC"
+          value: "panic"
+        - label: "TRACE"
+          value: "trace"
+      label:
+        en: Log Level
+        ja: ログレベル
+        ms: Tahap Log
+        pt-br: Nível de Log
+        ru: Уровень логирования
+        ko: 로그 레벨
+        zh-Hant: 日誌等級
+        zh: 日志级别
