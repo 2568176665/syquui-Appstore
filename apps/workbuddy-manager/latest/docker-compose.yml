@@ -19,7 +19,9 @@ services:
     restart: always
     depends_on:
       workbuddy2api:
-        condition: service_healthy
+        # 上游 /healthz 在账号池没有可受理账号时返回 503（镜像内置健康检查据此判 unhealthy），
+        # 首次安装尚无账号，用 service_healthy 会让管理端永远起不来。
+        condition: service_started
     environment:
       TZ: Asia/Shanghai
       WB2API_BASE: http://workbuddy2api:7863

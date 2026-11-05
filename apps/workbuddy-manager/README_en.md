@@ -43,6 +43,7 @@ Standard three-step workflow: **Authorize Accounts -> Issue API Keys -> Point Cl
 - The console stores account credentials; **do not expose it directly to the public Internet**. Always place it behind an HTTPS reverse proxy with access control.
 - Ensure the `data/` directory is owned by uid `10001` (handled by `init.sh`; for manual runs use `chown -R 10001:10001 ./data`).
 - Features like "Update Upstream in UI" and "View Upstream Logs" require mounting `/var/run/docker.sock`. This package leaves it unmounted by default for security; those operations will prompt you to run them on the host instead.
+- The upstream health check means "can serve a request right now": with no usable account in the pool it returns `503`, so the container reports `unhealthy`. That is expected, not a startup failure — the console only waits for the upstream container to start, and the status turns `healthy` after the first usable account is added.
 - If the upstream `api_key` in `config.json` is left empty, the upstream gateway endpoints become unauthenticated. Keep a strong random key configured.
 - Only manage accounts authorized voluntarily by yourself or family members; bulk registration, account trading, and commercial resale are strictly forbidden.
 
