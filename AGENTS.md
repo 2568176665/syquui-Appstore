@@ -12,7 +12,6 @@
 - `data.yaml`：应用商店元数据以及分类/标签定义。
 - `apps/<app-key>/`：每个应用一个目录。
 - `.agents/skills/`：应用生成指南、模板和辅助脚本。
-- `tests/<app-key>/`：应用测试脚本，不能放在 `apps/` 内（会被当成版本目录）。
 
 ## 应用包目录结构
 
@@ -32,7 +31,7 @@ apps/<app-key>/
 
 部分应用还包含 `latest/`。当 `latest/` 与具体版本目录同时存在时，`latest/` 应使用 `latest` 镜像标签，具体版本目录应使用固定的镜像标签。
 
-1Panel 会把 `apps/<app-key>/` 下的**每个子目录**都当作版本目录，并强制要求其中的 `docker-compose.yml` 与 `data.yml`，否则同步本地应用时报“docker-compose.yml 文件不存在”。因此测试脚本等非版本内容必须放在 `apps/<app-key>/` 之外（仓库根目录 `tests/<app-key>/`），不能放在应用目录内。
+1Panel 会把 `apps/<app-key>/` 下的**每个子目录**都当作版本目录，并强制要求其中的 `docker-compose.yml` 与 `data.yml`，否则同步本地应用时报“docker-compose.yml 文件不存在”。因此测试脚本等非版本内容必须放在 `apps/` 之外，不能放在应用目录内。
 
 ## 1Panel 约定
 
