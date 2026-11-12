@@ -1,0 +1,32 @@
+services:
+  kokoro-tts:
+    image: ghcr.io/remsky/kokoro-fastapi-gpu:v0.10.0-cu126
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    user: "1001:1001"
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:8880"
+    environment:
+      API_LOG_LEVEL: WARNING
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:8880/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities:
+                - gpu
+    networks:
+      - 1panel-network
+    labels:
+      createdBy: "Apps"
+
+networks:
+  1panel-network:
+    external: true

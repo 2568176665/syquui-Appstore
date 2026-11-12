@@ -1,0 +1,31 @@
+name: Kokoro-FastAPI
+
+tags:
+  - AI / 大模型
+  - 实用工具
+
+title: Kokoro-FastAPI - OpenAI 兼容的本地语音合成服务
+description: 把 Kokoro-82M 语音模型封装成 OpenAI 兼容的 TTS 接口，自带网页播放器，支持流式输出、多语言音色与 ElevenLabs/Cartesia 兼容协议。
+additionalProperties:
+  key: kokoro-fastapi
+  name: Kokoro-FastAPI
+  tags:
+    - AI
+    - Tool
+  shortDescZh: OpenAI 兼容的本地 Kokoro 语音合成服务
+  shortDescEn: Self-hosted Kokoro TTS behind an OpenAI-compatible API
+  description:
+    zh: Kokoro-FastAPI 把 Kokoro-82M 语音模型封装成一个 OpenAI 兼容的 `/v1/audio/speech` 接口，任何 OpenAI SDK 客户端都能直接调用。它支持流式音频输出、按句切块、多语言音色与音色混合，附带可直接试听的网页播放器，并额外提供 ElevenLabs 与 Cartesia 兼容的 WebSocket 协议，方便接入语音聊天与实时对话场景。本应用提供 CPU 版本（适用于任意服务器）与 GPU 版本（需要宿主机的 NVIDIA 容器运行时）。
+    en: Kokoro-FastAPI wraps the Kokoro-82M speech model in an OpenAI-compatible `/v1/audio/speech` endpoint, so any OpenAI SDK client can call it directly. It streams audio, chunks long text, ships multilingual voices and voice mixing, includes a browser player for quick listening, and also speaks the ElevenLabs and Cartesia compatible WebSocket protocols for voice chat and realtime dialogue. This package offers a CPU build that runs anywhere and a GPU build that needs the NVIDIA container runtime on the host.
+    zh-hant: Kokoro-FastAPI 把 Kokoro-82M 語音模型封裝成一個 OpenAI 相容的 `/v1/audio/speech` 介面，任何 OpenAI SDK 用戶端都能直接呼叫。它支援串流音訊輸出、依句切塊、多語言音色與音色混合，附帶可直接試聽的網頁播放器，並額外提供 ElevenLabs 與 Cartesia 相容的 WebSocket 協定，方便接入語音聊天與即時對話場景。本應用提供 CPU 版本（適用於任意伺服器）與 GPU 版本（需要主機的 NVIDIA 容器執行環境）。
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/remsky/Kokoro-FastAPI
+  github: https://github.com/remsky/Kokoro-FastAPI
+  document: https://github.com/remsky/Kokoro-FastAPI/blob/master/docs/configuration.md
+  memoryRequired: 2048
+  architectures:
+    - amd64
+    - arm64
