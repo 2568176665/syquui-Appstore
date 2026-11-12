@@ -348,7 +348,7 @@ image: example/demo:1.2.3
 镜像: example/demo:latest
 ```
 
-`latest` / `stable` 目录只有在用户明确需要并且上游通道可靠时才添加。
+每个应用包都必须同时包含固定版本目录和 `latest/`：固定版本目录使用具体 tag，`latest/` 使用 `latest` tag 且其余内容与固定版本一致。除 `latest/` 外不再添加 `stable` 等其他浮动通道目录。
 
 ---
 

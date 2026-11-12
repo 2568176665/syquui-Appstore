@@ -10,7 +10,7 @@
     {
       "id": 2,
       "prompt": "我有一个docker-compose.yml文件，内容如下：\n```yaml\nservices:\n  memos:\n    image: neosmemo/memos:0.25.0\n    container_name: memos\n    ports:\n      - \"5230:5230\"\n    volumes:\n      - ./memos_data:/var/opt/memos\n    environment:\n      MEMOS_MODE: prod\n    restart: always\n```\n帮我生成1Panel应用商店的配置",
-      "expected_output": "Preserve the concrete 0.25.0 image tag, mapping-form environment, volume mapping and container port. Generate only the concrete version directory by default, use PANEL_APP_PORT_HTTP for the host port, and produce validation-ready 1Panel files without an extra latest directory.",
+      "expected_output": "Preserve the concrete 0.25.0 image tag, mapping-form environment, volume mapping and container port. Generate the concrete version directory plus a latest/ directory whose Compose file differs only in the image tag, keep both data.yml form fields identical, use PANEL_APP_PORT_HTTP for the host port, and produce validation-ready 1Panel files.",
       "files": []
     },
     {

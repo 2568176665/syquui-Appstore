@@ -23,13 +23,20 @@ apps/<app-key>/
 ├── logo.png
 ├── README.md
 ├── README_en.md
-└── <version>/
+├── <version>/
+│   ├── data.yml
+│   ├── docker-compose.yml
+│   └── data/
+└── latest/
     ├── data.yml
-    ├── docker-compose.yml
-    └── data/
+    └── docker-compose.yml
 ```
 
-部分应用还包含 `latest/`。当 `latest/` 与具体版本目录同时存在时，`latest/` 应使用 `latest` 镜像标签，具体版本目录应使用固定的镜像标签。
+每个应用必须同时提供一个固定版本目录和一个 `latest/` 目录：
+
+- 固定版本目录以具体版本号命名（不以 `v` 开头），使用固定的镜像标签。
+- `latest/` 使用 `latest` 镜像标签，其余内容（端口、卷、环境变量、健康检查、标签）与固定版本目录保持一致。
+- 两个目录的 `data.yml` 表单字段必须完全一致，否则安装表单会因所选版本不同而变化。
 
 1Panel 会把 `apps/<app-key>/` 下的**每个子目录**都当作版本目录，并强制要求其中的 `docker-compose.yml` 与 `data.yml`，否则同步本地应用时报“docker-compose.yml 文件不存在”。因此测试脚本等非版本内容必须放在 `apps/` 之外，不能放在应用目录内。
 

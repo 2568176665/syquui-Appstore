@@ -28,10 +28,15 @@ apps/<app-key>/
 ├── logo.png
 ├── README.md
 ├── README_en.md
-└── <version>/
+├── <version>/
+│   ├── data.yml
+│   └── docker-compose.yml
+└── latest/
     ├── data.yml
     └── docker-compose.yml
 ```
+
+Every app ships **two** version directories: one pinned version and one `latest/`. See Version Policy below.
 
 Runtime data directories such as `data/`, `logs/`, `conf/`, or `storage/` are **optional**. Create or commit them only when the app actually needs seed/config files. Bind mounts may create empty runtime directories automatically.
 
@@ -46,14 +51,16 @@ Do not infer a production architecture from a README snippet when the upstream r
 
 ## Version Policy
 
-Default to a **pinned concrete version only**.
+Every app must ship a **pinned version directory plus a `latest/` directory**. Neither is optional, and the two are created together for each new app.
 
+- The pinned directory is named after a concrete upstream version and never starts with `v`; it uses that concrete image tag.
 - Prefer the concrete image tag already present in the verified upstream Compose/release.
 - Preserve `v` in the image tag when upstream uses it; version directories may omit the leading `v`.
-- Do **not** create `latest/`, `stable/`, or other floating channel directories by default.
+- `latest/` uses the `latest` image tag and is otherwise byte-identical to the pinned directory's Compose file apart from the tag.
+- Both directories carry the **same** `data.yml` form fields. A form that changes with the selected version breaks the install dialog.
 - Do not replace a concrete upstream tag with whatever tag a registry happens to report as newest.
-- Add a floating channel only when the user explicitly requests it and the upstream project documents that channel as safe.
-- For business-critical apps, avoid automatic upgrades. Treat each new app version as an explicit tested package update.
+- Do not add `stable/`, `edge/`, `main/` or other extra floating channel directories. Only `latest/` is part of the package shape.
+- For business-critical apps, point users at the pinned directory and treat each new version as an explicit tested package update; `latest/` exists for users who accept automatic upgrades.
 
 ## Workflow
 
@@ -74,6 +81,7 @@ Default to a **pinned concrete version only**.
    - Make initialization idempotent; a partially-created directory must not be treated as successful setup.
 6. **Generate/edit app metadata and Compose.**
    - Preserve upstream semantics; never invent generic volumes, PUID/PGID, or environment variables that the source app does not use.
+   - Produce both the pinned version directory and `latest/`, then diff their Compose files to confirm only the image tag differs.
 7. **Resolve a real icon.**
    - Never invent a placeholder logo.
 8. **Validate.**
@@ -192,7 +200,7 @@ Do not assume `stable`/`latest` images contain the expected app. Verify the imag
 
 `scripts/generate-app.sh` is a **draft generator**, not a replacement for app-specific review.
 
-- It defaults to one pinned version directory.
+- It defaults to one pinned version directory and does **not** create `latest/`; add it by copying the pinned directory and switching only the image tag to `latest`.
 - It preserves a concrete source image tag instead of silently resolving “latest”.
 - It refuses multi-service Compose input by default because dropping DB/Redis/workers creates broken packages.
 - `--allow-partial-compose` exists only for an explicitly acknowledged draft.
@@ -287,8 +295,9 @@ Before considering an app ready:
 
 - YAML parses successfully.
 - `additionalProperties.key` matches the directory name.
-- Every version directory has `data.yml` and `docker-compose.yml`.
-- Primary app images are pinned to the intended version; no accidental `latest`/`stable` in a concrete production version.
+- Both the pinned version directory and `latest/` exist, each with `data.yml` and `docker-compose.yml`, and their `data.yml` form fields are identical.
+- The pinned directory's primary image is pinned to the intended version; no accidental `latest`/`stable` there.
+- `latest/` uses the `latest` image tag and differs from the pinned Compose file only in that tag.
 - Every `PANEL_APP_PORT_*` reference has a matching form field.
 - Unresolved `${VAR}` references are reviewed and either defined by form fields/1Panel or intentionally supplied another way.
 - No static host binding to 80/443 unless explicitly justified.

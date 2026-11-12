@@ -24,7 +24,7 @@ apps/demo-app/
     └── docker-compose.yml
 ```
 
-不会自动生成 `latest/`。
+生成器不会自动创建 `latest/`。交付前需复制该固定版本目录为 `latest/`，只把镜像 tag 改成 `latest`。
 
 ## 2. 来源已经是具体 tag
 

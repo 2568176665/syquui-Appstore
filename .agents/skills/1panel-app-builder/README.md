@@ -6,7 +6,7 @@ AI 使用入口是 `SKILL.md`；人工常用入口是 `scripts/` 下的生成、
 
 ## 设计原则
 
-- 默认只生成**固定版本**，不自动创建 `latest/` / `stable/`。
+- 生成器只产出**固定版本**目录；交付的应用包还必须补齐 `latest/`（复制固定版本目录，仅把镜像 tag 改为 `latest`）。
 - 优先保留已经验证过的上游具体镜像 tag，不自动追新。
 - 多服务 Compose 默认拒绝“只抽主服务”，避免把 DB / Redis / worker / init / websocket 等依赖丢掉。
 - 不凭空添加来源中不存在的 `/app/data`、PUID、PGID、UMASK 等配置。
