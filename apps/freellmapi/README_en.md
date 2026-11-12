@@ -27,6 +27,7 @@ Provider keys are encrypted with AES-256-GCM in a local SQLite database, and cli
 - The admin account is created only on first boot, while no account exists. Changing the email or password in the form afterwards has no effect; edit them inside the dashboard instead.
 - The admin password may only contain letters, digits and `.%@!~_-`, because the value is embedded in the container's `FREEAPI_CONFIG_JSON`.
 - The server listens on all interfaces and the app is single-user by design, so do not expose it directly to the internet. For HTTPS, put a 1Panel website reverse proxy in front of the port.
+- Two version directories are published: pinned `0.16.26` uses a fixed image tag and suits controlled upgrades, while `latest` follows the upstream image and may update when the container is recreated.
 - Upgrading the app version works in place as long as `data/` and `ENCRYPTION_KEY` stay the same; database migrations run automatically on container start.
 - Upstream's optional Watchtower self-update sidecar needs the Docker socket and is not included here. Upgrade through the 1Panel App Store instead.
 - The container maps `host.docker.internal`, so a custom provider can target Ollama, LM Studio or vLLM running on the host (for example `http://host.docker.internal:11434/v1`).

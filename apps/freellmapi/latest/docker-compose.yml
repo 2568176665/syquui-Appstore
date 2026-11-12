@@ -1,0 +1,30 @@
+services:
+  freellmapi:
+    image: ghcr.io/tashfeenahmed/freellmapi:latest
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:3001"
+    volumes:
+      - ./data:/app/server/data
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      FREEAPI_CONFIG_JSON: '{"admin":{"email":"${PANEL_APP_ADMIN_EMAIL}","password":"${PANEL_APP_ADMIN_PASSWORD}"}}'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/api/ping').then((res) => { if (!res.ok) process.exit(1); }).catch(() => process.exit(1));"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+    networks:
+      - 1panel-network
+    labels:
+      createdBy: "Apps"
+
+networks:
+  1panel-network:
+    external: true
