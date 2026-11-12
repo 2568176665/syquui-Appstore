@@ -1,0 +1,30 @@
+name: MiroFish
+
+tags:
+  - AI / 大模型
+  - 实用工具
+
+title: MiroFish - 群体智能预测引擎
+description: 把一份文档或事件丢进多智能体社会模拟，观察舆论如何演化，并输出带证据的预测报告。
+additionalProperties:
+  key: mirofish
+  name: MiroFish
+  tags:
+    - AI
+    - Tool
+  shortDescZh: 用多智能体社会模拟做舆情与事件预测
+  shortDescEn: Multi-agent social simulation for opinion and event forecasting
+  description:
+    zh: MiroFish 是一个简洁通用的群体智能引擎。它把文档、新闻或事件描述抽取成本体与人物画像，再在模拟出来的社交网络里让成百上千个智能体按各自性格互动，观察话题如何扩散，最后生成带证据的预测报告。它需要一个 OpenAI 兼容的大模型接口用于生成与推理，以及一个 Zep Cloud 密钥用于保存记忆图谱。
+    en: MiroFish is a general-purpose swarm intelligence engine. It turns a document, news item or event description into an ontology and a cast of agent profiles, then runs hundreds of agents through a simulated social network where each behaves in character, watches how a topic spreads, and produces a forecast report with its evidence. It needs an OpenAI-compatible LLM endpoint for generation and reasoning, and a Zep Cloud key for the memory graph.
+    zh-hant: MiroFish 是一個簡潔通用的群體智能引擎。它把文件、新聞或事件描述抽取成本體與人物畫像，再在模擬出來的社交網路裡讓成百上千個智能體按各自性格互動，觀察話題如何擴散，最後產生帶證據的預測報告。它需要一個 OpenAI 相容的大模型介面用於生成與推理，以及一個 Zep Cloud 金鑰用於保存記憶圖譜。
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/666ghj/MiroFish
+  github: https://github.com/666ghj/MiroFish
+  document: https://github.com/666ghj/MiroFish/blob/main/README-ZH.md
+  memoryRequired: 2048
+  architectures:
+    - amd64

@@ -1,0 +1,38 @@
+additionalProperties:
+  formFields:
+    - default: 3000
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelZh: Web 端口
+      labelEn: Web Port
+      required: true
+      rule: paramPort
+      type: number
+    - default: ""
+      edit: true
+      envKey: LLM_API_KEY
+      labelZh: 大模型 API 密钥
+      labelEn: LLM API Key
+      required: true
+      type: password
+    - default: https://dashscope.aliyuncs.com/compatible-mode/v1
+      edit: true
+      envKey: LLM_BASE_URL
+      labelZh: 大模型 API 地址（OpenAI 兼容）
+      labelEn: LLM Base URL (OpenAI-compatible)
+      required: true
+      type: text
+    - default: qwen-plus
+      edit: true
+      envKey: LLM_MODEL_NAME
+      labelZh: 大模型名称
+      labelEn: LLM Model Name
+      required: true
+      type: text
+    - default: ""
+      edit: true
+      envKey: ZEP_API_KEY
+      labelZh: Zep Cloud 密钥（记忆图谱）
+      labelEn: Zep Cloud API Key (memory graph)
+      required: true
+      type: password
