@@ -116,6 +116,17 @@ PANEL_APP_PORT_S3
 PANEL_APP_PORT_SYNC
 ```
 
+## Generated Secrets
+
+`random: true` on a form field produces the field's default plus `_` and six random characters, so it cannot satisfy a strict format such as 64-character hex, a required prefix, or a checksum. When a secret must match one:
+
+- Drop the form field and generate the value in `scripts/init.sh` into `data/secrets.env`, then inject it with `env_file: ./data/secrets.env`.
+- Keep `init.sh` idempotent: exit early when a valid value already exists, so reinstalls and upgrades never rotate a key that already encrypted user data.
+- Refuse to generate when the app's database or other state already exists but the secret is missing — a fresh key would silently orphan stored data. Fail with a message naming both files.
+- `scripts/upgrade.sh` should re-run `init.sh` via `exec sh "$(dirname "$0")/init.sh"`.
+- Copy `scripts/` into every version directory, including `latest/`.
+- Never commit a real `data/secrets.env`; it is created at install time.
+
 ## Reusing 1Panel Database / Redis
 
 Prefer a 1Panel app selector when it simplifies operations **and** upstream supports an external service.

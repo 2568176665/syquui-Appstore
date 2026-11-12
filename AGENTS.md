@@ -49,6 +49,7 @@ apps/<app-key>/
 - `docker-compose.yml` 中用到的每个 `PANEL_APP_PORT_*` 都应在版本 `data.yml` 中有对应的表单字段。
 - Compose 服务应使用 `container_name: ${CONTAINER_NAME}`、`restart: always`、外部 `1panel-network`、相对 `./data/` 卷路径做持久化，并添加 `labels: createdBy: "Apps"`。
 - 使用 `./data/...` 挂载，而不是宿主机绝对路径，除非应用确实需要宿主机集成。
+- 格式严格的密钥（定长十六进制、固定前缀等）不要用表单 `random: true`，应在版本目录的 `scripts/init.sh` 中生成到 `data/secrets.env`，再用 `env_file` 注入；细节见 `.agents/skills/1panel-app-builder/SKILL.md`。
 - 保持应用元数据标签与 `data.yaml` 一致。
 
 ## 应用创建流程
