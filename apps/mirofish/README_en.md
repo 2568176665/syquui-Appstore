@@ -28,6 +28,7 @@ The Flask backend listens on port 5001 inside the container and the frontend dev
 ## Notes
 
 - **It is token-hungry.** One simulation makes many rounds of multi-agent model calls. Start with a run of fewer than 40 rounds to gauge the cost before scaling up.
-- The image starts both processes with `npm run dev`, which is how upstream ships it: it is not a production static site. The first start takes about a minute, and the health check's `start_period` is set to 90 seconds.
+- The image starts both processes with `npm run dev`, which is how upstream ships it: it is not a production static site. On start the backend rebuilds its local package with `uv`, which is why the health check's `start_period` is relaxed to 90 seconds.
+- **The image is about 14 GB**, so the first install pulls for a while; make sure there is enough disk space.
 - For the optional "boost" model, add `LLM_BOOST_API_KEY`, `LLM_BOOST_BASE_URL` and `LLM_BOOST_MODEL_NAME` to the Compose file. **Do not add them unless you use them**: upstream expects all three together or none at all.
 - Uploads are capped at 50 MB and accept `pdf`, `md`, `txt` and `markdown`.
