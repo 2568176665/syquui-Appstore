@@ -8,7 +8,7 @@ additionalProperties:
       required: true
       rule: paramPort
       type: number
-    - default: ""
+    - default: Promptopt1
       edit: true
       envKey: PROMPT_OPTIMIZER_PASSWORD
       labelEn: Basic Auth Password (Optional)

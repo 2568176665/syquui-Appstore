@@ -3,24 +3,29 @@ services:
     image: linshen/prompt-optimizer:latest
     container_name: ${CONTAINER_NAME}
     restart: always
+    security_opt:
+      - no-new-privileges:true
     ports:
       - "${PANEL_APP_PORT_HTTP}:80"
     environment:
-      ACCESS_USERNAME: "admin"
-      ACCESS_PASSWORD: "${PROMPT_OPTIMIZER_PASSWORD}"
-      VITE_OPENAI_API_KEY: "${VITE_OPENAI_API_KEY}"
-      VITE_GEMINI_API_KEY: "${VITE_GEMINI_API_KEY}"
-      VITE_DEEPSEEK_API_KEY: "${VITE_DEEPSEEK_API_KEY}"
-      VITE_SILICONFLOW_API_KEY: "${VITE_SILICONFLOW_API_KEY}"
-      VITE_CUSTOM_API_KEY: "${VITE_CUSTOM_API_KEY}"
-      VITE_CUSTOM_API_BASE_URL: "${VITE_CUSTOM_API_BASE_URL}"
-      VITE_CUSTOM_API_MODEL: "${VITE_CUSTOM_API_MODEL}"
+      ACCESS_USERNAME: admin
+      ACCESS_PASSWORD: ${PROMPT_OPTIMIZER_PASSWORD}
+      VITE_OPENAI_API_KEY: ${VITE_OPENAI_API_KEY}
+      VITE_GEMINI_API_KEY: ${VITE_GEMINI_API_KEY}
+      VITE_DEEPSEEK_API_KEY: ${VITE_DEEPSEEK_API_KEY}
+      VITE_SILICONFLOW_API_KEY: ${VITE_SILICONFLOW_API_KEY}
+      VITE_CUSTOM_API_KEY: ${VITE_CUSTOM_API_KEY}
+      VITE_CUSTOM_API_BASE_URL: ${VITE_CUSTOM_API_BASE_URL}
+      VITE_CUSTOM_API_MODEL: ${VITE_CUSTOM_API_MODEL}
+      MCP_LOG_LEVEL: info
+      MCP_DEFAULT_LANGUAGE: zh
+      MCP_DEFAULT_MODEL_PROVIDER: openai
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      test: ["CMD", "sh", "-c", "curl -fsS http://localhost:80/healthz >/dev/null"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 5s
+      start_period: 40s
     labels:
       createdBy: "Apps"
     networks:

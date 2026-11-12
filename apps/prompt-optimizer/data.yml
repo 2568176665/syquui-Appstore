@@ -19,6 +19,7 @@ additionalProperties:
   description:
     zh: Prompt Optimizer 是一款强大的提示词（Prompt）优化工具，旨在帮助用户轻松编写、优化和测试高质量的提示词。它支持多种主流的大语言模型（LLM），并提供直观的可视化界面，让提示词工程变得简单高效。
     en: Prompt Optimizer is a powerful tool designed to help users easily write, optimize, and test high-quality prompts. It supports various mainstream Large Language Models (LLMs) and provides an intuitive visual interface to make prompt engineering simple and efficient.
+    zh-hant: Prompt Optimizer 是一款強大的提示詞（Prompt）優化工具，旨在幫助使用者輕鬆撰寫、優化與測試高品質的提示詞。它支援多種主流的大型語言模型（LLM），並提供直覺的可視化介面，讓提示詞工程變得簡單高效。
   type: website
   crossVersionUpdate: true
   limit: 0
