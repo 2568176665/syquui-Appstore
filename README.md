@@ -13,6 +13,7 @@
 | ani-rss | 动漫自动订阅与下载工具 |
 | apipark | 开源企业级 API 全生命周期管理平台 |
 | arcane | 现代化 Docker 管理面板 |
+| astrbot | 多平台大模型聊天机器人框架 |
 | axonhub | 一站式 AI 开发平台 - 统一 API 网关，支持多种 LLM 提供商 |
 | beszel-agent | 轻量易用的服务器监控（客户端） |
 | browser-use | 让 AI 代理可以访问网站。轻松实现在线任务自动化 |
@@ -47,14 +48,17 @@
 | kali-linux | Kali Linux 渗透测试环境 |
 | karakeep | 智能书签和笔记管理工具 |
 | keepassxc | 跨平台密码管理器 |
+| kokoro-fastapi | OpenAI 兼容的本地 Kokoro 语音合成服务 |
 | linkwarden | Linkwarden 书签归档与协作工具 |
 | litellm | 使用 OpenAI 格式调用所有 LLM API |
 | lobe-chat-data | LobeChat 服务端数据库版 - 开源、现代设计的 ChatGPT/LLMs UI/框架 |
 | lucky | 一站式网络加速与端口转发工具 |
 | lxserver | LX Music 数据同步服务器与 Web 播放器 |
+| magpie | 把订阅账号与 API 密钥统一成一个兼容网关 |
 | mcphub | MCP 服务器统一管理中心 |
 | md | 微信 Markdown 编辑器 |
 | metamcp | MCP 聚合器、编排器、中间件、网关于一体的 Docker 解决方案 |
+| mirofish | 用多智能体社会模拟做舆情与事件预测 |
 | moontv | 开箱即用的、跨平台的影视聚合播放站 |
 | multica | 人与 AI 编程代理协作工作空间 |
 | myip | IP 与网络检测工具箱 |
