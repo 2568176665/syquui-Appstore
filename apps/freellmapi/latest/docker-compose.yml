@@ -7,10 +7,10 @@ services:
       - "${PANEL_APP_PORT_HTTP}:3001"
     volumes:
       - ./data:/app/server/data
+    env_file: ./data/secrets.env
     environment:
       NODE_ENV: production
       PORT: 3001
-      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
       FREEAPI_CONFIG_JSON: '{"admin":{"email":"${PANEL_APP_ADMIN_EMAIL}","password":"${PANEL_APP_ADMIN_PASSWORD}"}}'
     extra_hosts:
       - "host.docker.internal:host-gateway"

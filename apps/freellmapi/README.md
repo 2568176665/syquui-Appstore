@@ -17,18 +17,19 @@ FreeLLMAPI 是一个本地运行的大模型路由器：它把数十家提供商
 | 参数 | 默认值 | 说明 |
 | --- | --- | --- |
 | `PANEL_APP_PORT_HTTP` | `3001` | 控制台与 API 的宿主机端口 |
-| `ENCRYPTION_KEY` | - | 64 位十六进制密钥，用于加密存储提供商密钥 |
 | `PANEL_APP_ADMIN_EMAIL` | `admin@freellmapi.local` | 控制台管理员邮箱 |
 | `PANEL_APP_ADMIN_PASSWORD` | 随机生成 | 控制台管理员密码，至少 8 位 |
 
 ## 注意事项
 
-- `ENCRYPTION_KEY` 必须是 64 位十六进制字符串，可用 `openssl rand -hex 32` 生成。安装后请勿修改：更换密钥会让已保存的提供商密钥全部无法解密。
+- 加密密钥 `ENCRYPTION_KEY` 无需手工填写：安装脚本会自动生成一个 64 位十六进制密钥并写入 `data/secrets.env`（权限 `600`）。它用于加密存储提供商密钥，请与 `data/` 一起备份，不要修改或删除，否则已保存的提供商密钥将无法解密。
+- 若 `data/secrets.env` 丢失而 `data/freeapi.db` 仍然存在，安装脚本会拒绝生成新密钥并报错，避免悄悄作废数据库里的全部提供商密钥。此时请把原来的 `ENCRYPTION_KEY` 写回 `data/secrets.env`，或删除 `data/freeapi.db` 重新开始。
+- 如需沿用其他 FreeLLMAPI 实例的密钥，在首次启动前把该实例的 `ENCRYPTION_KEY` 写入 `data/secrets.env` 即可。
 - 管理员账号只在首次启动、用户表为空时创建。之后再修改表单中的邮箱或密码不会生效，需在控制台内修改。
 - 管理员密码只能使用字母、数字和 `.%@!~_-`，因为该值会被写入容器的 `FREEAPI_CONFIG_JSON`。
 - 容器内服务监听所有网卡，应用本身是单用户设计，不建议直接暴露到公网。需要 HTTPS 访问时，请使用 1Panel 网站的「反向代理」功能指向该端口。
 - 应用同时提供固定版本 `0.16.26` 与 `latest` 两个版本目录：固定版本使用固定镜像标签，适合可控升级；`latest` 跟随上游最新镜像，重启容器时可能自动更新。
-- 升级应用版本时，`data/` 目录与 `ENCRYPTION_KEY` 保持不变即可平滑升级，数据库迁移在容器启动时自动执行。
+- 升级应用版本时，`data/` 目录保持不变即可平滑升级，数据库迁移在容器启动时自动执行。
 - 上游提供可选的 Watchtower 自更新组件，需要挂载 Docker socket，本应用包未包含；升级请通过 1Panel 应用商店完成。
 - 容器已加入 `host.docker.internal` 映射，自定义提供商可以指向宿主机上运行的 Ollama、LM Studio、vLLM 等服务（例如 `http://host.docker.internal:11434/v1`）。
 
