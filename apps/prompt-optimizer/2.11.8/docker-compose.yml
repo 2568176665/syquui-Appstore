@@ -16,11 +16,7 @@ services:
       VITE_CUSTOM_API_BASE_URL: ${VITE_CUSTOM_API_BASE_URL}
       VITE_CUSTOM_API_MODEL: ${VITE_CUSTOM_API_MODEL}
     healthcheck:
-      test:
-        - CMD
-        - curl
-        - -f
-        - http://localhost:80
+      test: ["CMD", "curl", "-s", "-o", "/dev/null", "--max-time", "5", "http://localhost:80/"]
       interval: 30s
       timeout: 10s
       retries: 3

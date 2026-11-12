@@ -21,7 +21,7 @@ services:
       MCP_DEFAULT_LANGUAGE: zh
       MCP_DEFAULT_MODEL_PROVIDER: openai
     healthcheck:
-      test: ["CMD", "sh", "-c", "curl -fsS http://localhost:80/healthz >/dev/null"]
+      test: ["CMD", "curl", "-s", "-o", "/dev/null", "--max-time", "5", "http://localhost:80/"]
       interval: 30s
       timeout: 10s
       retries: 3
