@@ -1,0 +1,31 @@
+name: Magpie
+
+tags:
+  - AI / 大模型
+  - 开发工具
+
+title: Magpie - 订阅与密钥统一的 AI 网关
+description: 把订阅账号、API 密钥与本地模型统一成一个兼容 OpenAI、Anthropic、Gemini 的网关，供其它机器上的 Agent 调用。
+additionalProperties:
+  key: magpie
+  name: Magpie
+  tags:
+    - AI
+    - DevTool
+  shortDescZh: 把订阅账号与 API 密钥统一成一个兼容网关
+  shortDescEn: Turn subscriptions and API keys into one compatible gateway
+  description:
+    zh: Magpie 是一个本地 AI 网关。它把订阅账号（Claude Code、Codex、Grok 等）与各家 API 密钥收拢到一处，对外提供 OpenAI Chat/Responses、Anthropic Messages 与 Gemini 兼容接口，并在其间完成协议转换、流式输出、工具调用与思考内容转发。本应用以容器方式运行 Magpie 的浏览器控制台模式，可以在网页里添加提供商、登录订阅、签发网关密钥、配置路由组与插件，并按密钥统计用量与配额。
+    en: Magpie is a local AI gateway. It collects subscription accounts (Claude Code, Codex, Grok and others) and provider API keys in one place and serves them as OpenAI Chat/Responses, Anthropic Messages and Gemini compatible endpoints, translating between the protocols with streaming, tool calls and reasoning included. This package runs Magpie in its browser console mode, so providers, subscription sign-ins, gateway keys, routing groups and plugins are all managed from a web page, with per-key usage and quota tracking.
+    zh-hant: Magpie 是一個本機 AI 閘道。它把訂閱帳號（Claude Code、Codex、Grok 等）與各家 API 金鑰收攏到一處，對外提供 OpenAI Chat/Responses、Anthropic Messages 與 Gemini 相容介面，並在其間完成協定轉換、串流輸出、工具呼叫與思考內容轉發。本應用以容器方式執行 Magpie 的瀏覽器主控台模式，可以在網頁裡新增提供商、登入訂閱、簽發閘道金鑰、設定路由組與外掛，並依金鑰統計用量與配額。
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://usemagpie.ai
+  github: https://github.com/yetone/magpie
+  document: https://usemagpie.ai/docs/docker
+  memoryRequired: 512
+  architectures:
+    - amd64
+    - arm64

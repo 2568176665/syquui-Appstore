@@ -1,0 +1,27 @@
+additionalProperties:
+  formFields:
+    - default: 3430
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelZh: 控制台端口
+      labelEn: Console Port
+      required: true
+      rule: paramPort
+      type: number
+    - default: 3425
+      edit: true
+      envKey: PANEL_APP_PORT_API
+      labelZh: 网关端口
+      labelEn: Gateway Port
+      required: true
+      rule: paramPort
+      type: number
+    - default: magpiewebkey
+      edit: true
+      envKey: MAGPIE_WEB_KEY
+      labelZh: 控制台密钥（打开控制台时放在地址的 ?k= 后面）
+      labelEn: Console Key (appended as ?k= when opening the console)
+      required: true
+      rule: paramComplexity
+      type: password
+      random: true

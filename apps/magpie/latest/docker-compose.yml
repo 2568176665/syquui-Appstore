@@ -1,0 +1,27 @@
+services:
+  magpie:
+    image: ghcr.io/yetone/magpie:latest
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    command: ["web", "--addr", "0.0.0.0:3430", "--no-open"]
+    ports:
+      - "${PANEL_APP_PORT_API}:3425"
+      - "${PANEL_APP_PORT_HTTP}:3430"
+    environment:
+      MAGPIE_WEB_KEY: ${MAGPIE_WEB_KEY}
+    volumes:
+      - ./data/config:/config
+    healthcheck:
+      test: ["CMD", "/magpie", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+    networks:
+      - 1panel-network
+    labels:
+      createdBy: "Apps"
+
+networks:
+  1panel-network:
+    external: true
