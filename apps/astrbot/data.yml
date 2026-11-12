@@ -1,0 +1,31 @@
+name: AstrBot
+
+tags:
+  - AI / 大模型
+  - 实用工具
+
+title: AstrBot - 多平台大模型聊天机器人框架
+description: 把大模型接入 QQ、微信、Telegram、Discord 等消息平台的聊天机器人框架，自带网页管理面板、插件市场与知识库。
+additionalProperties:
+  key: astrbot
+  name: AstrBot
+  tags:
+    - AI
+    - Tool
+  shortDescZh: 多平台大模型聊天机器人框架
+  shortDescEn: A multi-platform LLM chatbot framework
+  description:
+    zh: AstrBot 是一个跨平台的聊天机器人框架。它把大模型能力接入 QQ、微信、Telegram、Discord、Slack 等消息平台，提供可视化配置的网页管理面板、插件市场、知识库、Agent 工具调用与会话管理，并支持按人格、按群组分别配置模型与提示词。接入 QQ 个人号时可与 NapCat 等 OneBot v11 实现配合使用。
+    en: AstrBot is a cross-platform chatbot framework. It brings LLM capabilities to QQ, WeChat, Telegram, Discord, Slack and other messaging platforms, with a web dashboard for visual configuration, a plugin marketplace, knowledge bases, agent tool calling and session management, plus per-persona and per-group model and prompt settings. For a personal QQ account it works with OneBot v11 implementations such as NapCat.
+    zh-hant: AstrBot 是一個跨平台的聊天機器人框架。它把大模型能力接入 QQ、微信、Telegram、Discord、Slack 等訊息平台，提供可視化設定的網頁管理面板、外掛市集、知識庫、Agent 工具呼叫與會話管理，並支援依人格、依群組分別設定模型與提示詞。接入 QQ 個人號時可與 NapCat 等 OneBot v11 實作搭配使用。
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://astrbot.app
+  github: https://github.com/AstrBotDevs/AstrBot
+  document: https://docs.astrbot.app
+  memoryRequired: 1024
+  architectures:
+    - amd64
+    - arm64

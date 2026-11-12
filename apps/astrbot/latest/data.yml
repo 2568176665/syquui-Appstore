@@ -1,0 +1,34 @@
+additionalProperties:
+  formFields:
+    - default: 6185
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelZh: 管理面板端口
+      labelEn: Dashboard Port
+      required: true
+      rule: paramPort
+      type: number
+    - default: 6199
+      edit: true
+      envKey: PANEL_APP_PORT_API
+      labelZh: OneBot v11 WebSocket 端口（接入 QQ 等平台时使用）
+      labelEn: OneBot v11 WebSocket Port (for QQ and similar platforms)
+      required: true
+      rule: paramPort
+      type: number
+    - default: Asia/Shanghai
+      edit: true
+      envKey: TZ
+      labelZh: 时区
+      labelEn: Time Zone
+      required: true
+      type: text
+    - default: Astrbot123
+      edit: true
+      envKey: ASTRBOT_DASHBOARD_INITIAL_PASSWORD
+      labelZh: 管理面板初始密码（首次登录后会要求修改）
+      labelEn: Dashboard Initial Password (change on first login)
+      required: true
+      rule: paramComplexity
+      type: password
+      random: true
