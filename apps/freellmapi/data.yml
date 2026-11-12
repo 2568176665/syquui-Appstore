@@ -1,0 +1,29 @@
+name: FreeLLMAPI
+tags:
+  - AI / 大模型
+  - 开发工具
+title: FreeLLMAPI - 免费大模型聚合网关
+description: FreeLLMAPI 把数十家免费大模型提供商的额度聚合到同一个 OpenAI 兼容接口后面，支持智能路由、自动故障转移与密钥加密存储。
+additionalProperties:
+  key: freellmapi
+  name: FreeLLMAPI
+  tags:
+    - AI
+    - DevTool
+  shortDescZh: 聚合数十家免费大模型提供商，统一 OpenAI 兼容接口
+  shortDescEn: Aggregate dozens of free LLM providers behind one OpenAI-compatible API
+  description:
+    zh: FreeLLMAPI 把数十家免费大模型提供商的免费额度聚合到同一个 OpenAI 兼容 `/v1` 接口后面。路由器按速度、能力和可靠性为每个请求挑选模型，遇到限流或故障自动切换到下一个提供商，并按密钥统计用量以守住各家的免费配额。提供商密钥以 AES-256-GCM 加密保存在本地 SQLite 中，客户端只需一个统一的 `freellmapi-...` 令牌。除 `/v1` 外还提供 Anthropic Messages、Gemini 与 Ollama 兼容接口，以及一个可管理密钥、调整回退链、查看分析的 Web 控制台。
+    en: FreeLLMAPI stacks the free tiers of dozens of LLM providers behind a single OpenAI-compatible `/v1` endpoint. A router ranks your chain by speed, capability and reliability, fails over to the next provider on rate limits or errors, and tracks per-key usage to stay under every free-tier cap. Provider keys are encrypted with AES-256-GCM in a local SQLite database, and clients only ever see one unified `freellmapi-...` token. Beyond `/v1` it also serves Anthropic Messages, Gemini and Ollama surfaces, plus a web dashboard for keys, fallback chains and analytics.
+    zh-hant: FreeLLMAPI 把數十家免費大模型提供商的免費額度聚合到同一個 OpenAI 相容 `/v1` 介面後面。路由器依速度、能力與可靠性為每個請求挑選模型，遇到限流或故障自動切換到下一個提供商，並依金鑰統計用量以守住各家免費配額。提供商金鑰以 AES-256-GCM 加密保存在本地 SQLite 中，用戶端只需一個統一的 `freellmapi-...` 權杖。除 `/v1` 外還提供 Anthropic Messages、Gemini 與 Ollama 相容介面，以及可管理金鑰、調整回退鏈、檢視分析的 Web 主控台。
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://freellmapi.co
+  github: https://github.com/tashfeenahmed/freellmapi
+  document: https://github.com/tashfeenahmed/freellmapi/blob/main/docs/en/install/01-install.md
+  memoryRequired: 512
+  architectures:
+    - amd64
+    - arm64
