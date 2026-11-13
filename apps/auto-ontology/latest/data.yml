@@ -1,0 +1,52 @@
+additionalProperties:
+  formFields:
+    - default: 3000
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Web Port
+      labelZh: Web 端口
+      required: true
+      rule: paramPort
+      type: number
+    - default: auto_ontology
+      edit: true
+      envKey: POSTGRES_PASSWORD
+      labelEn: Database Password
+      labelZh: 数据库密码
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+    - default: nvapi-your-api-key-here
+      edit: true
+      envKey: DEFAULT_MODELS_API_KEY
+      labelEn: NVIDIA API Key (nvapi-...)
+      labelZh: NVIDIA API Key（nvapi- 开头）
+      required: true
+      rule: paramCommon
+      type: password
+    - default: http://localhost:3000
+      edit: true
+      envKey: APP_URL
+      labelEn: Application URL (must match the URL you browse to)
+      labelZh: 应用访问地址（须与浏览器实际访问地址一致）
+      required: true
+      rule: paramExtUrl
+      type: text
+    - default: admin@example.com
+      edit: true
+      envKey: AUTO_ONTOLOGY_ADMIN_EMAIL
+      labelEn: Admin Email
+      labelZh: 管理员邮箱
+      required: true
+      rule: paramCommon
+      type: text
+    - default: autoontology
+      edit: true
+      envKey: AUTO_ONTOLOGY_ADMIN_PASSWORD
+      labelEn: Admin Password
+      labelZh: 管理员密码
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password

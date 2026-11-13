@@ -1,0 +1,26 @@
+name: Auto Ontology
+tags:
+    - AI / 大模型
+title: NVIDIA Auto Ontology 语义本体层
+description: 从企业元数据自动构建语义本体（术语、关系、SQL 属性），并以 Web UI、REST API 与 MCP 向智能体提供可信的数据上下文和自然语言查询能力
+additionalProperties:
+  key: auto-ontology
+  name: Auto Ontology
+  tags:
+    - AI
+  shortDescZh: NVIDIA 开源的语义本体层，为智能体提供可信的数据上下文与自然语言查询
+  shortDescEn: NVIDIA open-source semantic ontology layer that grounds agents in trusted data context and natural-language querying
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/NVIDIA/auto-ontology
+  github: https://github.com/NVIDIA/auto-ontology
+  document: https://github.com/NVIDIA/auto-ontology/blob/main/README.md
+  architectures:
+    - amd64
+    - arm64
+  memoryRequired: 4096
+  description:
+    en: Builds a semantic, graph-based ontology layer over enterprise metadata and serves it to agents through a web UI, REST API and MCP, so natural-language questions become validated SQL with provenance
+    zh: 从企业元数据自动构建语义本体层，通过 Web UI、REST API 与 MCP 为智能体提供术语、关系与 SQL 属性，使自然语言问题转化为可校验的 SQL 并附带溯源

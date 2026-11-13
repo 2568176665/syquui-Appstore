@@ -1,0 +1,140 @@
+x-auto-ontology-env: &auto-ontology-env
+  POSTGRES_HOST: postgres
+  POSTGRES_PORT: "5432"
+  POSTGRES_USER: auto_ontology
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  POSTGRES_DATABASE: auto_ontology
+  DEFAULT_MODELS_API_KEY: ${DEFAULT_MODELS_API_KEY}
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: ${CONTAINER_NAME}-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: auto_ontology
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: auto_ontology
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U auto_ontology -d auto_ontology"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  # One-shot: Alembic migrations for the public schema (catalog + semantic tier).
+  auto-ontology-migrate:
+    image: nvcr.io/nvidia/auto-ontology:1.2.0
+    container_name: ${CONTAINER_NAME}-migrate
+    restart: "no"
+    command: ["migrate"]
+    environment: *auto-ontology-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  # One-shot: Prisma schema sync for the frontend schema.
+  frontend-migrate:
+    image: nvcr.io/nvidia/auto-ontology-frontend:1.2.0
+    container_name: ${CONTAINER_NAME}-frontend-migrate
+    restart: "no"
+    working_dir: /app/migrate
+    command: ["sh", "prisma/migrate.sh"]
+    environment: *auto-ontology-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  backend:
+    image: nvcr.io/nvidia/auto-ontology:1.2.0
+    container_name: ${CONTAINER_NAME}-backend
+    restart: always
+    environment:
+      <<: *auto-ontology-env
+      INGESTION_SERVICE_URL: http://ingestion:3002
+      APP_VERSION: "1.2.0"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auto-ontology-migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:3001/api/health/live', timeout=3).status == 200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  ingestion:
+    image: nvcr.io/nvidia/auto-ontology:1.2.0
+    container_name: ${CONTAINER_NAME}-ingestion
+    restart: always
+    command: ["ingestion_service"]
+    environment:
+      <<: *auto-ontology-env
+      APP_VERSION: "1.2.0"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auto-ontology-migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:3002/health/live', timeout=3).status == 200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+  frontend:
+    image: nvcr.io/nvidia/auto-ontology-frontend:1.2.0
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    ports:
+      - ${PANEL_APP_PORT_HTTP}:3000
+    env_file:
+      - ./data/secrets.env
+    environment:
+      <<: *auto-ontology-env
+      PYTHON_API_URL: http://backend:3001
+      # Next.js standalone binds to HOSTNAME, which Docker overrides with the
+      # container hostname; pin it to all interfaces as the Helm chart does.
+      HOSTNAME: "0.0.0.0"
+      APP_URL: ${APP_URL}
+      AUTO_ONTOLOGY_ADMIN_EMAIL: ${AUTO_ONTOLOGY_ADMIN_EMAIL}
+      AUTO_ONTOLOGY_ADMIN_PASSWORD: ${AUTO_ONTOLOGY_ADMIN_PASSWORD}
+      APP_VERSION: "1.2.0"
+    depends_on:
+      backend:
+        condition: service_healthy
+      frontend-migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks: [1panel-network]
+    labels:
+      createdBy: "Apps"
+
+networks:
+  1panel-network:
+    external: true
