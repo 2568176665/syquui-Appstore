@@ -26,37 +26,6 @@ services:
     labels:
       createdBy: "Apps"
 
-  # One-shot: Alembic migrations for the public schema (catalog + semantic tier).
-  auto-ontology-migrate:
-    image: nvcr.io/nvidia/auto-ontology:1.2.0
-    container_name: ${CONTAINER_NAME}-migrate
-    restart: "no"
-    command: ["migrate"]
-    env_file: ./data/secrets.env
-    environment: *auto-ontology-env
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks: [1panel-network]
-    labels:
-      createdBy: "Apps"
-
-  # One-shot: Prisma schema sync for the frontend schema.
-  frontend-migrate:
-    image: nvcr.io/nvidia/auto-ontology-frontend:1.2.0
-    container_name: ${CONTAINER_NAME}-frontend-migrate
-    restart: "no"
-    working_dir: /app/migrate
-    command: ["sh", "prisma/migrate.sh"]
-    env_file: ./data/secrets.env
-    environment: *auto-ontology-env
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks: [1panel-network]
-    labels:
-      createdBy: "Apps"
-
   backend:
     image: nvcr.io/nvidia/auto-ontology:1.2.0
     container_name: ${CONTAINER_NAME}-backend
@@ -66,11 +35,14 @@ services:
       <<: *auto-ontology-env
       INGESTION_SERVICE_URL: http://ingestion:3002
       APP_VERSION: "1.2.0"
+    # Alembic owns the `public` schema. Migrating in place keeps every container
+    # long-running: 1Panel marks an app unhealthy while any of its containers is
+    # exited, which a one-shot migration service would trigger permanently.
+    entrypoint: ["/usr/bin/tini", "--", "/bin/sh", "-c"]
+    command: ["alembic upgrade head && exec /usr/local/bin/entrypoint.sh server"]
     depends_on:
       postgres:
         condition: service_healthy
-      auto-ontology-migrate:
-        condition: service_completed_successfully
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:3001/api/health/live', timeout=3).status == 200 else 1)"]
       interval: 30s
@@ -93,8 +65,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-      auto-ontology-migrate:
-        condition: service_completed_successfully
+      backend:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:3002/health/live', timeout=3).status == 200 else 1)"]
       interval: 30s
@@ -122,11 +94,13 @@ services:
       AUTO_ONTOLOGY_ADMIN_EMAIL: ${AUTO_ONTOLOGY_ADMIN_EMAIL}
       AUTO_ONTOLOGY_ADMIN_PASSWORD: ${AUTO_ONTOLOGY_ADMIN_PASSWORD}
       APP_VERSION: "1.2.0"
+    # Prisma owns the `frontend` schema; sync it before serving, for the same
+    # all-containers-running reason as the backend migration above.
+    entrypoint: ["/usr/bin/tini", "--", "/bin/sh", "-c"]
+    command: ["cd /app/migrate && sh prisma/migrate.sh && cd /app && exec node app/server.js"]
     depends_on:
       backend:
         condition: service_healthy
-      frontend-migrate:
-        condition: service_completed_successfully
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"]
       interval: 30s
