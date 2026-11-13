@@ -5,11 +5,21 @@ x-auto-ontology-env: &auto-ontology-env
   POSTGRES_DATABASE: auto_ontology
   DEFAULT_MODELS_API_KEY: ${DEFAULT_MODELS_API_KEY}
 
+# 1Panel writes the install dialog's CPU/memory limits into one randomly picked
+# service only, so every service declares the same limits here: the dialog value
+# then applies to all four containers instead of whichever one 1Panel chose.
+x-auto-ontology-limits: &auto-ontology-limits
+  resources:
+    limits:
+      cpus: ${CPUS:-0}
+      memory: ${MEMORY_LIMIT:-0}
+
 services:
   postgres:
     image: pgvector/pgvector:pg17
     container_name: ${CONTAINER_NAME}-postgres
     restart: always
+    deploy: *auto-ontology-limits
     env_file: ./data/secrets.env
     environment:
       POSTGRES_USER: auto_ontology
@@ -30,6 +40,7 @@ services:
     image: nvcr.io/nvidia/auto-ontology:1.2.0
     container_name: ${CONTAINER_NAME}-backend
     restart: always
+    deploy: *auto-ontology-limits
     env_file: ./data/secrets.env
     environment:
       <<: *auto-ontology-env
@@ -57,6 +68,7 @@ services:
     image: nvcr.io/nvidia/auto-ontology:1.2.0
     container_name: ${CONTAINER_NAME}-ingestion
     restart: always
+    deploy: *auto-ontology-limits
     command: ["ingestion_service"]
     env_file: ./data/secrets.env
     environment:
@@ -81,6 +93,7 @@ services:
     image: nvcr.io/nvidia/auto-ontology-frontend:1.2.0
     container_name: ${CONTAINER_NAME}
     restart: always
+    deploy: *auto-ontology-limits
     ports:
       - ${PANEL_APP_PORT_HTTP}:3000
     env_file: ./data/secrets.env

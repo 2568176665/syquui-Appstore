@@ -38,6 +38,7 @@ The backend trusts the user identity the frontend forwards, and the ingestion se
 ## Notes
 
 - The upstream development pgAdmin and the optional MCP server (`nvcr.io/nvidia/auto-ontology-mcp`) are not included. Deploy MCP separately and point `AUTO_ONTOLOGY_MCP_PUBLIC_URL` at its public URL.
+- The **CPU / memory limit** fields in the install dialog reach compose as `CPUS` / `MEMORY_LIMIT`, and 1Panel writes them into one randomly picked service only. This bundle declares the same `deploy.resources.limits` on all four services, so the limit applies uniformly: it is a **per-container** cap, so budget four times that value for the whole app. The backend idles around 420–470 MB and grows during large ingests, so keep the limit at 1 GB or more; leave it empty or 0 for no limit.
 - Upstream publishes only version tags on NGC (such as `1.2.0`), never `latest`, so the `latest` directory pins the newest published release.
 - The default chat model (`nvidia/nemotron-3.5-lightning-30b-a3b`) does not accept `guided_json` structured output on the build.nvidia.com endpoint, so backend logs show `[400] unknown field 'guided_json'`; the app degrades gracefully and still answers, but each question takes noticeably longer. To remove the error, add `REASONING_MODEL` and `NON_REASONING_MODEL` for `backend` and `ingestion` pointing at a model that supports structured output (change only those two roles, never `EMBED_MODEL` or `RERANK_MODEL`).
 - 4 GB of memory or more is recommended.
