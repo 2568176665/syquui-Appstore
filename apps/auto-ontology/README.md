@@ -7,7 +7,7 @@ NVIDIA 开源的语义本体层。它从企业元数据自动构建术语、关�
 1. 需要 NVIDIA API Key（`nvapi-` 开头，在 https://build.nvidia.com 获取），安装时填入「NVIDIA API Key」。推理、非推理、向量、重排四个模型角色的地址与模型名会按 Key 前缀（`nvapi-` / `sk-`）自动推导；改用自建 NIM 或其他 OpenAI 兼容服务时，需在应用编排中补充 `DEFAULT_MODELS_ENDPOINT`、`DEFAULT_MODELS_MODEL`、`EMBED_ENDPOINT`、`EMBED_MODEL`、`RERANK_ENDPOINT`、`RERANK_MODEL` 等变量（见上游 `.env.example`），其中向量模型在摄取与查询两端必须一致。
 2. 镜像来自 NVIDIA NGC（`nvcr.io`），服务器需能访问该仓库。镜像为公开镜像，无需登录即可拉取。
 3. 使用包内独立的 `pgvector/pgvector:pg17` PostgreSQL：pgvector 是本体向量检索的硬依赖，因此不复用 1Panel PostgreSQL。
-4. 「应用访问地址」（`APP_URL`）必须与浏览器实际访问的地址完全一致（含协议、端口或域名），否则登录会失败。通过 1Panel 网站反向代理并启用 HTTPS 时，请填写该 HTTPS 地址，反代目标为 `http://<容器名>:3000`。
+4. 「应用访问地址」（`APP_URL`）必须与浏览器实际访问的地址完全一致（含协议、端口或域名），否则登录会失败（返回 `Invalid origin`）。通过 1Panel 网站反向代理并启用 HTTPS 时，请填写该 HTTPS 地址，反代目标为应用容器名加 `:3000`，容器名形如 `1Panel-auto-ontology-abcd`。
 5. 首次安装会先执行两段数据库迁移（Alembic 负责 `public`，Prisma 负责 `frontend`），完成后才启动后端、摄取服务与前端。
 6. 登录账号即安装时填写的管理员邮箱与密码。应用不支持自助注册。
 
@@ -31,7 +31,8 @@ NVIDIA 开源的语义本体层。它从企业元数据自动构建术语、关�
 ## 数据与升级
 
 - `data/postgres`：PostgreSQL 数据（catalog、本体、会话）。
-- `data/secrets.env`：安装时自动生成的 `AUTH_SECRET`（会话签名密钥）。升级时由 `scripts/upgrade.sh` 保留；删除该文件会使所有用户重新登录。
+- `data/secrets.env`：安装时自动生成，含 `POSTGRES_PASSWORD`（包内数据库密码）与 `AUTH_SECRET`（会话签名密钥）。数据库密码之所以由脚本生成而不是表单填写，是因为应用用 `postgresql://用户:密码@主机` 直接拼接连接串、不做 URL 转义，密码里出现 `@ : / #` 等字符会立刻连不上数据库。
+- 升级时由 `scripts/upgrade.sh` 保留上述两个值。若该文件丢失而 `data/postgres` 仍在，`init.sh` 会拒绝启动并提示：此时只能找回原值，或删除 `data/postgres` 重装。
 - 升级会重新执行数据库迁移，迁移失败时应用不会启动，可在 1Panel 容器日志中查看 `*-migrate` 容器的输出。
 
 ## 说明

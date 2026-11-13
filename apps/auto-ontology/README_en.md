@@ -7,7 +7,7 @@ NVIDIA's open-source semantic ontology layer. It builds terms, relationships and
 1. An NVIDIA API Key (`nvapi-...`, from https://build.nvidia.com) is required; enter it in **NVIDIA API Key**. Endpoints and model names for all four model roles (reasoning, non-reasoning, embedding, rerank) are derived from the key prefix (`nvapi-` / `sk-`). To use a self-hosted NIM or another OpenAI-compatible endpoint, add `DEFAULT_MODELS_ENDPOINT`, `DEFAULT_MODELS_MODEL`, `EMBED_ENDPOINT`, `EMBED_MODEL`, `RERANK_ENDPOINT` and `RERANK_MODEL` to the deployment yourself (see upstream `.env.example`); the embedding model must match between ingestion and query.
 2. Images come from NVIDIA NGC (`nvcr.io`), so the server must be able to reach that registry. The images are public and need no login to pull.
 3. The bundle ships its own `pgvector/pgvector:pg17` PostgreSQL: pgvector is required for ontology embedding search, so 1Panel's PostgreSQL is not reused.
-4. **Application URL** (`APP_URL`) must exactly match the URL you browse to, including scheme, port or domain, otherwise sign-in fails. When you front it with a 1Panel website reverse proxy over HTTPS, enter that HTTPS URL; the proxy target is `http://<container-name>:3000`.
+4. **Application URL** (`APP_URL`) must exactly match the URL you browse to, including scheme, port or domain, otherwise sign-in fails with `Invalid origin`. When you front it with a 1Panel website reverse proxy over HTTPS, enter that HTTPS URL; the proxy target is the app container name plus `:3000`, where the container name looks like `1Panel-auto-ontology-abcd`.
 5. On first install two database migrations run first (Alembic owns `public`, Prisma owns `frontend`), then the backend, ingestion service and frontend start.
 6. Sign in with the admin email and password entered during installation. Self-service sign-up is disabled.
 
@@ -31,7 +31,8 @@ The backend trusts the user identity the frontend forwards, and the ingestion se
 ## Data and upgrades
 
 - `data/postgres`: PostgreSQL data (catalog, ontology, conversations).
-- `data/secrets.env`: `AUTH_SECRET` generated at install time (session signing key). `scripts/upgrade.sh` keeps it across upgrades; deleting it signs every user out.
+- `data/secrets.env`: generated at install time; holds `POSTGRES_PASSWORD` (the bundled database password) and `AUTH_SECRET` (session signing key). The database password is generated rather than asked for because the application builds `postgresql://user:password@host` without URL-encoding, so characters such as `@ : / #` in it break every connection immediately.
+- `scripts/upgrade.sh` keeps both values across upgrades. If the file is lost while `data/postgres` still exists, `init.sh` refuses to continue: recover the original values, or delete `data/postgres` and start over.
 - Upgrades re-run the database migrations. If a migration fails the app does not start; check the `*-migrate` container logs in 1Panel.
 
 ## Notes

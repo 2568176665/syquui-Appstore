@@ -8,15 +8,6 @@ additionalProperties:
       required: true
       rule: paramPort
       type: number
-    - default: auto_ontology
-      edit: true
-      envKey: POSTGRES_PASSWORD
-      labelEn: Database Password
-      labelZh: 数据库密码
-      random: true
-      required: true
-      rule: paramComplexity
-      type: password
     - default: nvapi-your-api-key-here
       edit: true
       envKey: DEFAULT_MODELS_API_KEY
