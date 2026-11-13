@@ -14,7 +14,6 @@ additionalProperties:
       labelEn: NVIDIA API Key (nvapi-...)
       labelZh: NVIDIA API Key（nvapi- 开头）
       required: true
-      rule: paramCommon
       type: password
     - default: http://localhost:3000
       edit: true
@@ -30,7 +29,7 @@ additionalProperties:
       labelEn: Admin Email
       labelZh: 管理员邮箱
       required: true
-      rule: paramCommon
+      rule: email
       type: text
     - default: autoontology
       edit: true
