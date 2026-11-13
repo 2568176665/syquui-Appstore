@@ -38,6 +38,7 @@ NVIDIA 开源的语义本体层。它从企业元数据自动构建术语、关�
 ## 说明
 
 - 未包含上游开发用的 pgAdmin 与可选 MCP 服务（`nvcr.io/nvidia/auto-ontology-mcp`）。MCP 需单独部署，并通过 `AUTO_ONTOLOGY_MCP_PUBLIC_URL` 指定其公开地址。
+- 默认对话模型（`nvidia/nemotron-3.5-lightning-30b-a3b`）在 build.nvidia.com 端点上不支持 `guided_json` 结构化输出，后端日志会出现 `[400] unknown field 'guided_json'`；应用会自动降级并继续作答，但单次提问明显变慢。要消除该报错，可为 `backend` 与 `ingestion` 追加 `REASONING_MODEL`、`NON_REASONING_MODEL` 指向支持结构化输出的模型（只改这两个角色，不要动 `EMBED_MODEL`、`RERANK_MODEL`）。
 - 上游在 NGC 只发布版本号标签（如 `1.2.0`），没有 `latest` 标签，因此 `latest` 目录固定指向当前最新发布版本。
 - 建议内存不低于 4 GB。
 
