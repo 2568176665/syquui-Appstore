@@ -14,6 +14,7 @@
 | apipark | 开源企业级 API 全生命周期管理平台 |
 | arcane | 现代化 Docker 管理面板 |
 | astrbot | 多平台大模型聊天机器人框架 |
+| auto-ontology | NVIDIA 语义本体层，为智能体提供可信的数据上下文与自然语言查询 |
 | axonhub | 一站式 AI 开发平台 - 统一 API 网关，支持多种 LLM 提供商 |
 | beszel-agent | 轻量易用的服务器监控（客户端） |
 | browser-use | 让 AI 代理可以访问网站。轻松实现在线任务自动化 |
